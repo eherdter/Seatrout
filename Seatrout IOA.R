@@ -1,3 +1,4 @@
+# This is for exploring the indices of abundance and running some statistics on them. 
 setwd("~/Desktop/Github Repo/Seatrout")
 # load Tampa Bay river and bay IOA for YOY. Data are from FIM. 
 TB_RIV <- read.csv("TB_RIV.csv", check.names=FALSE)
