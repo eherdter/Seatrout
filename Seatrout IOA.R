@@ -47,7 +47,7 @@ IRBAY_sum <- ddply(meltIR_BAY, .(Year), summarise, median=median(BootstrapRealiz
 JX_sum    <- ddply(meltJX,     .(Year), summarise, median=median(BootstrapRealization), lower=quantile(BootstrapRealization, .25, na.rm=TRUE), upper=quantile(BootstrapRealization, .75, na.rm=TRUE))
 
 
- # to do next:
+ # to do next: (REVIST WITH RAW DATA)
 # 1. plot each time series
 # 2. test autocorrelation for each
 #   a. graphically summarize autocorrelation- lagged scatterplot
@@ -55,7 +55,7 @@ JX_sum    <- ddply(meltJX,     .(Year), summarise, median=median(BootstrapRealiz
 #     b1. how to evaluate the autocorrelation .. http://stats.stackexchange.com/questions/78281/confidence-band-in-correlogram (which assumes normal assumption)
 #     b2. what is the distribution of the output from a general linear model??... 
 
-#   c. test for a trend- using time series analysis pdf-Colorado lecture 
+#   c. test for a trend- using time series analysis pdf-Colorado lecture; Mann-Kendall test?
 
 # Useful Resources:
 #  http://wwwuser.gwdg.de/~cscherb1/content/Statistics%20Course%20files/A%20short%20introduction%20to%20time%20series%20analysis%20in%20R.pdf
@@ -105,18 +105,26 @@ lag1.plot(JX_sum$median, 5, corr=TRUE, smooth=TRUE)
 # perform autocorrelation function and make correlogram
   #below, the correlogram is an automatic output of the acf2 function
 acf2(TBRIV_sum$median)
+acf2(TBBAY_sum$median)
+acf2(APBAY_sum$median)
+acf2(CHBAY_sum$median)
+acf2(CHRIV_sum$median)
+acf2(CKBAY_sum$median)
+acf2(CKRIV_sum$median)
+acf2(IRBAY_sum$median)
+acf2(JX_sum$median)
 
-
-
-
-
-
-
-
-
-
-
-
+# perform Mann-Kendall test - test for monotonic trend in a time series z[t] based on the Kendall rank correlation of z[t]
+library(Kendall)
+MannKendall(TBRIV_sum$median)
+MannKendall(TBBAY_sum$median)
+MannKendall(APBAY_sum$median)
+MannKendall(CHBAY_sum$median)
+MannKendall(CHRIV_sum$median)
+MannKendall(CKBAY_sum$median)
+MannKendall(CKRIV_sum$median)
+MannKendall(IRBAY_sum$median)
+MannKendall(JX_sum$median)
 
 
 
