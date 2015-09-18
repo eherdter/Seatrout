@@ -1,5 +1,5 @@
 # This is for exploring the indices of abundance and running some statistics on them. 
-setwd("~/Desktop/Github Repo/Seatrout")
+setwd("~/Desktop/Github Repo/Seatrout/Data/Indices")
 # load all IOA for YOY. Data are from FIM. 
 TB_RIV <- read.csv("TB_RIV.csv", check.names=FALSE)
 TB_BAY <- read.csv("TB_BAY.csv", check.names=FALSE)
@@ -93,6 +93,16 @@ library(zoo)
 plot(TBRIV_time)
 rm <-rollmean(TBRIV_time,k=3)
 lines(rm)
+
+
+
+
+
+
+
+
+
+
 
 
 #lagged scatterplots of each time series
