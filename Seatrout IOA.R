@@ -87,10 +87,15 @@ plot(CKRIV_sum$median~CKRIV_sum$Year)
 plot(IRBAY_sum$median~IRBAY_sum$Year)
 plot(JX_sum$median~JX_sum$Year)
 
+ #fit a 3 yr moving average to the time series
+TBRIV_time <- as.matrix(TBRIV_sum[,1:2])
+library(zoo)
+plot(TBRIV_time)
+rm <-rollmean(TBRIV_time,k=3)
+lines(rm)
 
 
-
-  #lagged scatterplots of each time series
+#lagged scatterplots of each time series
 library(astsa)
 lag1.plot(TBRIV_sum$median, 5, corr=TRUE, smooth=TRUE)
 lag1.plot(TBBAY_sum$median, 5, corr=TRUE, smooth=TRUE)
@@ -126,5 +131,7 @@ MannKendall(CKRIV_sum$median)
 MannKendall(IRBAY_sum$median)
 MannKendall(JX_sum$median)
 
+
+#haven for loading SAS variables
 
 
