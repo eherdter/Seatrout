@@ -4,15 +4,13 @@ setwd("~/Desktop/Github Repo/Seatrout/Data/Raw Survey Data/Seatrout FIM Data")
 
 library(haven)
 #Appalachicola
-AP_C  <- read_sas("apm_cn_c.sas7bdat")
-unique(AP_C$Zone) #Why Zones here not present on sampling map "A" "B" "D" "C"
+AP_C  <- data.frame(read_sas("apm_cn_c.sas7bdat"))
 AP_Hab <- read_sas("apm_cn_hab.sas7bdat")
 AP_Hyd <- read_sas("apm_cn_hyd.sas7bdat")
 AP_L <- read_sas("apm_cn_l.sas7bdat")
 
 #Charlotte Harbor
 CH_C <- read_sas("chm_cn_c.sas7bdat")
-unique(CH_C$Zone)  # Why are there Zones here not present on sampling map "A" "C" "B" "D" "P" "M" "G" "E" "H" ??
 CH_Hab <- read_sas("chm_cn_hab.sas7bdat")
 CH_Hyd <- read_sas("chm_cn_hyd.sas7bdat")
 CH_L <- read_sas("chm_cn_l.sas7bdat")
@@ -81,9 +79,12 @@ unique()
 # Apply constraints
 #########################
 apl <- subset(AP_L, sl <= 100, select =c(bio_reference, sl, COUNT, nl))
-apc_bay <- subset(AP_C, gr==23 | gr==20 & month >= 6 & month <= 10 & Zone == "A" | Zone== "B", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
+apc_bay1 <- subset(AP_C, gr == 23 | gr ==20 & month >=6 & month <= 10 & Zone == "A" | Zone == "B", select=c(gr,Zone, month)) # | gr == 20 & month >= 6 & month <= 10 & Zone == "A" | Zone == "B", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
+
+unique(apc_bay1$gr)
 apc_riv <- subset(AP_C, gr==23 | gr==20 & month >= 6 & month <= 10 & Zone == "C", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
                      
+
 
 chl <- subset(CH_L, sl <= 100, select =c(bio_reference, sl, COUNT, nl))
 chc_bay <- subset(CH_C, gr==23 | gr==20 & month >= 4 & month <= 10 & Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
@@ -140,5 +141,15 @@ diff <- anti_join(tbc_bay, tbl, by= 'bio_reference') #16276
 untbl <- unique(tbl$bio_reference) #2290 unique bio_reference in tbl, length of tbl is 9224
 untbc <- unique(tbc_bay$bio_reference) #18461 unique bio_reference in tbc_bay, length is 18461
 unnew <- unique(new$bio_reference) # 2185 unique bio_reference in new, length is 8794
+
+###################################################################
+# Seperate by Zone within location
+##########################################
+AP_BAY_A <- subset(AP_BAY, Zone=="A", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number, sl, COUNT, nl))
+AP_BAY_A <- subset(AP_BAY, Zone=="A", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number, sl, COUNT, nl))
+AP_BAY_A <- subset(AP_BAY, Zone=="A", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number, sl, COUNT, nl))
+AP_BAY_A <- subset(AP_BAY, Zone=="A", select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number, sl, COUNT, nl))
+
+
 
 
