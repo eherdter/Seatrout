@@ -95,8 +95,8 @@ ckc_bay <- subset(CK_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & 
 ckc_riv <- subset(CK_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & Zone == "F" , select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
 
 irl <- subset(IR_L, sl <= 100, select =c(bio_reference, sl, COUNT, nl))
-irc_bay <- subset(IR_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
-irc_riv <- subset(IR_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & Zone == "F" , select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
+irc_bay <- subset(IR_C, (gr==23 | gr==20) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
+irc_riv <- subset(IR_C, (gr==23 | gr==20) & month >= 5 & month <= 11 & Zone == "F" , select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
 
 jxl <- subset(JX_L, sl <= 100, select =c(bio_reference, sl, COUNT , nl))
 jxc_riv <- subset(JX_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone== "C" | Zone=="D" | Zone=="E"  | Zone == "F"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
@@ -104,7 +104,7 @@ jxc_riv <- subset(JX_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & 
 tbl <- subset(TB_L, sl <= 100, select =c(bio_reference, sl, COUNT, nl))
 tbc_bay <- subset(TB_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
 tbc_riv <- subset(TB_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "K" | Zone == "L" | Zone == "M" | Zone== "N") , select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )                     
-
+# apparantly gear==19 was also included as a bay gear
 
 
 
@@ -299,26 +299,58 @@ TBB_Esum <- ddply(TB_BAY_EUn, c("year", "month"), summarise, NumberofBioReferenc
 ########## 
 # Make sure total numbers from all months are the same as reported in the FWRI data report
 ##########
-tbc_bayFWRItest <- subset(TB_C, (gr==20 | gr==19)) # gear can also be reported as 19 so I need to include 19 in the bay seines ,  select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )  #& ( Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
-##### gear is also 19 ####
+
+      # Tampa Bay#
+TBUn <- subset(TB_C, !duplicated(bio_reference))
+tbc_bayFWRItest <- subset(TBUn, (gr==20 | gr==19)) # equivalent to Gear==20gear can also be reported as gr==19 so I need to include 19 in the bay seines ,  select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )  #& ( Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E"), select=c(bio_reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
 TBBtest <- ddply(tbc_bayFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-tbc_rivFWRItest <- subset(TB_C, gr==23)
-TBRtest <- 
+tbc_rivFWRItest <- subset(TBUn, Gear==23)
+TBRtest <- ddply(tbc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+     
+     # Jax #
+JXUn <- subset(JX_C, !duplicated(bio_reference))
+jxc_rivFWRItest <- subset(JXUn, Gear==23)
+JXRtest <- ddply(jxc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+    
+    # Indian River #
+IRUn <- subset(IR_C, !duplicated(bio_reference))
+irc_rivFWRItest <- subset(IRUn, Gear==23)
+IRRtest <- ddply(irc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+irc_bayFWRItest <- subset(IRUn,  gear)
+IRBtest <- ddply(irc_bayFWRItest, c("year"), summarise, NumberofUniqueBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+
+
+    # Cedar Key ##
+CKUn <- subset(CK_C, !duplicated(bio_reference))
+ckc_bayFWRItest <- subset(CKUn, Gear==20 )
+CKBtest <- ddply(ckc_bayFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+ckc_rivFWRItest <- subset(CK_C, Gear==23)
+CKRtest <- ddply(ckc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+   # Appalachicola ## 
+APUn <-subset(AP_C, !duplicated(bio_reference))
+apc_bayFWRItest <- subset(APUn, Gear==20)
+APBtest <- ddply(apc_bayFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+apc_rivFWRItest <- subset(APUn, Gear==23)
+APRtest <- ddply(apc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+  # Charlotte Harbor #
+CHUn <- subset(CH_C, !duplicated(bio_reference))
+chc_bayFWRItest <- subset(CHUn, Gear==20)
+CHBtest <- ddply(chc_bayFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+chc_rivFWRItest <- subset(CHUn, Gear ==23)
+CHRtest <- ddply(chc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
 
 
 
-
-
-
-test1 <- merge(tbc_bayFWRItest, TB_L, by="bio_reference")
-testUn <- subset(test, !duplicated(bio_reference))
-
-
-testsum <- ddply(testUn, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-testsum2 <- ddply(tbc_bayFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
 
