@@ -299,6 +299,7 @@ TBB_Esum <- ddply(TB_BAY_EUn, c("year", "month"), summarise, NumberofBioReferenc
 ########## 
 # Make sure total numbers from all months are the same as reported in the FWRI data report
 ##########
+# all numbers are verified except for Indian River 10/06/2015
 
       # Tampa Bay#
 TBUn <- subset(TB_C, !duplicated(bio_reference))
@@ -315,13 +316,12 @@ JXRtest <- ddply(jxc_rivFWRItest, c("year"), summarise, NumberofBioReferences=le
     
     # Indian River #
 IRUn <- subset(IR_C, !duplicated(bio_reference))
+year14 <- subset(IRUn, year==2014, select=c(year, number, n, bio_reference, Gear, gr))
 irc_rivFWRItest <- subset(IRUn, Gear==23)
 IRRtest <- ddply(irc_rivFWRItest, c("year"), summarise, NumberofBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 irc_bayFWRItest <- subset(IRUn,  gear)
 IRBtest <- ddply(irc_bayFWRItest, c("year"), summarise, NumberofUniqueBioReferences=length(bio_reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-
 
     # Cedar Key ##
 CKUn <- subset(CK_C, !duplicated(bio_reference))
@@ -349,13 +349,17 @@ CHRtest <- ddply(chc_rivFWRItest, c("year"), summarise, NumberofBioReferences=le
 
 
 
+##################################################
+## Evaluting zones not covered in the 2014 annual report ####
+##################################################
 
+apzone <- subset(AP_C, Zone== "D")
+unique(apzone$year)
+irzone <- subset(IR_C, Zone=="O" | Zone == "G")
+unique(irzone$year)
 
-
-
-
-
-
+chzone <- subset(CH_C, Zone=="G" | Zone== "E" | Zone == "H")
+unique(chzone$year)
 
 
 
