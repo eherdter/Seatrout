@@ -1,11 +1,10 @@
-# This script loads Spotted Seatrout raw survy data. They are stored as .sas7bdat at FWRI but I will be using
+# This script loads Spotted Seatrout raw survey data. They are stored as .sas7bdat at FWRI but I will be using
 # haven to convert them and work with them in R
 setwd("~/Desktop/Github Repo/Seatrout/Data/Raw Survey Data/Seatrout FIM Data")
 
 library(haven)
 #Appalachicola
 AP_C  <- data.frame(read_sas("apm_cn_c.sas7bdat"))
-unique(AP_C$bveg)
 AP_Hab <- read_sas("apm_cn_hab.sas7bdat")
 AP_Hyd <- read_sas("apm_cn_hyd.sas7bdat")
 AP_L <- read_sas("apm_cn_l.sas7bdat")
@@ -79,122 +78,82 @@ unique()
 ########################################################
 # Apply constraints, Project 1= AM (long term monitoring)
 ########################################################
-apl <- subset(AP_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
-apc_bay <- subset(AP_C, (gr == 23 | gr ==20 | gr==19) & month >=6 & month <= 10 & (Zone == "A" | Zone == "B"))
+#apl <- subset(AP_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
+# I don't think I need to merge the length because selecting the 
+#gear is an automatic filter for any fish larger than 100m, I believe. 
+ 
+apc_bay <- subset(AP_C, ( gr ==20 | gr==19) & month >=6 & month <= 10 & (Zone == "A" | Zone == "B"))
 #must include the gear constraints or else large seines might be included
-apc_riv <- subset(AP_C, (gr==23   | gr ==20 | gr==19) & month >=6 & month <= 10 & (Zone == "C"))                     
+apc_riv <- subset(AP_C, (gr==23   ) & month >=6 & month <= 10 & (Zone == "C"))                     
                      
 
-chl <- subset(CH_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
-chc_bay <- subset(CH_C, (gr==23 | gr==20 | gr==19) & month >= 4 & month <= 10 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D"))
-chc_riv <- subset(CH_C, (gr==23 | gr==20 | gr==19) & month >= 4 & month <= 10 & (Zone == "M" | Zone == "N" | Zone == "O" | Zone== "P"))                     
+chc_bay <- subset(CH_C, ( gr==20 | gr==19) & month >= 4 & month <= 10 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D"))
+chc_riv <- subset(CH_C, (gr==23 ) & month >= 4 & month <= 10 & (Zone == "M" | Zone == "N" | Zone == "O" | Zone== "P"))                     
+
+ckc_bay <- subset(CK_C, ( gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "B" | Zone == "C"))
+ckc_riv <- subset(CK_C, (gr==23 ) & month >= 5 & month <= 11 & Zone == "F")                     
+
+irc_bay <- subset(IR_C, ( gr==20 | gr ==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"))
+irc_riv <- subset(IR_C, (gr==23 ) & month >= 5 & month <= 11 & Zone == "F")                     
 
 
-ckl <- subset(CK_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
-ckc_bay <- subset(CK_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "B" | Zone == "C"))
-ckc_riv <- subset(CK_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & Zone == "F")                     
+jxc_riv <- subset(JX_C, (gr==23 ) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone== "C" | Zone=="D" | Zone=="E"  | Zone == "F") )                     
 
-irl <- subset(IR_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
-irc_bay <- subset(IR_C, (gr==23 | gr==20) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"))
-irc_riv <- subset(IR_C, (gr==23 | gr==20) & month >= 5 & month <= 11 & Zone == "F")                     
-
-jxl <- subset(JX_L, sl <= 100, select =c(Reference, sl, COUNT , nl))
-jxc_riv <- subset(JX_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone== "C" | Zone=="D" | Zone=="E"  | Zone == "F") )                     
-
-tbl <- subset(TB_L, sl <= 100, select =c(Reference, sl, COUNT, nl))
-tbc_bay <- subset(TB_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E") )
-tbc_riv <- subset(TB_C, (gr==23 | gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "K" | Zone == "L" | Zone == "M" | Zone== "N") )                     
+tbc_bay <- subset(TB_C, ( gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E") )
+tbc_riv <- subset(TB_C, (gr==23 ) & month >= 5 & month <= 11 & (Zone == "K" | Zone == "L" | Zone == "M" | Zone== "N") )                     
 # apparantly gear==19 was also included as a bay gear
 
-
-
-############################################################
-# Merge values from c_bay and c_riv into ##l so all values from the c_bay and c_riv can be retained 
-# but only at the Reference numbers in the length variables. If I wanted to retain all values -> all=TRUE
-############################################################
-
-AP_BAY <- merge(apc_bay, apl, by="Reference")
-unique(AP_BAY$Zone)
-AP_RIV <- merge(apc_riv, apl, by="Reference")
-
-CH_BAY <- merge(chc_bay, chl, by="Reference")
-CH_RIV <- merge(chc_riv, chl, by="Reference")
-
-CK_BAY <- merge(ckc_bay, ckl, by="Reference")
-CK_RIV <- merge(ckc_riv, ckl, by="Reference")
-
-IR_BAY <- merge(irc_bay, irl, by="Reference")
-IR_RIV <- merge(irc_riv, irl, by="Reference")
-
-JX_RIV <- merge(jxc_riv, jxl, by="Reference")
-
-TB_BAY <- merge(tbc_bay, tbl, by="Reference")
-TB_RIV <- merge(tbc_riv, tbl, by="Reference")
-
-######### SHORT EXPLORATION INTO BIO_REFERENCE CODES###############
-# NOTE: catch file and length file have 2185 bio_references in common and 16276 in difference. 
-# Therefore when merged they create a df "new" that has 2185 unique bio_reference numbers. 
-
-library(dplyr)
-data.frame(tbc_bay)
-data.frame(tbl)
-same <- semi_join(tbc_bay, tbl, by= 'bio_reference') #2185
-diff <- anti_join(tbc_bay, tbl, by= 'bio_reference') #16276
-
-untbl <- unique(tbl$bio_reference) #2290 unique bio_reference in tbl, length of tbl is 9224
-untbc <- unique(tbc_bay$bio_reference) #18461 unique bio_reference in tbc_bay, length is 18461
-unnew <- unique(new$bio_reference) # 2185 unique bio_reference in new, length is 8794
 
 ###################################################################
 # Seperate by Zone within Estuary
 ##########################################
-AP_BAY_A <- subset(AP_BAY, Zone=="A")
-AP_BAY_B <- subset(AP_BAY, Zone=="B")
+AP_BAY_A <- subset(apc_bay, Zone=="A")
+AP_BAY_B <- subset(apc_bay, Zone=="B")
 
-AP_RIV_C <- subset(AP_RIV, Zone=="C")
+AP_RIV_C <- subset(apc_riv, Zone=="C")
 
-CH_BAY_A <- subset(CH_BAY, Zone=="A")
-CH_BAY_B <- subset(CH_BAY, Zone=="B")
-CH_BAY_C <- subset(CH_BAY, Zone=="C")
-CH_BAY_D <- subset(CH_BAY, Zone=="D")
+CH_BAY_A <- subset(chc_bay, Zone=="A")
+CH_BAY_B <- subset(chc_bay, Zone=="B")
+CH_BAY_C <- subset(chc_bay, Zone=="C")
+CH_BAY_D <- subset(chc_bay, Zone=="D")
 
-CH_RIV_M <- subset(CH_RIV, Zone=="M")
-CH_RIV_N <- subset(CH_RIV, Zone=="N")
-CH_RIV_O <- subset(CH_RIV, Zone=="O")
-CH_RIV_P <- subset(CH_RIV, Zone=="P")
+CH_RIV_M <- subset(chc_riv, Zone=="M")
+CH_RIV_N <- subset(chc_riv, Zone=="N")
+CH_RIV_O <- subset(chc_riv, Zone=="O")
+CH_RIV_P <- subset(chc_riv, Zone=="P")
 
-CK_BAY_B <- subset(CK_BAY, Zone=="B")
-CK_BAY_C <- subset(CK_BAY, Zone=="C")
+CK_BAY_B <- subset(ckc_bay, Zone=="B")
+CK_BAY_C <- subset(ckc_bay, Zone=="C")
 
-CK_RIV_F <- subset(CK_BAY, Zone=="F")
+CK_RIV_F <- subset(ckc_bay, Zone=="F")
 
 
-IR_BAY_A <- subset(IR_BAY, Zone=="A")
-IR_BAY_B <- subset(IR_BAY, Zone=="B")
-IR_BAY_C <- subset(IR_BAY, Zone=="C")
-IR_BAY_D <- subset(IR_BAY, Zone=="D")
-IR_BAY_E <- subset(IR_BAY, Zone=="E")
-IR_BAY_H <- subset(IR_BAY, Zone=="H")
+IR_BAY_A <- subset(irc_bay, Zone=="A")
+IR_BAY_B <- subset(irc_bay, Zone=="B")
+IR_BAY_C <- subset(irc_bay, Zone=="C")
+IR_BAY_D <- subset(irc_bay, Zone=="D")
+IR_BAY_E <- subset(irc_bay, Zone=="E")
+IR_BAY_H <- subset(irc_bay, Zone=="H")
 
-IR_RIV_F <- subset(IR_RIV, Zone=="F")
+IR_RIV_F <- subset(irc_riv, Zone=="F")
 
-JX_RIV_A <- subset(JX_RIV, Zone=="A")
-JX_RIV_B <- subset(JX_RIV, Zone=="B")
-JX_RIV_C <- subset(JX_RIV, Zone=="C")
-JX_RIV_D <- subset(JX_RIV, Zone=="D")
-JX_RIV_E <- subset(JX_RIV, Zone=="E")
-JX_RIV_F <- subset(JX_RIV, Zone=="F")
+JX_RIV_A <- subset(jxc_riv, Zone=="A")
+JX_RIV_B <- subset(jxc_riv, Zone=="B")
+JX_RIV_C <- subset(jxc_riv, Zone=="C")
+JX_RIV_D <- subset(jxc_riv, Zone=="D")
+JX_RIV_E <- subset(jxc_riv, Zone=="E")
+JX_RIV_F <- subset(jxc_riv, Zone=="F")
 
-TB_BAY_A <- subset(TB_BAY, Zone=="A")
-TB_BAY_B <- subset(TB_BAY, Zone=="B")
-TB_BAY_C <- subset(TB_BAY, Zone=="C")
-TB_BAY_D <- subset(TB_BAY, Zone=="D")
-TB_BAY_E <- subset(TB_BAY, Zone=="E")
+TB_BAY_A <- subset(tbc_bay, Zone=="A")
+TB_BAY_B <- subset(tbc_bay, Zone=="B")
+TB_BAY_C <- subset(tbc_bay, Zone=="C")
+TB_BAY_D <- subset(tbc_bay, Zone=="D")
+TB_BAY_E <- subset(tbc_bay, Zone=="E")
 
-TB_RIV_M <- subset(TB_RIV, Zone=="M")
-TB_RIV_N <- subset(TB_RIV, Zone=="N")
-TB_RIV_O <- subset(TB_RIV, Zone=="O")
-TB_RIV_P <- subset(TB_RIV, Zone=="P")
+TB_RIV_M <- subset(tbc_riv, Zone=="M")
+TB_RIV_N <- subset(tbc_riv, Zone=="N")
+TB_RIV_O <- subset(tbc_riv, Zone=="O")
+TB_RIV_P <- subset(tbc_riv, Zone=="P")
 
 
 ########################################################################################################
@@ -202,8 +161,6 @@ TB_RIV_P <- subset(TB_RIV, Zone=="P")
 #. Each haul is represented as a unique (Reference). The total number of particular species collected in each
 # haul is "n" or "number". Thusly,  each unique Reference has an associated ("n", "number"). 
 # Therefore I will capture unique (Un) Reference and then use the N or Number to determine numbers. 
-# 
-# All References have already been filtered by length (see above constraint steps) so I know that I will be capturing YOY fish (<= 100 mm)
 ########################################################################################################
 
 AP_BAY_AUn <- subset(AP_BAY_A, !duplicated(Reference))
@@ -378,33 +335,74 @@ unique(chzone$year)
 #       -> Over
 #       -> Nonover
 ##########################################################
+### THESE VARIABLES NEED TO BE CHECKED. I DONT THINK IM
+# SUBSETTING BY THE CORRECT VARIABLES.
 
-##  Tampa Bay ###
-    # Bay #
+## Perhaps is this because they havent sampled in zone A in a while...??
+# Check on unique values for bveg
+# Sum by zone and compare to the annual report to figure out correct variables. 
+
+
+
+##  Tampa Bay ### 
+
+
+tbc_bay_un_2014 <- subset(TB_C, (gr==20 | gr==19) & !duplicated(Reference) & year==2014)
+  tbc_shore <- subset(tbc_bay_un_2014, ShoreDistance <=5 | ShoreDistance == 99)
+  tbc_shore_sum <- ddply(tbc_shore, c("year"),summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number)) 
+    
+
+# Bay #
 TB_BAY_AUn <- subset(TB_BAY_A, !duplicated(Reference))
   TBBA_Shore <- subset(TB_BAY_AUn, ShoreDistance <= 5)
-  TBBA_Off_Veg <-subset(TB_BAY_Aun, ShoreDistance > 5 & (bveg = "SAV" | bveg = " Algea" | bveg = "Other"))
-  TBBA_Off_NonVeg <- subset(TB_BAY_Aun, ShoreDistance > 5 & (bveg=="None" | bveg= .)) # is this going to work for a missing value?? 
+  TBBA_Off_Veg <-subset(TB_BAY_AUn, ShoreDistance > 5 & (bveg = "SAV" | bveg = " Algea" | bveg = "Other"))
+  TBBA_Off_NonVeg <- subset(TB_BAY_AUn, ShoreDistance > 5 & (bveg=="None")) 
+
+          # Summarised #
+      TBBA_Shore_sum <- ddply(TBBA_Shore, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBA_Off_Veg_sum <- ddply(TBBA_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBA_Off_NonVeg_sum <- ddply(TBBA_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 TB_BAY_BUn <- subset(TB_BAY_B, !duplicated(Reference))
   TBBB_Shore <- subset(TB_BAY_BUn, ShoreDistance <= 5)
   TBBB_Off_Veg <-subset(TB_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  TBBB_Off_NonVeg <- subset(TB_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+  TBBB_Off_NonVeg <- subset(TB_BAY_BUn, ShoreDistance >5 & (bveg =="None"))
+
+          # Summarised #
+      TBBB_Shore_sum <- ddply(TBBB_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBB_Off_Veg_sum <- ddply(TBBB_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBB_Off_NonVeg_sum <- ddply(TBBB_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 TB_BAY_CUn <- subset(TB_BAY_C, !duplicated(Reference))
   TBBC_Shore <- subset(TB_BAY_CUn, ShoreDistance <= 5)
   TBBC_Off_Veg <-subset(TB_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
   TBBC_Off_NonVeg <- subset(TB_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
+          # Summarised #
+      TBBC_Shore_sum <- ddply(TBBC_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBC_Off_Veg_sum <- ddply(TBBC_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBC_Off_NonVeg_sum <- ddply(TBBC_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
 TB_BAY_DUn <- subset(TB_BAY_D, !duplicated(Reference))
   TBBD_Shore <- subset(TB_BAY_DUn, ShoreDistance <=5)
   TBBD_Off_Veg <-subset(TB_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
   TBBD_Off_NonVeg <- subset(TB_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
+          # Summarised #
+      TBBD_Shore_sum <- ddply(TBBD_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBD_Off_Veg_sum <- ddply(TBBD_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBD_Off_NonVeg_sum <- ddply(TBBD_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
 TB_BAY_EUn <- subset(TB_BAY_E, !duplicated(Reference))
   TBBE_Shore <- subset(TB_BAY_EUn, ShoreDistance <=5)
   TBBE_Off_Veg <-subset(TB_BAY_EUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
   TBBE_Off_NonVeg <- subset(TB_BAY_EUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
+          # Summarised #
+      TBBE_Shore_sum <- ddply(TBBE_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBE_Off_Veg_sum <- ddply(TBBE_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+      TBBE_Off_NonVeg_sum <- ddply(TBBE_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
 
     # River # 
 TB_RIV_MUn <- subset(TB_RIV_M, !duplicated(Reference))
@@ -419,7 +417,6 @@ AP_BAY_AUn <- subset(AP_BAY_A, !duplicated(Reference))
   APBA_Shore <- subset(AP_BAY_AUn, ShoreDistance <=5)
   APBA_Off_Veg <-subset(AP_BAY_AUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
   APBA_Off_NonVeg <- subset(AP_BAY_AUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
 
 AP_BAY_BUn <- subset(AP_BAY_B, !duplicated(Reference))
   APBB_Shore <- subset(AP_BAY_BUn, ShoreDistance <=5)
@@ -452,7 +449,7 @@ CH_BAY_DUn <- subset(CH_BAY_D, !duplicated(Reference))
   CHBD_Off_Veg <-subset(CH_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
   CHBD_Off_NonVeg <- subset(CH_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
-
+  # River #
 CH_RIV_MUn <- subset(CH_RIV_M, !duplicated(Reference))
 CH_RIV_NUn <- subset(CH_RIV_N, !duplicated(Reference))
 CH_RIV_OUn <- subset(CH_RIV_O, !duplicated(Reference))
@@ -460,18 +457,58 @@ CH_RIV_PUn <- subset(CH_RIV_P, !duplicated(Reference))
 
 
 ## Cedar Key ##
+  # Bay #
 CK_BAY_BUn <- subset(CK_BAY_B, !duplicated(Reference))
+  CKBB_Shore <- subset(CK_BAY_BUn, ShoreDistance <=5)
+  CKBB_Off_Veg <-subset(CK_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  CKBB_Off_NonVeg <- subset(CK_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
 CK_BAY_CUn <- subset(CK_BAY_C, !duplicated(Reference))
+  CKBC_Shore <- subset(CK_BAY_CUn, ShoreDistance <=5)
+  CKBC_Off_Veg <-subset(CK_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  CKBC_Off_NonVeg <- subset(CK_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
+  # River #
 CK_RIV_FUn <- subset(CK_RIV_F, !duplicated(Reference))
 
+
+## Northern Indian River ##
+  # Bay #
 IR_BAY_AUn <- subset(IR_BAY_A, !duplicated(Reference))
+  IRBA_Shore <- subset(IR_BAY_AUn, ShoreDistance <=5)
+  IRBA_Off_Veg <-subset(IR_BAY_AUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBA_Off_NonVeg <- subset(IR_BAY_AUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
 IR_BAY_BUn <- subset(IR_BAY_B, !duplicated(Reference))
+  IRBB_Shore <- subset(IR_BAY_BUn, ShoreDistance <=5)
+  IRBB_Off_Veg <-subset(IR_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBB_Off_NonVeg <- subset(IR_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+  
 IR_BAY_CUn <- subset(IR_BAY_C, !duplicated(Reference))
+  IRBC_Shore <- subset(IR_BAY_CUn, ShoreDistance <=5)
+  IRBC_Off_Veg <-subset(IR_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBC_Off_NonVeg <- subset(IR_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
 IR_BAY_DUn <- subset(IR_BAY_D, !duplicated(Reference))
+  IRBD_Shore <- subset(IR_BAY_DUn, ShoreDistance <=5)
+  IRBD_Off_Veg <-subset(IR_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBD_Off_NonVeg <- subset(IR_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
 IR_BAY_EUn <- subset(IR_BAY_E, !duplicated(Reference))
+  IRBE_Shore <- subset(IR_BAY_EUn, ShoreDistance <=5)
+  IRBE_Off_Veg <-subset(IR_BAY_EUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBE_Off_NonVeg <- subset(IR_BAY_EUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
 IR_BAY_HUn <- subset(IR_BAY_H, !duplicated(Reference))
+  IRBH_Shore <- subset(IR_BAY_HUn, ShoreDistance <=5)
+  IRBH_Off_Veg <-subset(IR_BAY_HUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
+  IRBH_Off_NonVeg <- subset(IR_BAY_HUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+
+  # River #
 IR_RIV_FUn <- subset(IR_RIV_F, !duplicated(Reference))
 
+## Northeast Florida JAX ##
+  # River #
 JX_RIV_AUn <- subset(JX_RIV_A, !duplicated(Reference))
 JX_RIV_BUn <- subset(JX_RIV_B, !duplicated(Reference))
 JX_RIV_CUn <- subset(JX_RIV_C, !duplicated(Reference))
