@@ -156,6 +156,74 @@ TB_RIV_O <- subset(tbc_riv, Zone=="O")
 TB_RIV_P <- subset(tbc_riv, Zone=="P")
 
 
+########## 
+# Make sure total numbers from all months are the same as reported in the FWRI data report
+##########
+# all numbers are verified except for Indian River 10/06/2015
+library(plyr)
+# Tampa Bay#
+TBUn <- subset(TB_C, !duplicated(Reference))
+tbc_bayFWRItest <- subset(TBUn, (gr==20 | gr==19)) # equivalent to Gear==20gear can also be reported as gr==19 so I need to include 19 in the bay seines ,  select=c(Reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )  #& ( Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E"), select=c(Reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
+TBBtest <- ddply(tbc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+tbc_rivFWRItest <- subset(TBUn, Gear==23)
+TBRtest <- ddply(tbc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+# Jax #
+JXUn <- subset(JX_C, !duplicated(Reference))
+jxc_rivFWRItest <- subset(JXUn, Gear==23)
+JXRtest <- ddply(jxc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+# Indian River #
+IRUn <- subset(IR_C, !duplicated(Reference))
+year14 <- subset(IRUn, year==2014, select=c(year, number, n, Reference, Gear, gr))
+irc_rivFWRItest <- subset(IRUn, Gear==23)
+IRRtest <- ddply(irc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+irc_bayFWRItest <- subset(IRUn,  gear)
+IRBtest <- ddply(irc_bayFWRItest, c("year"), summarise, NumberofUniqueBioReferences=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+# Cedar Key ##
+CKUn <- subset(CK_C, !duplicated(Reference))
+ckc_bayFWRItest <- subset(CKUn, Gear==20 )
+CKBtest <- ddply(ckc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+ckc_rivFWRItest <- subset(CK_C, Gear==23)
+CKRtest <- ddply(ckc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+# Appalachicola ## 
+APUn <-subset(AP_C, !duplicated(Reference))
+apc_bayFWRItest <- subset(APUn, Gear==20)
+APBtest <- ddply(apc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+apc_rivFWRItest <- subset(APUn, Gear==23)
+APRtest <- ddply(apc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+# Charlotte Harbor #
+CHUn <- subset(CH_C, !duplicated(Reference))
+chc_bayFWRItest <- subset(CHUn, Gear==20)
+CHBtest <- ddply(chc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+chc_rivFWRItest <- subset(CHUn, Gear ==23)
+CHRtest <- ddply(chc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+
+
+##################################################
+## Evaluting zones not covered in the 2014 annual report ####
+##################################################
+
+apzone <- subset(AP_C, Zone== "D")
+unique(apzone$year)
+irzone <- subset(IR_C, Zone=="O" | Zone == "G")
+unique(irzone$year)
+
+chzone <- subset(CH_C, Zone=="G" | Zone== "E" | Zone == "H")
+unique(chzone$year)
+
+
+
+
 ########################################################################################################
 # To plot absolute numbers caught in each month I must determine the total number of species collected in each haul 
 #. Each haul is represented as a unique (Reference). The total number of particular species collected in each
@@ -252,71 +320,133 @@ TBB_Csum <- ddply(TB_BAY_CUn, c("year", "month"), summarise, NumberofHauls=lengt
 TBB_Dsum <- ddply(TB_BAY_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Esum <- ddply(TB_BAY_EUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
+TBR_Msum <- ddply(TB_RIV_MUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Nsum <- ddply(TB_RIV_NUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Osum <- ddply(TB_RIV_OUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Psum <- ddply(TB_RIV_PUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-########## 
-# Make sure total numbers from all months are the same as reported in the FWRI data report
-##########
-# all numbers are verified except for Indian River 10/06/2015
-library(plyr)
-      # Tampa Bay#
-TBUn <- subset(TB_C, !duplicated(Reference))
-tbc_bayFWRItest <- subset(TBUn, (gr==20 | gr==19)) # equivalent to Gear==20gear can also be reported as gr==19 so I need to include 19 in the bay seines ,  select=c(Reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )  #& ( Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E"), select=c(Reference, Longitude, Latitude, Zone, Grid, month, year, gr, bottom, n, number) )
-TBBtest <- ddply(tbc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-tbc_rivFWRItest <- subset(TBUn, Gear==23)
-TBRtest <- ddply(tbc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-     
-     # Jax #
-JXUn <- subset(JX_C, !duplicated(Reference))
-jxc_rivFWRItest <- subset(JXUn, Gear==23)
-JXRtest <- ddply(jxc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+
+
+
+################################################################
+# Use raw catch data to make a time series of raw abundance index. 
+# First, by Zone.
+#   - > sum abundance over all months of recruitment season
+#   - > chose month with most recruitment
+# Then, by shore and offshore (veg and non veg). ###  SEE BELOW ###
+#   - > sum abundance over all months of recruitment season
+#   - > chose month with most recruitment
+
+
+## Tampa Bay ##
+  # Bay #
+TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+library(ggplot2)
+  plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line() + geom_point()+
+                      xlab("Year")+ ylab("Total Number of C.neb collected in hauls")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                            panel.background=element_rect(fill='white', colour='black'))+
+                      ggtitle( "Zone A")
+                      
+
+TBB_B_sumrec <- ddply(TBB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("Total Number of C.neb collected in hauls")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                            panel.background=element_rect(fill='white', colour='black'))+
+                      ggtitle( "Zone B")
+
+TBB_C_sumrec <- ddply(TBB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBB_C_sumrec <- ggplot(TBB_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("Total Number of C.neb collected in hauls")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                            panel.background=element_rect(fill='white', colour='black'))+
+                      ggtitle( "Zone C")
+
+
+TBB_D_sumrec <- ddply(TBB_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBB_D_sumrec <- ggplot(TBB_D_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("Total Number of C.neb collected in hauls")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                            panel.background=element_rect(fill='white', colour='black'))+
+                      ggtitle( "Zone D")
+
+
+TBB_E_sumrec <- ddply(TBB_Esum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBB_E_sumrec <- ggplot(TBB_E_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("Total Number of C.neb collected in hauls")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                            panel.background=element_rect(fill='white', colour='black'))+
+                      ggtitle( "Zone E")
+
+          ###### Add in the Multiplot Function ####
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
     
-    # Indian River #
-IRUn <- subset(IR_C, !duplicated(Reference))
-year14 <- subset(IRUn, year==2014, select=c(year, number, n, Reference, Gear, gr))
-irc_rivFWRItest <- subset(IRUn, Gear==23)
-IRRtest <- ddply(irc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-irc_bayFWRItest <- subset(IRUn,  gear)
-IRBtest <- ddply(irc_bayFWRItest, c("year"), summarise, NumberofUniqueBioReferences=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-    # Cedar Key ##
-CKUn <- subset(CK_C, !duplicated(Reference))
-ckc_bayFWRItest <- subset(CKUn, Gear==20 )
-CKBtest <- ddply(ckc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-ckc_rivFWRItest <- subset(CK_C, Gear==23)
-CKRtest <- ddply(ckc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-   # Appalachicola ## 
-APUn <-subset(AP_C, !duplicated(Reference))
-apc_bayFWRItest <- subset(APUn, Gear==20)
-APBtest <- ddply(apc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-apc_rivFWRItest <- subset(APUn, Gear==23)
-APRtest <- ddply(apc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-  # Charlotte Harbor #
-CHUn <- subset(CH_C, !duplicated(Reference))
-chc_bayFWRItest <- subset(CHUn, Gear==20)
-CHBtest <- ddply(chc_bayFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-chc_rivFWRItest <- subset(CHUn, Gear ==23)
-CHRtest <- ddply(chc_rivFWRItest, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(n), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
 
 
+          ## Plot ##
+TBB_ZONE_sumrec_multiplot <- multiplot()
 
-##################################################
-## Evaluting zones not covered in the 2014 annual report ####
-##################################################
 
-apzone <- subset(AP_C, Zone== "D")
-unique(apzone$year)
-irzone <- subset(IR_C, Zone=="O" | Zone == "G")
-unique(irzone$year)
+  # River #
+TBR_M_sumrec <- ddply(TBR_Msum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBR_M_sumrec <- ggplot(TBR_M_sumrec, aes(x=year, y=TotalCollected))+ geom_line()
 
-chzone <- subset(CH_C, Zone=="G" | Zone== "E" | Zone == "H")
-unique(chzone$year)
+TBR_N_sumrec <- ddply(TBR_Nsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBR_N_sumrec <- ggplot(TBR_N_sumrec, aes(x=year, y=TotalCollected))+ geom_line()
+
+TBR_O_sumrec <- ddply(TBR_Osum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBR_O_sumrec <- ggplot(TBR_O_sumrec, aes(x=year, y=TotalCollected))+ geom_line()
+
+TBR_P_sumrec <- ddply(TBR_Psum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_TBR_P_sumrec <- ggplot(TBR_P_sumrec, aes(x=year, y=TotalCollected))+ geom_line()
+
+
+
+
+
+
+
+
 
 
 
@@ -345,7 +475,6 @@ unique(chzone$year)
 
 
 ##  Tampa Bay ### 
-
 
 tbc_bay_un_2014 <- subset(TB_C, (gr==20 | gr==19) & !duplicated(Reference) & year==2014)
   tbc_shore <- subset(tbc_bay_un_2014, ShoreDistance <=5 | ShoreDistance == 99)
