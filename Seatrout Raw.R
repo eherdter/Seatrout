@@ -88,7 +88,7 @@ apc_riv <- subset(AP_C, (gr==23   ) & month >=6 & month <= 10 & (Zone == "C"))
                      
 
 chc_bay <- subset(CH_C, ( gr==20 | gr==19) & month >= 4 & month <= 10 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D"))
-chc_riv <- subset(CH_C, (gr==23 ) & month >= 4 & month <= 10 & (Zone == "M" | Zone == "N" | Zone == "O" | Zone== "P"))                     
+chc_riv <- subset(CH_C, (gr==23 ) & month >= 4 & month <= 10 & (Zone == "M" | Zone== "P"))                     
 
 ckc_bay <- subset(CK_C, ( gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "B" | Zone == "C"))
 ckc_riv <- subset(CK_C, (gr==23 ) & month >= 5 & month <= 11 & Zone == "F")                     
@@ -118,8 +118,6 @@ CH_BAY_C <- subset(chc_bay, Zone=="C")
 CH_BAY_D <- subset(chc_bay, Zone=="D")
 
 CH_RIV_M <- subset(chc_riv, Zone=="M")
-CH_RIV_N <- subset(chc_riv, Zone=="N")
-CH_RIV_O <- subset(chc_riv, Zone=="O")
 CH_RIV_P <- subset(chc_riv, Zone=="P")
 
 CK_BAY_B <- subset(ckc_bay, Zone=="B")
@@ -240,8 +238,6 @@ CH_BAY_BUn <- subset(CH_BAY_B, !duplicated(Reference))
 CH_BAY_CUn <- subset(CH_BAY_C, !duplicated(Reference))
 CH_BAY_DUn <- subset(CH_BAY_D, !duplicated(Reference))
 CH_RIV_MUn <- subset(CH_RIV_M, !duplicated(Reference))
-CH_RIV_NUn <- subset(CH_RIV_N, !duplicated(Reference))
-CH_RIV_OUn <- subset(CH_RIV_O, !duplicated(Reference))
 CH_RIV_PUn <- subset(CH_RIV_P, !duplicated(Reference))
 
 CK_BAY_BUn <- subset(CK_BAY_B, !duplicated(Reference))
@@ -291,8 +287,6 @@ CHB_Bsum <- ddply(CH_BAY_BUn, c("year", "month"), summarise, NumberofHauls=lengt
 CHB_Csum <- ddply(CH_BAY_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHB_Dsum <- ddply(CH_BAY_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHR_Msum <- ddply(CH_RIV_MUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHR_Nsum <- ddply(CH_RIV_NUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHR_Osum <- ddply(CH_RIV_OUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHR_Psum <- ddply(CH_RIV_PUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 CKB_Bsum <- ddply(CK_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
@@ -674,28 +668,17 @@ CHR_M_sumrec <- ddply(CHR_Msum, c("year"), summarise, TotalNumberofHauls=sum(Num
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone M")
 
-CHR_N_sumrec <- ddply(CHR_Nsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHR_N_sumrec <- ggplot(CHR_N_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
-                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
-                      panel.background=element_rect(fill='white', colour='black'))+
-                      ggtitle( "Zone N")
 
-CHR_O_sumrec <- ddply(CHR_Osum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHR_O_sumrec <- ggplot(CHR_O_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
-                      theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
-                      panel.background=element_rect(fill='white', colour='black'))+
-                      ggtitle( "Zone O")
+CHR_P_sumrec <- ddply(CHR_Psum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+  plot_CHR_P_sumrec <- ggplot(CHR_P_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("Total # of C.neb collected")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+                    theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+                    panel.background=element_rect(fill='white', colour='black'))+
+                    ggtitle( "Zone P")
 
+multiplot(plot_CHB_A_sumrec,plot_CHB_B_sumrec,plot_CHB_C_sumrec,plot_CHB_D_sumrec,plot_CHR_M_sumrec,plot_CHR_P_sumrec, cols=2)
 
-
-CHR_Msum <- ddply(CH_RIV_MUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHR_Nsum <- ddply(CH_RIV_NUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHR_Osum <- ddply(CH_RIV_OUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHR_Psum <- ddply(CH_RIV_PUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
 
