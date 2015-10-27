@@ -327,7 +327,7 @@ TBR_Nsum <- ddply(TB_RIV_NUn, c("year", "month"), summarise, NumberofHauls=lengt
 # Use raw catch data to make a time series of raw abundance index. 
 # First, by Zone.
 #   - > sum abundance over all months of recruitment season
-#   - > chose month with most recruitment
+#   - > chose month with most recruitment (Not sure about this step)
 # Then, by shore and offshore (veg and non veg). ###  SEE BELOW ###
 #   - > sum abundance over all months of recruitment season
 #   - > chose month with most recruitment
@@ -335,50 +335,58 @@ TBR_Nsum <- ddply(TB_RIV_NUn, c("year", "month"), summarise, NumberofHauls=lengt
 
 ## Tampa Bay ##
   # Bay #
-TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+TBB_A_sumrec$CPUE <- TBB_A_sumrec$TotalCollected/TBB_A_sumrec$TotalNumberofHauls
 library(ggplot2)
-  plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line() + geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+  plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                             panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone A")
-                      
 
+
+write.csv(TBB_A_sumrec, "TampaBay_Bay_A_sumrec.csv")
+  
 TBB_B_sumrec <- ddply(TBB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBB_B_sumrec$CPUE <- TBB_B_sumrec$TotalCollected/TBB_B_sumrec$TotalNumberofHauls
+  plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                             panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(TBB_B_sumrec, "TampaBay_Bay_B_sumrec.csv")
 
 TBB_C_sumrec <- ddply(TBB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBB_C_sumrec <- ggplot(TBB_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBB_C_sumrec$CPUE <- TBB_C_sumrec$TotalCollected/TBB_C_sumrec$TotalNumberofHauls
+  plot_TBB_C_sumrec <- ggplot(TBB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                             panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone C")
-
+write.csv(TBB_C_sumrec, "TampaBay_Bay_C_sumrec.csv")
 
 TBB_D_sumrec <- ddply(TBB_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBB_D_sumrec <- ggplot(TBB_D_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBB_D_sumrec$CPUE <- TBB_D_sumrec$TotalCollected/TBB_D_sumrec$TotalNumberofHauls
+  plot_TBB_D_sumrec <- ggplot(TBB_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                             panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone D")
-
+write.csv(TBB_D_sumrec, "TampaBay_Bay_D_sumrec.csv")
 
 TBB_E_sumrec <- ddply(TBB_Esum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBB_E_sumrec <- ggplot(TBB_E_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBB_E_sumrec$CPUE <- TBB_E_sumrec$TotalCollected/TBB_E_sumrec$TotalNumberofHauls
+plot_TBB_E_sumrec <- ggplot(TBB_E_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                             panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone E")
-
+write.csv(TBB_E_sumrec, "TampaBay_Bay_E_sumrec.csv")
           ###### Add in the Multiplot Function ####
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
@@ -423,87 +431,121 @@ TBB_ZONE_sumrec_multiplot <- multiplot(plot_TBB_A_sumrec, plot_TBB_B_sumrec, plo
 
   # River #
 TBR_K_sumrec <- ddply(TBR_Ksum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBR_K_sumrec <- ggplot(TBR_K_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBR_K_sumrec$CPUE <- TBR_K_sumrec$TotalCollected/TBR_K_sumrec$TotalNumberofHauls
+  plot_TBR_K_sumrec <- ggplot(TBR_K_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone K")
+write.csv(TBR_K_sumrec, "TampaBay_Riv_K_sumrec.csv")
 
 TBR_L_sumrec <- ddply(TBR_Lsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBR_L_sumrec <- ggplot(TBR_L_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBR_L_sumrec$CPUE <- TBR_L_sumrec$TotalCollected/TBR_L_sumrec$TotalNumberofHauls
+  plot_TBR_L_sumrec <- ggplot(TBR_L_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone L")
 
+write.csv(TBR_L_sumrec, "TampaBay_Riv_L_sumrec.csv")
+
+
+
 TBR_M_sumrec <- ddply(TBR_Msum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBR_M_sumrec <- ggplot(TBR_M_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBR_M_sumrec$CPUE <- TBR_M_sumrec$TotalCollected/TBR_M_sumrec$TotalNumberofHauls
+  plot_TBR_M_sumrec <- ggplot(TBR_M_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone M")
 
+write.csv(TBR_M_sumrec, "TampaBay_Riv_M_sumrec.csv")
+
 TBR_N_sumrec <- ddply(TBR_Nsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_TBR_N_sumrec <- ggplot(TBR_N_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+TBR_N_sumrec$CPUE <- TBR_N_sumrec$TotalCollected/TBR_N_sumrec$TotalNumberofHauls
+  plot_TBR_N_sumrec <- ggplot(TBR_N_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone N")
+write.csv(TBR_N_sumrec, "TampaBay_Riv_N_sumrec.csv")
+
 
 TBR_ZONE_sumrec_multiplot <- multiplot(plot_TBR_K_sumrec, plot_TBR_L_sumrec,plot_TBR_M_sumrec,plot_TBR_N_sumrec, cols=2)
 
 ## JAX ##
 JXR_A_sumrec <- ddply(JXR_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_A_sumrec <- ggplot(JXR_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_A_sumrec$CPUE <- JXR_A_sumrec$TotalCollected/JXR_A_sumrec$TotalNumberofHauls
+  plot_JXR_A_sumrec <- ggplot(JXR_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone A")
+write.csv(JXR_A_sumrec, "Jax_Riv_A_sumrec.csv")
+
 
 JXR_B_sumrec <- ddply(JXR_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_B_sumrec <- ggplot(JXR_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_B_sumrec$CPUE <- JXR_B_sumrec$TotalCollected/JXR_B_sumrec$TotalNumberofHauls
+  plot_JXR_B_sumrec <- ggplot(JXR_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(JXR_B_sumrec, "Jax_Riv_B_sumrec.csv")
+
 
 JXR_C_sumrec <- ddply(JXR_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_C_sumrec <- ggplot(JXR_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_C_sumrec$CPUE <- JXR_C_sumrec$TotalCollected/JXR_C_sumrec$TotalNumberofHauls
+  plot_JXR_C_sumrec <- ggplot(JXR_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone C")
 
+write.csv(JXR_C_sumrec, "Jax_Riv_C_sumrec.csv")
+
+
 JXR_D_sumrec <- ddply(JXR_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_D_sumrec <- ggplot(JXR_D_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_D_sumrec$CPUE <- JXR_D_sumrec$TotalCollected/JXR_D_sumrec$TotalNumberofHauls
+  plot_JXR_D_sumrec <- ggplot(JXR_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone D")
+write.csv(JXR_D_sumrec, "Jax_Riv_D_sumrec.csv")
+
+
 
 JXR_E_sumrec <- ddply(JXR_Esum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_E_sumrec <- ggplot(JXR_E_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_E_sumrec$CPUE <- JXR_E_sumrec$TotalCollected/JXR_E_sumrec$TotalNumberofHauls
+  plot_JXR_E_sumrec <- ggplot(JXR_E_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone E")
+write.csv(JXR_E_sumrec, "Jax_Riv_E_sumrec.csv")
+
+
 
 JXR_F_sumrec <- ddply(JXR_Fsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_JXR_F_sumrec <- ggplot(JXR_F_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 1))+
+JXR_F_sumrec$CPUE <- JXR_F_sumrec$TotalCollected/JXR_F_sumrec$TotalNumberofHauls
+  plot_JXR_F_sumrec <- ggplot(JXR_F_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone F")
+write.csv(JXR_F_sumrec, "Jax_Riv_F_sumrec.csv")
+
 
 multiplot(plot_JXR_A_sumrec,plot_JXR_B_sumrec,plot_JXR_C_sumrec,plot_JXR_D_sumrec,plot_JXR_E_sumrec,plot_JXR_F_sumrec, cols=2) 
 
@@ -511,60 +553,78 @@ multiplot(plot_JXR_A_sumrec,plot_JXR_B_sumrec,plot_JXR_C_sumrec,plot_JXR_D_sumre
 ## INDIAN RIVER ##
 # - Stations A, B, and E were onl sampled only in October and November
 IRB_A_sumrec <- ddply(IRB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_A_sumrec <- ggplot(IRB_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_A_sumrec$CPUE <- IRB_A_sumrec$TotalCollected/IRB_A_sumrec$TotalNumberofHauls
+  plot_IRB_A_sumrec <- ggplot(IRB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone A")
+write.csv(IRB_A_sumrec, "IndianRiver_Bay_A_sumrec.csv")
+
 
 IRB_B_sumrec <- ddply(IRB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_B_sumrec <- ggplot(IRB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_B_sumrec$CPUE <- IRB_B_sumrec$TotalCollected/IRB_B_sumrec$TotalNumberofHauls
+  plot_IRB_B_sumrec <- ggplot(IRB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(IRB_B_sumrec, "IndianRiver_Bay_B_sumrec.csv")
 
 IRB_C_sumrec <- ddply(IRB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_C_sumrec <- ggplot(IRB_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_C_sumrec$CPUE <- IRB_C_sumrec$TotalCollected/IRB_C_sumrec$TotalNumberofHauls
+  plot_IRB_C_sumrec <- ggplot(IRB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone C")
+write.csv(IRB_C_sumrec, "IndianRiver_Bay_C_sumrec.csv")
 
 IRB_D_sumrec <- ddply(IRB_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_D_sumrec <- ggplot(IRB_D_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_D_sumrec$CPUE <- IRB_D_sumrec$TotalCollected/IRB_D_sumrec$TotalNumberofHauls
+  plot_IRB_D_sumrec <- ggplot(IRB_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone D")
+write.csv(IRB_D_sumrec, "IndianRiver_Bay_D_sumrec.csv")
 
 IRB_E_sumrec <- ddply(IRB_Esum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_E_sumrec <- ggplot(IRB_E_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_E_sumrec$CPUE <- IRB_E_sumrec$TotalCollected/IRB_E_sumrec$TotalNumberofHauls
+  plot_IRB_E_sumrec <- ggplot(IRB_E_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone E")
+write.csv(IRB_E_sumrec, "IndianRiver_Bay_E_sumrec.csv")
+
 
 IRB_H_sumrec <- ddply(IRB_Hsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRB_H_sumrec <- ggplot(IRB_H_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRB_H_sumrec$CPUE <- IRB_H_sumrec$TotalCollected/IRB_H_sumrec$TotalNumberofHauls
+  plot_IRB_H_sumrec <- ggplot(IRB_H_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone H")
+write.csv(IRB_H_sumrec, "IndianRiver_Bay_H_sumrec.csv")
+
 
 IRR_F_sumrec <- ddply(IRR_Fsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_IRR_F_sumrec <- ggplot(IRR_F_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+IRR_F_sumrec$CPUE <- IRR_F_sumrec$TotalCollected/IRR_F_sumrec$TotalNumberofHauls
+  plot_IRR_F_sumrec <- ggplot(IRR_F_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone F")
+write.csv(IRR_F_sumrec, "IndianRiver_Riv_F_sumrec.csv")
+
 
 multiplot(plot_IRB_A_sumrec,plot_IRB_B_sumrec,plot_IRB_C_sumrec,plot_IRB_D_sumrec,plot_IRB_E_sumrec,plot_IRB_H_sumrec,plot_IRR_F_sumrec, cols=3) 
 
@@ -572,28 +632,37 @@ multiplot(plot_IRB_A_sumrec,plot_IRB_B_sumrec,plot_IRB_C_sumrec,plot_IRB_D_sumre
 ## Cedar Key ##
 
 CKB_B_sumrec <- ddply(CKB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CKB_B_sumrec <- ggplot(CKB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CKB_B_sumrec$CPUE <- CKB_B_sumrec$TotalCollected/CKB_B_sumrec$TotalNumberofHauls
+  plot_CKB_B_sumrec <- ggplot(CKB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(CKB_B_sumrec, "CedarKey_Bay_B_sumrec.csv")
+
 
 CKB_C_sumrec <- ddply(CKB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CKB_C_sumrec <- ggplot(CKB_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CKB_C_sumrec$CPUE <- CKB_C_sumrec$TotalCollected/CKB_C_sumrec$TotalNumberofHauls
+  plot_CKB_C_sumrec <- ggplot(CKB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone C")
+write.csv(CKB_C_sumrec, "CedarKey_Bay_C_sumrec.csv")
+
 
 CKR_F_sumrec <- ddply(CKR_Fsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CKR_F_sumrec <- ggplot(CKR_F_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CKR_F_sumrec$CPUE <- CKR_F_sumrec$TotalCollected/CKR_F_sumrec$TotalNumberofHauls
+  plot_CKR_F_sumrec <- ggplot(CKR_F_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone F")
+write.csv(CKR_F_sumrec, "CedarKey_Riv_F_sumrec.csv")
+
 
 multiplot(plot_CKB_B_sumrec,plot_CKB_C_sumrec,plot_CKR_F_sumrec, cols=1)
 
@@ -601,81 +670,108 @@ multiplot(plot_CKB_B_sumrec,plot_CKB_C_sumrec,plot_CKR_F_sumrec, cols=1)
 ## Appilachicola ##
 
 APB_A_sumrec <- ddply(APB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_APB_A_sumrec <- ggplot(APB_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+APB_A_sumrec$CPUE <- APB_A_sumrec$TotalCollected/APB_A_sumrec$TotalNumberofHauls
+  plot_APB_A_sumrec <- ggplot(APB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone A")
+write.csv(APB_A_sumrec, "Appalachicola_Bay_A_sumrec.csv")
+
 
 APB_B_sumrec <- ddply(APB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_APB_B_sumrec <- ggplot(APB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+APB_B_sumrec$CPUE <- APB_B_sumrec$TotalCollected/APB_B_sumrec$TotalNumberofHauls
+  plot_APB_B_sumrec <- ggplot(APB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(APB_B_sumrec, "Appalachicola_Bay_B_sumrec.csv")
+
 
 APR_C_sumrec <- ddply(APR_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-plot_APR_C_sumrec <- ggplot(APR_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+APR_C_sumrec$CPUE <- APR_C_sumrec$TotalCollected/APR_C_sumrec$TotalNumberofHauls
+plot_APR_C_sumrec <- ggplot(APR_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone C")
+write.csv(APR_C_sumrec, "Appalachicola_Riv_C_sumrec.csv")
+
 
 multiplot(plot_APB_A_sumrec,plot_APB_B_sumrec,plot_APR_C_sumrec, cols=1)
 
 ## Charlotte Harbor ##
 
 CHB_A_sumrec <- ddply(CHB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-plot_CHB_A_sumrec <- ggplot(CHB_A_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHB_A_sumrec$CPUE <- CHB_A_sumrec$TotalCollected/CHB_A_sumrec$TotalNumberofHauls
+  plot_CHB_A_sumrec <- ggplot(CHB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone A")
+write.csv(CHB_A_sumrec, "CharlotteHarbor_Bay_A_sumrec.csv")
+
 
 CHB_B_sumrec <- ddply(CHB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHB_B_sumrec <- ggplot(CHB_B_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHB_B_sumrec$CPUE <- CHB_B_sumrec$TotalCollected/CHB_B_sumrec$TotalNumberofHauls
+  plot_CHB_B_sumrec <- ggplot(CHB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone B")
+write.csv(CHB_B_sumrec, "CharlotteHarbor_Bay_B_sumrec.csv")
+
 
 CHB_C_sumrec <- ddply(CHB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHB_C_sumrec <- ggplot(CHB_C_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHB_C_sumrec$CPUE <- CHB_C_sumrec$TotalCollected/CHB_C_sumrec$TotalNumberofHauls
+  plot_CHB_C_sumrec <- ggplot(CHB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone C")
+write.csv(CHB_C_sumrec, "CharlotteHarbor_Bay_C_sumrec.csv")
+
 
 CHB_D_sumrec <- ddply(CHB_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHB_D_sumrec <- ggplot(CHB_D_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHB_D_sumrec$CPUE <- CHB_D_sumrec$TotalCollected/CHB_D_sumrec$TotalNumberofHauls
+  plot_CHB_D_sumrec <- ggplot(CHB_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone D")
+write.csv(CHB_D_sumrec, "CharlotteHarbor_Bay_D_sumrec.csv")
+
 
 CHR_M_sumrec <- ddply(CHR_Msum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHR_M_sumrec <- ggplot(CHR_M_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                      xlab("Year")+ ylab("Total # of C.neb collected")+
-                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHR_M_sumrec$CPUE <- CHR_M_sumrec$TotalCollected/CHR_M_sumrec$TotalNumberofHauls
+  plot_CHR_M_sumrec <- ggplot(CHR_M_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                      xlab("Year")+ ylab("CPUE C.neb")+
+                      scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                       theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                       panel.background=element_rect(fill='white', colour='black'))+
                       ggtitle( "Zone M")
+write.csv(CHR_M_sumrec, "CharlotteHarbor_Riv_M_sumrec.csv")
+
 
 
 CHR_P_sumrec <- ddply(CHR_Psum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-  plot_CHR_P_sumrec <- ggplot(CHR_P_sumrec, aes(x=year, y=TotalCollected))+ geom_line()+ geom_point()+
-                    xlab("Year")+ ylab("Total # of C.neb collected")+
-                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 1))+
+CHR_P_sumrec$CPUE <- CHR_P_sumrec$TotalCollected/CHR_P_sumrec$TotalNumberofHauls
+  plot_CHR_P_sumrec <- ggplot(CHR_P_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+                    xlab("Year")+ ylab("CPUE C.neb")+
+                    scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
                     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
                     panel.background=element_rect(fill='white', colour='black'))+
                     ggtitle( "Zone P")
+write.csv(CHR_P_sumrec, "CharlotteHarbor_Riv_P_sumrec.csv")
+
 
 multiplot(plot_CHB_A_sumrec,plot_CHB_B_sumrec,plot_CHB_C_sumrec,plot_CHB_D_sumrec,plot_CHR_M_sumrec,plot_CHR_P_sumrec, cols=2)
 
