@@ -5,9 +5,9 @@ setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
 
 # to do next: (COPIED FROM Seatrout IOA.R)
 # 1. plot each time series (Done in Seatrout Raw.R)
-# 2. test autocorrelation for each
-#   a. graphically summarize autocorrelation- lagged scatterplot
-#   b. acf/acf2 and correlogram (continue with all time series)
+# 2. test autocorrelation for each 
+#   a. graphically summarize autocorrelation- lagged scatterplot (Done below)
+#   b. acf/acf2 and correlogram (aka autocorrelation plot) (continue with all time series)  
 #     b1. how to evaluate the autocorrelation .. http://stats.stackexchange.com/questions/78281/confidence-band-in-correlogram (which assumes normal assumption)
 #     b2. what is the distribution of the output from a general linear model??... 
 
@@ -110,34 +110,91 @@ lag1.plot(JX_D$CPUE, 4, corr=TRUE, smooth=TRUE)
 lag1.plot(JX_E$CPUE, 4, corr=TRUE, smooth=TRUE)
 lag1.plot(JX_F$CPUE, 4, corr=TRUE, smooth=TRUE)
 
+# B. ACF and Correlograms
+# perform autocorrelation function and make correlogram
+#below, the correlogram is an automatic output of the acf2 function
 
+acf2(JX_A$CPUE)
+acf2(JX_B$CPUE)
+acf2(JX_C$CPUE)
+acf2(JX_D$CPUE)
+acf2(JX_E$CPUE)
+acf2(JX_F$CPUE)
 
+acf2(TB_A$CPUE)
+acf2(TB_B$CPUE)
+acf2(TB_C$CPUE)
+acf2(TB_D$CPUE)
+acf2(TB_E$CPUE)
+acf2(TB_K$CPUE)
+acf2(TB_L$CPUE)
+acf2(TB_M$CPUE)
+acf2(TB_N$CPUE)
 
+acf2(AP_A$CPUE)
+acf2(AP_B$CPUE)
+acf2(AP_C$CPUE)
 
+acf2(CK_B$CPUE)
+acf2(CK_C$CPUE)
+acf2(CK_F$CPUE)
 
+acf2(CH_A$CPUE)
+acf2(CH_B$CPUE)
+acf2(CH_C$CPUE)
+acf2(CH_D$CPUE)
+acf2(CH_M$CPUE)
+acf2(CH_P$CPUE)
 
+acf2(IR_A$CPUE)
+acf2(IR_B$CPUE)
+acf2(IR_C$CPUE)
+acf2(IR_D$CPUE)
+acf2(IR_E$CPUE)
+acf2(IR_H$CPUE)
+acf2(IR_F$CPUE)
 
+# C. Test for a trend using Mann Kendall test (since no autocorrelation present I do not need to use a modified test)
+library(Kendall)
+MannKendall(IR_A$CPUE)
+MannKendall(IR_B$CPUE)
+MannKendall(IR_C$CPUE)
+MannKendall(IR_D$CPUE)
+MannKendall(IR_E$CPUE)
+MannKendall(IR_H$CPUE)
+MannKendall(IR_F$CPUE)
 
+MannKendall(JX_A$CPUE)
+MannKendall(JX_B$CPUE)
+MannKendall(JX_C$CPUE)
+MannKendall(JX_D$CPUE)
+MannKendall(JX_E$CPUE)
+MannKendall(JX_F$CPUE)
 
+MannKendall(TB_A$CPUE)
+MannKendall(TB_B$CPUE)
+MannKendall(TB_C$CPUE)
+MannKendall(TB_D$CPUE)
+MannKendall(TB_E$CPUE)
+MannKendall(TB_K$CPUE)
+MannKendall(TB_L$CPUE)
+MannKendall(TB_M$CPUE)
+MannKendall(TB_N$CPUE)
 
+MannKendall(AP_A$CPUE)
+MannKendall(AP_B$CPUE)
+MannKendall(AP_C$CPUE)
 
+MannKendall(CK_B$CPUE)
+MannKendall(CK_C$CPUE)
+MannKendall(CK_F$CPUE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MannKendall(CH_A$CPUE)
+MannKendall(CH_B$CPUE)
+MannKendall(CH_C$CPUE)
+MannKendall(CH_D$CPUE)
+MannKendall(CH_M$CPUE)
+MannKendall(CH_P$CPUE)
 
  
 
