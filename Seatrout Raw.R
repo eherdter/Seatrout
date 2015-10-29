@@ -234,7 +234,7 @@ AP_BAY_AUn <- subset(AP_BAY_A, !duplicated(Reference))
 AP_BAY_BUn <- subset(AP_BAY_B, !duplicated(Reference))
   write.csv(AP_BAY_BUn, "AP_B_coordinates.csv")
 AP_RIV_CUn <- subset(AP_RIV_C, !duplicated(Reference))
-  write.csv(AP_BAY_CUn, "AP_C_coordinates.csv")
+  write.csv(AP_RIV_CUn, "AP_C_coordinates.csv")
 
 CH_BAY_AUn <- subset(CH_BAY_A, !duplicated(Reference))
   write.csv(CH_BAY_AUn, "CH_A_coordinates.csv")
