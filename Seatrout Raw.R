@@ -4,46 +4,61 @@ setwd("~/Desktop/Github Repo/Seatrout/Data/Raw Survey Data/Seatrout FIM Data")
 
 library(haven)
 #Appalachicola
-AP_C  <- data.frame(read_sas("apm_cn_c.sas7bdat"))
-AP_Hab <- read_sas("apm_cn_hab.sas7bdat")
-AP_Hyd <- read_sas("apm_cn_hyd.sas7bdat")
-AP_L <- read_sas("apm_cn_l.sas7bdat")
+AP_C  <- data.frame(read_sas("apm_cn_c.sas7bdat")) #catch data for C.neb
+AP_Hab <- read_sas("apm_cn_hab.sas7bdat")         # habitat data for C.neb
+AP_Hyd <- read_sas("apm_cn_hyd.sas7bdat")         # hydrolab data for C.neb
+AP_L <- read_sas("apm_cn_l.sas7bdat")             # length data from the rep for C.neb
+AP_P <- read_sas("apm_physical.sas7bdat")         # overall physical data 
+  AP_C <-  merge(AP_C, subset(AP_P, select=c("Reference", "Stratum")), by="Reference")      # turn AP_C into the merged data set of AP_C and AP_P
 
 #Charlotte Harbor
 CH_C <- read_sas("chm_cn_c.sas7bdat")
 CH_Hab <- read_sas("chm_cn_hab.sas7bdat")
 CH_Hyd <- read_sas("chm_cn_hyd.sas7bdat")
 CH_L <- read_sas("chm_cn_l.sas7bdat")
+CH_P <- read_sas("chm_physical.sas7bdat") 
+  CH_C <- merge(CH_C, subset(CH_P, select=c("Reference", "Stratum")), by="Reference")
 
 #Cedar Key
 CK_C <- read_sas("ckm_cn_c.sas7bdat")
 CK_Hab <- read_sas("ckm_cn_hab.sas7bdat")
 CK_Hyd <- read_sas("ckm_cn_hyd.sas7bdat")
 CK_L <- read_sas("ckm_cn_l.sas7bdat")
+CK_P <- read_sas("ckm_physical.sas7bdat")         
+  CK_C <- merge(CK_C, subset(CK_P, select=c("Reference", "Stratum")), by="Reference")
 
 #Indian River (Northern Indian River Lagoon???)
 IR_C <- read_sas("irm_cn_c.sas7bdat")
 IR_Hab <- read_sas("irm_cn_hab.sas7bdat")
 IR_Hyd <- read_sas("irm_cn_hyd.sas7bdat")
 IR_L <- read_sas("irm_cn_l.sas7bdat")
+IR_P  <-read_sas("irm_physical.sas7bdat")        
+  IR_C <- merge(IR_C, subset(IR_C, select=c("Reference", "Stratum")), by ="Reference")
 
 #JAX
 JX_C <- read_sas("jxm_cn_c.sas7bdat")
 JX_Hab <- read_sas("jxm_cn_hab.sas7bdat")
 JX_Hyd <- read_sas("jxm_cn_hyd.sas7bdat")
 JX_L <- read_sas("jxm_cn_l.sas7bdat")
+JX_P <- read_sas("jxm_physical.sas7bdat")
+  JX_C <- merge(JX_C, subset(JX_P, select=c("Reference", "Stratum")), by="Reference")
 
 #Tampa Bay
 TB_C <- read_sas("tbm_cn_c.sas7bdat")
 TB_Hab <- read_sas("tbm_cn_hab.sas7bdat")
 TB_Hyd <- read_sas("tbm_cn_hyd.sas7bdat")
 TB_L <- read_sas("tbm_cn_l.sas7bdat")
+TB_P <- read_sas("tbm_physical.sas7bdat")
+  TB_C <- merge(TB_C, subset(TB_P,select=c("Reference", "Stratum")), by="Reference")
+
 
 #Tequesta (Southern Indian River Lagoon??- index no calculated becuase 21.3m seines were not included in sampling)
 TQM_C <- read_sas("tqm_cn_c.sas7bdat")
 TQM_Hab <- read_sas("tqm_cn_hab.sas7bdat")
 TQM_Hyd <- read_sas("tqm_cn_hyd.sas7bdat")
 TQM_L <- read_sas("tqm_cn_l.sas7bdat")
+TQM_P <- read_sas("tqm_physical.sas7bdat")         
+
 
 
 #########################################################
@@ -58,7 +73,7 @@ unique()
 #########################################################
 # Constraints to Data sets
 # _L$sl => between 0-100 mm (YOY animals in this range)
-# _C$gear => 20 & 23 (bay seines and river seines that target YOY)
+# _C$Gear => 20 & 23 (bay seines and river seines that target YOY)
 # _C$month => depends on recruitment window in each estuary
 #               => Jax 5<=x<=11
 #               => nor. IRL 5<=x<=11
@@ -82,25 +97,25 @@ unique()
 # I don't think I need to merge the length because selecting the 
 #gear is an automatic filter for any fish larger than 100m, I believe. 
  
-apc_bay <- subset(AP_C, ( gr ==20 | gr==19) & month >=6 & month <= 10 & (Zone == "A" | Zone == "B"))
+apc_bay <- subset(AP_C, Gear==20 & month >=6 & month <= 10 & (Zone == "A" | Zone == "B"))
 #must include the gear constraints or else large seines might be included
-apc_riv <- subset(AP_C, (gr==23   ) & month >=6 & month <= 10 & (Zone == "C"))                     
+apc_riv <- subset(AP_C, Gear==23 & month >=6 & month <= 10 & (Zone == "C"))                     
                      
 
-chc_bay <- subset(CH_C, ( gr==20 | gr==19) & month >= 4 & month <= 10 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D"))
-chc_riv <- subset(CH_C, (gr==23 ) & month >= 4 & month <= 10 & (Zone == "M" | Zone== "P"))                     
+chc_bay <- subset(CH_C, Gear==20 & month >= 4 & month <= 10 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D"))
+chc_riv <- subset(CH_C, Gear==23 & month >= 4 & month <= 10 & (Zone == "M" | Zone== "P"))                     
 
-ckc_bay <- subset(CK_C, ( gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "B" | Zone == "C"))
-ckc_riv <- subset(CK_C, (gr==23 ) & month >= 5 & month <= 11 & Zone == "F")                     
+ckc_bay <- subset(CK_C, Gear==20 & month >= 5 & month <= 11 & (Zone == "B" | Zone == "C"))
+ckc_riv <- subset(CK_C, Gear==23 & month >= 5 & month <= 11 & Zone == "F")                     
 
-irc_bay <- subset(IR_C, ( gr==20 | gr ==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"))
-irc_riv <- subset(IR_C, (gr==23 ) & month >= 5 & month <= 11 & Zone == "F")                     
+irc_bay <- subset(IR_C, Gear==20 & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E" | Zone=="H"))
+irc_riv <- subset(IR_C, Gear==23 & month >= 5 & month <= 11 & Zone == "F")                     
 
 
-jxc_riv <- subset(JX_C, (gr==23 ) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone== "C" | Zone=="D" | Zone=="E"  | Zone == "F") )                     
+jxc_riv <- subset(JX_C, Gear==23 & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone== "C" | Zone=="D" | Zone=="E"  | Zone == "F") )                     
 
-tbc_bay <- subset(TB_C, ( gr==20 | gr==19) & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E") )
-tbc_riv <- subset(TB_C, (gr==23 ) & month >= 5 & month <= 11 & (Zone == "K" | Zone == "L" | Zone == "M" | Zone== "N") )                     
+tbc_bay <- subset(TB_C, Gear==20 & month >= 5 & month <= 11 & (Zone == "A" | Zone == "B" | Zone == "C" | Zone== "D" | Zone=="E") )
+tbc_riv <- subset(TB_C, Gear==23 & month >= 5 & month <= 11 & (Zone == "K" | Zone == "L" | Zone == "M" | Zone== "N") )                     
 # apparantly gear==19 was also included as a bay gear
 
 
@@ -360,10 +375,12 @@ TBR_Nsum <- ddply(TB_RIV_NUn, c("year", "month"), summarise, NumberofHauls=lengt
 ################################################################
 # Use raw catch data to make a time series of raw abundance index. 
 # First, by Zone.
-#   - > sum abundance over all months of recruitment season
+#   - > monthly recruitment over season
+#   - > SUM abundance over all months of recruitment season
 #   - > chose month with most recruitment (Not sure about this step)
-# Then, by shore and offshore (veg and non veg). ###  SEE BELOW ###
-#   - > sum abundance over all months of recruitment season
+# Then, by Stratum ( shore and offshore (veg and non veg)) within EACH zone ###  SEE BELOW ###
+#   - > monthly recruitment over season
+#   - > SUM abundance over all months of recruitment season
 #   - > chose month with most recruitment
 
 
@@ -811,13 +828,6 @@ multiplot(plot_CHB_A_sumrec,plot_CHB_B_sumrec,plot_CHB_C_sumrec,plot_CHB_D_sumre
 
 
 
-
-
-
-
-
-
-
 ###########################################################
 ## Partition the data further by shore and offshore. Can use previously defined dataframes.  
 # By each Estuary
@@ -833,185 +843,165 @@ multiplot(plot_CHB_A_sumrec,plot_CHB_B_sumrec,plot_CHB_C_sumrec,plot_CHB_D_sumre
 #       -> Over
 #       -> Nonover
 ##########################################################
-### THESE VARIABLES NEED TO BE CHECKED. I DONT THINK IM
-# SUBSETTING BY THE CORRECT VARIABLES.
+# Use the Stratum variable in the _physical data sheets. Per the procedure manual, S is for shorelines,
+# A and B represent offshore seines with A being on vegetated sites and B on non vegetated sites.
+# The shoreline is stratified by the presence of over-hanging vegetation
+# Rivers are NOT stratified. 
+# 1. Subset by Offshore veg and non-veg and shore
+#       > OV= offshore Veg, ONV= offshore non Veg, S= shoreline
+#         . summarise by year and month
 
-## Perhaps is this because they havent sampled in zone A in a while...??
-# Check on unique values for bveg
-# Sum by zone and compare to the annual report to figure out correct variables. 
-
-
-
-##  Tampa Bay ### 
-
-tbc_bay_un_2014 <- subset(TB_C, (gr==20 | gr==19) & !duplicated(Reference) & year==2014)
-  tbc_shore <- subset(tbc_bay_un_2014, ShoreDistance <=5 | ShoreDistance == 99)
-  tbc_shore_sum <- ddply(tbc_shore, c("year"),summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number)) 
-    
-
-# Bay #
-TB_BAY_AUn <- subset(TB_BAY_A, !duplicated(Reference))
-  TBBA_Shore <- subset(TB_BAY_AUn, ShoreDistance <= 5)
-  TBBA_Off_Veg <-subset(TB_BAY_AUn, ShoreDistance > 5 & (bveg = "SAV" | bveg = " Algea" | bveg = "Other"))
-  TBBA_Off_NonVeg <- subset(TB_BAY_AUn, ShoreDistance > 5 & (bveg=="None")) 
-
-          # Summarised #
-      TBBA_Shore_sum <- ddply(TBBA_Shore, c("year"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBA_Off_Veg_sum <- ddply(TBBA_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBA_Off_NonVeg_sum <- ddply(TBBA_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-TB_BAY_BUn <- subset(TB_BAY_B, !duplicated(Reference))
-  TBBB_Shore <- subset(TB_BAY_BUn, ShoreDistance <= 5)
-  TBBB_Off_Veg <-subset(TB_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  TBBB_Off_NonVeg <- subset(TB_BAY_BUn, ShoreDistance >5 & (bveg =="None"))
-
-          # Summarised #
-      TBBB_Shore_sum <- ddply(TBBB_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBB_Off_Veg_sum <- ddply(TBBB_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBB_Off_NonVeg_sum <- ddply(TBBB_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-TB_BAY_CUn <- subset(TB_BAY_C, !duplicated(Reference))
-  TBBC_Shore <- subset(TB_BAY_CUn, ShoreDistance <= 5)
-  TBBC_Off_Veg <-subset(TB_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  TBBC_Off_NonVeg <- subset(TB_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-          # Summarised #
-      TBBC_Shore_sum <- ddply(TBBC_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBC_Off_Veg_sum <- ddply(TBBC_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBC_Off_NonVeg_sum <- ddply(TBBC_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-TB_BAY_DUn <- subset(TB_BAY_D, !duplicated(Reference))
-  TBBD_Shore <- subset(TB_BAY_DUn, ShoreDistance <=5)
-  TBBD_Off_Veg <-subset(TB_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  TBBD_Off_NonVeg <- subset(TB_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-          # Summarised #
-      TBBD_Shore_sum <- ddply(TBBD_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBD_Off_Veg_sum <- ddply(TBBD_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBD_Off_NonVeg_sum <- ddply(TBBD_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-
-TB_BAY_EUn <- subset(TB_BAY_E, !duplicated(Reference))
-  TBBE_Shore <- subset(TB_BAY_EUn, ShoreDistance <=5)
-  TBBE_Off_Veg <-subset(TB_BAY_EUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  TBBE_Off_NonVeg <- subset(TB_BAY_EUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-          # Summarised #
-      TBBE_Shore_sum <- ddply(TBBE_Shore, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBE_Off_Veg_sum <- ddply(TBBE_Off_Veg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-      TBBE_Off_NonVeg_sum <- ddply(TBBE_Off_NonVeg, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_A_OV <- subset(AP_BAY_AUn, Stratum =="A")
+  library(plyr)
+  APA_OV_sum <- ddply(AP_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_B_OV <- subset(AP_BAY_BUn, Stratum=="A")
+  APB_OV_sum <- ddply(AP_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_A_ONV <- subset(AP_BAY_AUn, Stratum=="B")
+  APA_ONV_sum <- ddply(AP_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_B_ONV <- subset(AP_BAY_BUn, Stratum=="B")
+  APB_ONV_sum <- ddply(AP_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_A_S <- subset(AP_BAY_AUn, Stratum=="S")
+  APA_S_sum <- ddply(AP_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+AP_B_S <- subset(AP_BAY_BUn, Stratum=="S")
+  APB_S_sum <- ddply(AP_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
-    # River # 
-TB_RIV_MUn <- subset(TB_RIV_M, !duplicated(Reference))
-TB_RIV_NUn <- subset(TB_RIV_N, !duplicated(Reference))
-TB_RIV_OUn <- subset(TB_RIV_O, !duplicated(Reference))
-TB_RIV_PUn <- subset(TB_RIV_P, !duplicated(Reference))
+CH_A_OV <- subset(CH_BAY_AUn, Stratum="A")
+  CHA_OV_sum <- ddply(CH_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_B_OV <- subset(CH_BAY_BUn, Stratum="A")
+  CHB_OV_sum <- ddply(CH_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_C_OV <- subset(CH_BAY_CUn, Stratum="A")
+  CHC_OV_sum <- ddply(CH_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_D_OV <- subset(CH_BAY_DUn, Stratum="A")
+  CHD_OV_sum <- ddply(CH_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_A_ONV <- subset(CH_BAY_AUn, Stratum="B")
+  CHA_ONV_sum <- ddply(CH_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_B_ONV <- subset(CH_BAY_BUn, Stratum="B")
+  CHB_ONV_sum <- ddply(CH_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_C_ONV <- subset(CH_BAY_CUn, Stratum="B")
+  CHC_ONV_sum <- ddply(CH_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_D_ONV <- subset(CH_BAY_DUn, Stratum="B")
+  CHD_ONV_sum <- ddply(CH_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_A_S <- subset(CH_BAY_AUn, Stratum="S")
+  CHA_S_sum <- ddply(CH_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_B_S <- subset(CH_BAY_BUn, Stratum="S")
+  CHB_S_sum <- ddply(CH_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_C_S <- subset(CH_BAY_CUn, Stratum="S")
+  CHC_S_sum <- ddply(CH_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CH_D_S <- subset(CH_BAY_DUn, Stratum="S")
+  CHD_S_sum <- ddply(CH_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
-## Appalachicola ##
-    # Bay #
-AP_BAY_AUn <- subset(AP_BAY_A, !duplicated(Reference))
-  APBA_Shore <- subset(AP_BAY_AUn, ShoreDistance <=5)
-  APBA_Off_Veg <-subset(AP_BAY_AUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  APBA_Off_NonVeg <- subset(AP_BAY_AUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-AP_BAY_BUn <- subset(AP_BAY_B, !duplicated(Reference))
-  APBB_Shore <- subset(AP_BAY_BUn, ShoreDistance <=5)
-  APBB_Off_Veg <-subset(AP_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  APBB_Off_NonVeg <- subset(AP_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-    # River #
-AP_RIV_CUn <- subset(AP_RIV_C, !duplicated(Reference))
+CK_B_OV <- subset(CK_BAY_BUn, Stratum="A")
+  CKB_OV_sum <- ddply(CK_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CK_C_OV <- subset(CK_BAY_CUn, Stratum="A")
+  CKC_OV_sum <- ddply(CK_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
-## Charlotte Harbor ##
-    # Bay #
-CH_BAY_AUn <- subset(CH_BAY_A, !duplicated(Reference))
-  CHBA_Shore <- subset(CH_BAY_AUn, ShoreDistance <=5)
-  CHBA_Off_Veg <-subset(CH_BAY_AUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CHBA_Off_NonVeg <- subset(CH_BAY_AUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+CK_B_ONV <- subset(CK_BAY_BUn, Stratum="B")
+  CKB_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CK_C_ONV <- subset(CK_BAY_CUn, Stratum="B")
+  CKC_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-CH_BAY_BUn <- subset(CH_BAY_B, !duplicated(Reference))
-  CHBB_Shore <- subset(CH_BAY_BUn, ShoreDistance <=5)
-  CHBB_Off_Veg <-subset(CH_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CHBB_Off_NonVeg <- subset(CH_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+CK_B_S <- subset(CK_BAY_BUn, Stratum="S")
+  CKB_S_sum <- ddply(CK_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CK_C_S <- subset(CK_BAY_CUn, Stratum="S")
+  CKC_S_sum <- ddply(CK_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-CH_BAY_CUn <- subset(CH_BAY_C, !duplicated(Reference))
-  CHBC_Shore <- subset(CH_BAY_CUn, ShoreDistance <=5)
-  CHBC_Off_Veg <-subset(CH_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CHBC_Off_NonVeg <- subset(CH_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+IR_A_OV <- subset(IR_BAY_AUn, Stratum="A")
+  IRA_OV_sum <- ddply(IR_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_B_OV <- subset(IR_BAY_BUn, Stratum="A")
+  IRB_OV_sum <- ddply(IR_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_C_OV <- subset(IR_BAY_CUn, Stratum="A")
+  IRC_OV_sum <- ddply(IR_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_D_OV <- subset(IR_BAY_DUn, Stratum="A")
+  IRD_OV_sum <- ddply(IR_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_E_OV <- subset(IR_BAY_EUn, Stratum="A")
+  IRE_OV_sum <- ddply(IR_E_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_H_OV <- subset(IR_BAY_HUn, Stratum="A")
+  IRH_OV_sum <- ddply(IR_H_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_A_ONV <- subset(IR_BAY_AUn, Stratum="B")
+  IRA_ONV_sum <- ddply(IR_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_B_ONV <- subset(IR_BAY_BUn, Stratum="B")
+  IRB_ONV_sum <- ddply(IR_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_C_ONV <- subset(IR_BAY_CUn, Stratum="B")
+  IRC_ONV_sum <- ddply(IR_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_D_ONV <- subset(IR_BAY_DUn, Stratum="B")
+  IRD_ONV_sum <- ddply(IR_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_E_ONV <- subset(IR_BAY_EUn, Stratum="B")
+  IRE_ONV_sum <- ddply(IR_E_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_H_ONV <- subset(IR_BAY_HUn, Stratum="B")
+  IRH_ONV_sum <- ddply(IR_H_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_A_S <- subset(IR_BAY_AUn, Stratum="S")
+  IRA_S_sum <- ddply(IR_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_B_S <- subset(IR_BAY_BUn, Stratum="S")
+  IRB_S_sum <- ddply(IR_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_C_S <- subset(IR_BAY_CUn, Stratum="S")
+  IRC_S_sum <- ddply(IR_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_D_S <- subset(IR_BAY_DUn, Stratum="S")
+  IRD_S_sum <- ddply(IR_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_E_S <- subset(IR_BAY_EUn, Stratum="S")
+  IRE_S_sum <- ddply(IR_E_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IR_H_S <- subset(IR_BAY_HUn, Stratum="S")
+  IRH_S_sum <- ddply(IR_H_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-CH_BAY_DUn <- subset(CH_BAY_D, !duplicated(Reference))
-  CHBD_Shore <- subset(CH_BAY_DUn, ShoreDistance <=5)
-  CHBD_Off_Veg <-subset(CH_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CHBD_Off_NonVeg <- subset(CH_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-  # River #
-CH_RIV_MUn <- subset(CH_RIV_M, !duplicated(Reference))
-CH_RIV_NUn <- subset(CH_RIV_N, !duplicated(Reference))
-CH_RIV_OUn <- subset(CH_RIV_O, !duplicated(Reference))
-CH_RIV_PUn <- subset(CH_RIV_P, !duplicated(Reference))
 
 
-## Cedar Key ##
-  # Bay #
-CK_BAY_BUn <- subset(CK_BAY_B, !duplicated(Reference))
-  CKBB_Shore <- subset(CK_BAY_BUn, ShoreDistance <=5)
-  CKBB_Off_Veg <-subset(CK_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CKBB_Off_NonVeg <- subset(CK_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-CK_BAY_CUn <- subset(CK_BAY_C, !duplicated(Reference))
-  CKBC_Shore <- subset(CK_BAY_CUn, ShoreDistance <=5)
-  CKBC_Off_Veg <-subset(CK_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  CKBC_Off_NonVeg <- subset(CK_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-
-  # River #
-CK_RIV_FUn <- subset(CK_RIV_F, !duplicated(Reference))
+TB_A_OV <- subset(TB_BAY_AUn, Stratum=="A")
+  TBA_OV_sum <- ddply(TB_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_B_OV <- subset(TB_BAY_BUn, Stratum=="A")
+  TBB_OV_sum <- ddply(TB_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_C_OV <- subset(TB_BAY_CUn, Stratum=="A")
+  TBC_OV_sum <- ddply(TB_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_D_OV <- subset(TB_BAY_DUn, Stratum=="A")
+  TBD_OV_sum <- ddply(TB_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_E_OV <- subset(TB_BAY_EUn, Stratum=="A")
+  TBE_OV_sum <- ddply(TB_E_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
 
-## Northern Indian River ##
-  # Bay #
-IR_BAY_AUn <- subset(IR_BAY_A, !duplicated(Reference))
-  IRBA_Shore <- subset(IR_BAY_AUn, ShoreDistance <=5)
-  IRBA_Off_Veg <-subset(IR_BAY_AUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBA_Off_NonVeg <- subset(IR_BAY_AUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
+TB_A_ONV <- subset(TB_BAY_AUn, Stratum=="B")
+  TBB_ONV_sum <- ddply(TB_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_B_ONV <- subset(TB_BAY_BUn, Stratum=="B")
+  TBB_ONV_sum <- ddply(TB_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_C_ONV <- subset(TB_BAY_CUn, Stratum=="B")
+  TBC_ONV_sum <- ddply(TB_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_D_ONV <- subset(TB_BAY_DUn, Stratum=="B")
+  TBD_ONV_sum <- ddply(TB_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_E_ONV <- subset(TB_BAY_EUn, Stratum=="B")
+  TBE_ONV_sum <- ddply(TB_E_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_A_ONV <- subset(TB_BAY_AUn, Stratum=="S")
+  TBA_S_sum <- ddply(TB_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_B_ONV <- subset(TB_BAY_BUn, Stratum=="S")
+  TBB_S_sum <- ddply(TB_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_C_ONV <- subset(TB_BAY_CUn, Stratum=="S")
+  TBC_S_sum <- ddply(TB_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_D_ONV <- subset(TB_BAY_DUn, Stratum=="S")
+  TBD_S_sum <- ddply(TB_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TB_E_ONV <- subset(TB_BAY_EUn, Stratum=="S")
+  TBE_S_sum <- ddply(TB_E_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 
-IR_BAY_BUn <- subset(IR_BAY_B, !duplicated(Reference))
-  IRBB_Shore <- subset(IR_BAY_BUn, ShoreDistance <=5)
-  IRBB_Off_Veg <-subset(IR_BAY_BUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBB_Off_NonVeg <- subset(IR_BAY_BUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
-  
-IR_BAY_CUn <- subset(IR_BAY_C, !duplicated(Reference))
-  IRBC_Shore <- subset(IR_BAY_CUn, ShoreDistance <=5)
-  IRBC_Off_Veg <-subset(IR_BAY_CUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBC_Off_NonVeg <- subset(IR_BAY_CUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
-IR_BAY_DUn <- subset(IR_BAY_D, !duplicated(Reference))
-  IRBD_Shore <- subset(IR_BAY_DUn, ShoreDistance <=5)
-  IRBD_Off_Veg <-subset(IR_BAY_DUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBD_Off_NonVeg <- subset(IR_BAY_DUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
-IR_BAY_EUn <- subset(IR_BAY_E, !duplicated(Reference))
-  IRBE_Shore <- subset(IR_BAY_EUn, ShoreDistance <=5)
-  IRBE_Off_Veg <-subset(IR_BAY_EUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBE_Off_NonVeg <- subset(IR_BAY_EUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
-IR_BAY_HUn <- subset(IR_BAY_H, !duplicated(Reference))
-  IRBH_Shore <- subset(IR_BAY_HUn, ShoreDistance <=5)
-  IRBH_Off_Veg <-subset(IR_BAY_HUn, ShoreDistance > 5 & (bveg="SAV" | bveg= "Algea" | bveg ="Other"))
-  IRBH_Off_NonVeg <- subset(IR_BAY_HUn, ShoreDistance >5 & (bveg =="None" | bveg = .))
 
-  # River #
-IR_RIV_FUn <- subset(IR_RIV_F, !duplicated(Reference))
 
-## Northeast Florida JAX ##
-  # River #
-JX_RIV_AUn <- subset(JX_RIV_A, !duplicated(Reference))
-JX_RIV_BUn <- subset(JX_RIV_B, !duplicated(Reference))
-JX_RIV_CUn <- subset(JX_RIV_C, !duplicated(Reference))
-JX_RIV_DUn <- subset(JX_RIV_D, !duplicated(Reference))
-JX_RIV_EUn <- subset(JX_RIV_E, !duplicated(Reference))
-JX_RIV_FUn <- subset(JX_RIV_F, !duplicated(Reference))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
