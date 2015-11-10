@@ -1,3 +1,6 @@
+# Script for summarizing by Stratum #
+# > For  summarizing by Zone see Summarized by Zone.R
+
 setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
 # can use these data frames because they came from Seatrout Raw.R
 # Example of Origin: 
@@ -47,8 +50,16 @@ AP_B <- read.csv("AP_B.csv")
 AP_C <- read.csv("AP_C.csv")
 
 
-
-
+####### STRATUM ########
+# >>>>>>Partition the data further by shore and offshore. Can use previously defined dataframes.  
+#  >>>>>>>By each Estuary
+#           -> Bay Zones
+#               -> Zone
+#                 -> Shore
+#                 -> Offshore
+#                     -> Veg
+#                     -> Unveg
+#  No stratum partitioning in rivers
 ##########################################################
 # Use the Stratum variable in the _physical data sheets. Per the procedure manual, S is for shorelines,
 # A and B represent offshore seines with A being on vegetated sites and B on non vegetated sites.
@@ -60,187 +71,675 @@ AP_C <- read.csv("AP_C.csv")
 #         > summarise by year and month
 
 
-AP_A_OV <- subset(AP_BAY_AUn, Stratum =="A")
+AP_A_OV <- subset(AP_A, Stratum =="A")
+AP_B_OV <- subset(AP_B, Stratum=="A")
+AP_A_ONV <- subset(AP_A, Stratum=="B")
+AP_B_ONV <- subset(AP_B, Stratum=="B")
+AP_A_S <- subset(AP_A, Stratum=="S")
+AP_B_S <- subset(AP_B, Stratum=="S")
 library(plyr)
 APA_OV_sum <- ddply(AP_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APA_OV_sum <- APA_OV_sum$TotalNumberofAnimalsCollectedinHaul/APA_OV_sum$NumberofHauls
-AP_B_OV <- subset(AP_BAY_BUn, Stratum=="A")
+  APA_OV_sum$CPUE <- APA_OV_sum$TotalNumberofAnimalsCollectedinHaul/APA_OV_sum$NumberofHauls
 APB_OV_sum <- ddply(AP_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APB_OV_sum <- APB_OV_sum$TotalNumberofAnimalsCollectedinHaul/APB_OV_sum$NumberofHauls
-AP_A_ONV <- subset(AP_BAY_AUn, Stratum=="B")
+  APB_OV_sum$CPUE <- APB_OV_sum$TotalNumberofAnimalsCollectedinHaul/APB_OV_sum$NumberofHauls
+
 APA_ONV_sum <- ddply(AP_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APA_ONV_sum <- APA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/AP_A_ONV_sum$NumberofHauls
-AP_B_ONV <- subset(AP_BAY_BUn, Stratum=="B")
+  APA_ONV_sum$CPUE <- APA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/APA_ONV_sum$NumberofHauls
 APB_ONV_sum <- ddply(AP_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APB_ONV_sum <- APB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/APB_ONV_sum$NumberofHauls
-AP_A_S <- subset(AP_BAY_AUn, Stratum=="S")
+  APB_ONV_sum$CPUE <- APB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/APB_ONV_sum$NumberofHauls
+
 APA_S_sum <- ddply(AP_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APA_S_sum <- AP_A_S_sum$TotalNumberofAnimalsCollectedinHaul/APA_S_sum$NumberofHauls
-AP_B_S <- subset(AP_BAY_BUn, Stratum=="S")
+  APA_S_sum$CPUE <- APA_S_sum$TotalNumberofAnimalsCollectedinHaul/APA_S_sum$NumberofHauls
 APB_S_sum <- ddply(AP_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-APB_S_sum <- APB_S_sum$TotalNumberofAnimalsCollectedinHaul/APB_S_sum$NumberofHauls
+  APB_S_sum$CPUE <- APB_S_sum$TotalNumberofAnimalsCollectedinHaul/APB_S_sum$NumberofHauls
 
-CH_A_OV <- subset(CH_BAY_AUn, Stratum="A")
-CHA_OV_sum <- ddply(CHA_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHA_OV_sum <- CHA_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHA_OV_sum$NumberofHauls
-CH_B_OV <- subset(CH_BAY_BUn, Stratum="A")
+CH_A_OV <- subset(CH_A, Stratum=="A")
+CH_B_OV <- subset(CH_B, Stratum=="A")
+CH_C_OV <- subset(CH_C, Stratum=="A")
+CH_D_OV <- subset(CH_D, Stratum=="A")
+CH_A_ONV <- subset(CH_A, Stratum=="B")
+CH_B_ONV <- subset(CH_B, Stratum=="B")
+CH_C_ONV <- subset(CH_C, Stratum=="B")
+CH_D_ONV <- subset(CH_D, Stratum=="B")
+CH_A_S <- subset(CH_A, Stratum=="S")
+CH_B_S <- subset(CH_B, Stratum=="S")
+CH_C_S <- subset(CH_C, Stratum=="S")
+CH_D_S <- subset(CH_D, Stratum=="S")
+
+CHA_OV_sum <- ddply(CH_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  CHA_OV_sum$CPUE <- CHA_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHA_OV_sum$NumberofHauls
 CHB_OV_sum <- ddply(CH_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHB_OV_sum <- CHB_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHB_OV_sum$NumberofHauls
-CH_C_OV <- subset(CH_BAY_CUn, Stratum="A")
-CH_C_OV_sum <- ddply(CH_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHC_OV_sum <- CHC_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHC_OV_sum$NumberofHauls
-CH_D_OV <- subset(CH_BAY_DUn, Stratum="A")
+  CHB_OV_sum$CPUE <- CHB_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHB_OV_sum$NumberofHauls
+CHC_OV_sum <- ddply(CH_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  CHC_OV_sum$CPUE <- CHC_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHC_OV_sum$NumberofHauls
 CHD_OV_sum <- ddply(CH_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHD_OV_sum <- CHD_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHD_OV_sum$NumberofHauls
-CH_A_ONV <- subset(CH_BAY_AUn, Stratum="B")
+  CHD_OV_sum$CPUE <- CHD_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHD_OV_sum$NumberofHauls
+
 CHA_ONV_sum <- ddply(CH_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHA_ONV_sum <- CHA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHA_ONV_sum$NumberofHauls
-CH_B_ONV <- subset(CH_BAY_BUn, Stratum="B")
+  CHA_ONV_sum$CPUE <- CHA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHA_ONV_sum$NumberofHauls
 CHB_ONV_sum <- ddply(CH_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHB_ONV_sum <- CHB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHB_ONV_sum$NumberofHauls
-CH_C_ONV <- subset(CH_BAY_CUn, Stratum="B")
+  CHB_ONV_sum$CPUE <- CHB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHB_ONV_sum$NumberofHauls
 CHC_ONV_sum <- ddply(CH_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHC_ONV_sum <- CHC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHC_ONV_sum$NumberofHauls
-CH_D_ONV <- subset(CH_BAY_DUn, Stratum="B")
+  CHC_ONV_sum$CPUE <- CHC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHC_ONV_sum$NumberofHauls
 CHD_ONV_sum <- ddply(CH_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHD_ONV_sum <- CHD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHD_ONV_sum$NumberofHauls
-CH_A_S <- subset(CH_BAY_AUn, Stratum="S")
+  CHD_ONV_sum$CPUE <- CHD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CHD_ONV_sum$NumberofHauls
+
 CHA_S_sum <- ddply(CH_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHA_S_sum <- CHA_S_sum$TotalNumberofAnimalsCollectedinHaul/CHA_S_sum$NumberofHauls
-CH_B_S <- subset(CH_BAY_BUn, Stratum="S")
+  CHA_S_sum$CPUE <- CHA_S_sum$TotalNumberofAnimalsCollectedinHaul/CHA_S_sum$NumberofHauls
 CHB_S_sum <- ddply(CH_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHB_S_sum <- CHB_S_sum$TotalNumberofAnimalsCollectedinHaul/CHB_S_sum$NumberofHauls
-CH_C_S <- subset(CH_BAY_CUn, Stratum="S")
+  CHB_S_sum$CPUE <- CHB_S_sum$TotalNumberofAnimalsCollectedinHaul/CHB_S_sum$NumberofHauls
 CHC_S_sum <- ddply(CH_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHC_S_sum <- CHC_S_sum$TotalNumberofAnimalsCollectedinHaul/CHC_S_sum$NumberofHauls
-CH_D_S <- subset(CH_BAY_DUn, Stratum="S")
+  CHC_S_sum$CPUE <- CHC_S_sum$TotalNumberofAnimalsCollectedinHaul/CHC_S_sum$NumberofHauls
 CHD_S_sum <- ddply(CH_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CHD_S_sum <- CHD_S_sum$TotalNumberofAnimalsCollectedinHaul/CHD_S_sum$NumberofHauls
+  CHD_S_sum$CPUE <- CHD_S_sum$TotalNumberofAnimalsCollectedinHaul/CHD_S_sum$NumberofHauls
 
 
-CK_B_OV <- subset(CK_BAY_BUn, Stratum="A")
+CK_B_OV <- subset(CK_B, Stratum=="A")
+CK_C_OV <- subset(CK_C, Stratum=="A")
+CK_B_ONV <- subset(CK_B, Stratum=="B")
+CK_C_ONV <- subset(CK_C, Stratum=="B")
+CK_B_S <- subset(CK_B, Stratum=="S")
+CK_C_S <- subset(CK_C, Stratum=="S")
+
 CKB_OV_sum <- ddply(CK_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKB_OV_sum <- CKB_OV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_OV_sum$NumberofHauls
-CK_C_OV <- subset(CK_BAY_CUn, Stratum="A")
+  CKB_OV_sum$CPUE <- CKB_OV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_OV_sum$NumberofHauls
 CKC_OV_sum <- ddply(CK_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKC_OV_sum <- CKC_OV_sum$TotalNumberofAnimalsCollectedinHaul/CKC_OV_sum$NumberofHauls
-CK_B_ONV <- subset(CK_BAY_BUn, Stratum="B")
+  CKC_OV_sum$CPUE <- CKC_OV_sum$TotalNumberofAnimalsCollectedinHaul/CKC_OV_sum$NumberofHauls
+
 CKB_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKB_ONV_sum <- CKB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_ONV_sum$NumberofHauls
-CK_C_ONV <- subset(CK_BAY_CUn, Stratum="B")
+  CKB_ONV_sum$CPUE <- CKB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_ONV_sum$NumberofHauls
 CKC_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKC_ONV_sum <- CKC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKC_ONV_sum$NumberofHauls
-CK_B_S <- subset(CK_BAY_BUn, Stratum="S")
+  CKC_ONV_sum$CPUE <- CKC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKC_ONV_sum$NumberofHauls
+  
 CKB_S_sum <- ddply(CK_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKB_S_sum <- CKB_S_sum$TotalNumberofAnimalsCollectedinHaul/CKB_S_sum$NumberofHauls
-CK_C_S <- subset(CK_BAY_CUn, Stratum="S")
+  CKB_S_sum$CPUE <- CKB_S_sum$TotalNumberofAnimalsCollectedinHaul/CKB_S_sum$NumberofHauls
 CKC_S_sum <- ddply(CK_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-CKC_S_sum <- CKC_S_sum$TotalNumberofAnimalsCollectedinHaul/CKC_S_sum$NumberofHauls
+  CKC_S_sum$CPUE <- CKC_S_sum$TotalNumberofAnimalsCollectedinHaul/CKC_S_sum$NumberofHauls
 
 
-IR_A_OV <- subset(IR_BAY_AUn, Stratum="A")
+IR_A_OV <- subset(IR_A, Stratum=="A")
+IR_B_OV <- subset(IR_B, Stratum=="A")
+IR_C_OV <- subset(IR_C, Stratum=="A")
+IR_D_OV <- subset(IR_D, Stratum=="A")
+IR_E_OV <- subset(IR_E, Stratum=="A")
+IR_H_OV <- subset(IR_H, Stratum=="A")
+IR_A_ONV <- subset(IR_A, Stratum=="B")
+IR_B_ONV <- subset(IR_B, Stratum=="B")
+IR_C_ONV <- subset(IR_C, Stratum=="B")
+IR_D_ONV <- subset(IR_D, Stratum=="B")
+IR_E_ONV <- subset(IR_E, Stratum=="B")
+IR_H_ONV <- subset(IR_H, Stratum=="B")
+IR_A_S <- subset(IR_A, Stratum=="S")
+IR_B_S <- subset(IR_B, Stratum=="S")
+IR_C_S <- subset(IR_C, Stratum=="S")
+IR_D_S <- subset(IR_D, Stratum=="S")
+IR_E_S <- subset(IR_E, Stratum=="S")
+IR_H_S <- subset(IR_H, Stratum=="S")
+
 IRA_OV_sum <- ddply(IR_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRA_OV_sum <- IRA_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRA_OV_sum$NumberofHauls
-IR_B_OV <- subset(IR_BAY_BUn, Stratum="A")
+  IRA_OV_sum$CPUE <- IRA_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRA_OV_sum$NumberofHauls
 IRB_OV_sum <- ddply(IR_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRB_OV_sum <- IRB_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRB_OV_sum$NumberofHauls
-IR_C_OV <- subset(IR_BAY_CUn, Stratum="A")
+  IRB_OV_sum$CPUE <- IRB_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRB_OV_sum$NumberofHauls
 IRC_OV_sum <- ddply(IR_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRC_OV_sum <- IRC_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRC_OV_sum$NumberofHauls
-IR_D_OV <- subset(IR_BAY_DUn, Stratum="A")
+  IRC_OV_sum$CPUE <- IRC_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRC_OV_sum$NumberofHauls
 IRD_OV_sum <- ddply(IR_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRD_OV_sum <- IRD_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRD_OV_sum$NumberofHauls
-IR_E_OV <- subset(IR_BAY_EUn, Stratum="A")
+  IRD_OV_sum$CPUE <- IRD_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRD_OV_sum$NumberofHauls
 IRE_OV_sum <- ddply(IR_E_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRE_OV_sum <- IRE_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRE_OV_sum$NumberofHauls
-IR_H_OV <- subset(IR_BAY_HUn, Stratum="A")
+  IRE_OV_sum$CPUE <- IRE_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRE_OV_sum$NumberofHauls
 IRH_OV_sum <- ddply(IR_H_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRH_OV_sum <- IRH_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRH_OV_sum$NumberofHauls
-IR_A_ONV <- subset(IR_BAY_AUn, Stratum="B")
+  IRH_OV_sum$CPUE <- IRH_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRH_OV_sum$NumberofHauls
+
 IRA_ONV_sum <- ddply(IR_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRA_ONV_sum <- IRA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRA_ONV_sum$NumberofHauls
-IR_B_ONV <- subset(IR_BAY_BUn, Stratum="B")
+  IRA_ONV_sum$CPUE <- IRA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRA_ONV_sum$NumberofHauls
 IRB_ONV_sum <- ddply(IR_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRB_ONV_sum <- IRB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRB_ONV_sum$NumberofHauls
-IR_C_ONV <- subset(IR_BAY_CUn, Stratum="B")
+  IRB_ONV_sum$CPUE <- IRB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRB_ONV_sum$NumberofHauls
 IRC_ONV_sum <- ddply(IR_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRC_ONV_sum <- IRC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRC_ONV_sum$NumberofHauls
-IR_D_ONV <- subset(IR_BAY_DUn, Stratum="B")
+  IRC_ONV_sum$CPUE <- IRC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRC_ONV_sum$NumberofHauls
 IRD_ONV_sum <- ddply(IR_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRD_ONV_sum <- IRD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRD_ONV_sum$NumberofHauls
-IR_E_ONV <- subset(IR_BAY_EUn, Stratum="B")
+  IRD_ONV_sum$CPUE <- IRD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRD_ONV_sum$NumberofHauls
 IRE_ONV_sum <- ddply(IR_E_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRE_ONV_sum <- IRE_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRE_ONV_sum$NumberofHauls
-IR_H_ONV <- subset(IR_BAY_HUn, Stratum="B")
+  IRE_ONV_sum$CPUE <- IRE_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRE_ONV_sum$NumberofHauls
 IRH_ONV_sum <- ddply(IR_H_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRH_ONV_sum <- IRH_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRH_ONV_sum$NumberofHauls
-IR_A_S <- subset(IR_BAY_AUn, Stratum="S")
+  IRH_ONV_sum$CPUE <- IRH_ONV_sum$TotalNumberofAnimalsCollectedinHaul/IRH_ONV_sum$NumberofHauls
+
 IRA_S_sum <- ddply(IR_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRA_S_sum <- IRA_S_sum$TotalNumberofAnimalsCollectedinHaul/IRA_S_sum$NumberofHauls
-IR_B_S <- subset(IR_BAY_BUn, Stratum="S")
+  IRA_S_sum$CPUE <- IRA_S_sum$TotalNumberofAnimalsCollectedinHaul/IRA_S_sum$NumberofHauls
 IRB_S_sum <- ddply(IR_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRB_S_sum <- IRB_S_sum$TotalNumberofAnimalsCollectedinHaul/IRB_S_sum$NumberofHauls
-IR_C_S <- subset(IR_BAY_CUn, Stratum="S")
+  IRB_S_sum$CPUE <- IRB_S_sum$TotalNumberofAnimalsCollectedinHaul/IRB_S_sum$NumberofHauls
 IRC_S_sum <- ddply(IR_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRC_S_sum <- IRC_S_sum$TotalNumberofAnimalsCollectedinHaul/IRC_S_sum$NumberofHauls
-IR_D_S <- subset(IR_BAY_DUn, Stratum="S")
+  IRC_S_sum$CPUE <- IRC_S_sum$TotalNumberofAnimalsCollectedinHaul/IRC_S_sum$NumberofHauls
 IRD_S_sum <- ddply(IR_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRD_S_sum <- IRD_S_sum$TotalNumberofAnimalsCollectedinHaul/IRD_S_sum$NumberofHauls
-IR_E_S <- subset(IR_BAY_EUn, Stratum="S")
+  IRD_S_sum$CPUE <- IRD_S_sum$TotalNumberofAnimalsCollectedinHaul/IRD_S_sum$NumberofHauls
 IRE_S_sum <- ddply(IR_E_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRE_S_sum <- IRE_S_sum$TotalNumberofAnimalsCollectedinHaul/IRE_S_sum$NumberofHauls
-IR_H_S <- subset(IR_BAY_HUn, Stratum="S")
+  IRE_S_sum$CPUE <- IRE_S_sum$TotalNumberofAnimalsCollectedinHaul/IRE_S_sum$NumberofHauls
 IRH_S_sum <- ddply(IR_H_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-IRH_S_sum <- IRH_S_sum$TotalNumberofAnimalsCollectedinHaul/IRH_S_sum$NumberofHauls
+  IRH_S_sum$CPUE <- IRH_S_sum$TotalNumberofAnimalsCollectedinHaul/IRH_S_sum$NumberofHauls
 
-TB_A_OV <- subset(TB_BAY_AUn, Stratum=="A")
+TB_A_OV <- subset(TB_A, Stratum=="A")
+TB_B_OV <- subset(TB_B, Stratum=="A")
+TB_C_OV <- subset(TB_C, Stratum=="A")
+TB_D_OV <- subset(TB_D, Stratum=="A")
+TB_E_OV <- subset(TB_E, Stratum=="A")
+TB_A_ONV <- subset(TB_A, Stratum=="B")
+TB_B_ONV <- subset(TB_B, Stratum=="B")
+TB_C_ONV <- subset(TB_C, Stratum=="B")
+TB_D_ONV <- subset(TB_D, Stratum=="B")
+TB_E_ONV <- subset(TB_E, Stratum=="B")
+TB_A_S <- subset(TB_A, Stratum=="S")
+TB_B_S <- subset(TB_B, Stratum=="S")
+TB_C_S <- subset(TB_C, Stratum=="S")
+TB_D_S <- subset(TB_D, Stratum=="S")
+TB_E_S <- subset(TB_E, Stratum=="S")
+
 TBA_OV_sum <- ddply(TB_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBA_OV_sum <- TBA_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_OV_sum$NumberofHauls
-TB_B_OV <- subset(TB_BAY_BUn, Stratum=="A")
+  TBA_OV_sum$CPUE <- TBA_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_OV_sum$NumberofHauls
 TBB_OV_sum <- ddply(TB_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBB_OV_sum <- TBB_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBB_OV_sum$NumberofHauls
-TB_C_OV <- subset(TB_BAY_CUn, Stratum=="A")
+  TBB_OV_sum$CPUE <- TBB_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBB_OV_sum$NumberofHauls
 TBC_OV_sum <- ddply(TB_C_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBC_OV_sum <- TBC_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_OV_sum$NumberofHauls
-TB_D_OV <- subset(TB_BAY_DUn, Stratum=="A")
+  TBC_OV_sum$CPUE <- TBC_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBC_OV_sum$NumberofHauls
 TBD_OV_sum <- ddply(TB_D_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBD_OV_sum <- TBD_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBD_OV_sum$NumberofHauls
-TB_E_OV <- subset(TB_BAY_EUn, Stratum=="A")
+  TBD_OV_sum$CPUE <- TBD_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBD_OV_sum$NumberofHauls
 TBE_OV_sum <- ddply(TB_E_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBE_OV_sum <- TBE_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBE_OV_sum$NumberofHauls
-TB_A_ONV <- subset(TB_BAY_AUn, Stratum=="B")
-TBA_ONV_sum <- ddply(TB_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBA_ONV_sum <- TBA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_ONV_sum$NumberofHauls
-TB_B_ONV <- subset(TB_BAY_BUn, Stratum=="B")
-TBB_ONV_sum <- ddply(TB_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBB_ONV_sum <- TBB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBB_ONV_sum$NumberofHauls
-TB_C_ONV <- subset(TB_BAY_CUn, Stratum=="B")
-TBC_ONV_sum <- ddply(TB_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBC_ONV_sum <- TBC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBC_ONV_sum$NumberofHauls
-TB_D_ONV <- subset(TB_BAY_DUn, Stratum=="B")
-TBD_ONV_sum <- ddply(TB_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBD_ONV_sum <- TBD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBD_ONV_sum$NumberofHauls
-TB_E_ONV <- subset(TB_BAY_EUn, Stratum=="B")
-TBE_ONV_sum <- ddply(TB_E_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBE_ONV_sum <- TBE_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBE_ONV_sum$NumberofHauls
-TB_A_S <- subset(TB_BAY_AUn, Stratum=="S")
-TBA_S_sum <- ddply(TB_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBA_S_sum <- TBA_S_sum$TotalNumberofAnimalsCollectedinHaul/TBA_S_sum$NumberofHauls
-TB_B_S <- subset(TB_BAY_BUn, Stratum=="S")
-TBB_S_sum <- ddply(TB_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBB_S_sum <- TBB_S_sum$TotalNumberofAnimalsCollectedinHaul/TBB_S_sum$NumberofHauls
-TB_C_S <- subset(TB_BAY_CUn, Stratum=="S")
-TBC_S_sum <- ddply(TB_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBC_S_sum <- TBC_S_sum$TotalNumberofAnimalsCollectedinHaul/TBC_S_sum$NumberofHauls
-TB_D_S <- subset(TB_BAY_DUn, Stratum=="S")
-TBD_S_sum <- ddply(TB_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBD_S_sum <- TBD_S_sum$TotalNumberofAnimalsCollectedinHaul/TBD_S_sum$NumberofHauls
-TB_E_S <- subset(TB_BAY_EUn, Stratum=="S")
-TBE_S_sum <- ddply(TB_E_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
-TBE_S_sum <- TBE_S_sum$TotalNumberofAnimalsCollectedinHaul/TBE_S_sum$NumberofHauls
+  TBE_OV_sum$CPUE <- TBE_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBE_OV_sum$NumberofHauls
 
+TBA_ONV_sum <- ddply(TB_A_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBA_ONV_sum$CPUE <- TBA_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_ONV_sum$NumberofHauls
+TBB_ONV_sum <- ddply(TB_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBB_ONV_sum$CPUE <- TBB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBB_ONV_sum$NumberofHauls
+TBC_ONV_sum <- ddply(TB_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBC_ONV_sum$CPUE <- TBC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBC_ONV_sum$NumberofHauls
+TBD_ONV_sum <- ddply(TB_D_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBD_ONV_sum$CPUE <- TBD_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBD_ONV_sum$NumberofHauls
+TBE_ONV_sum <- ddply(TB_E_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBE_ONV_sum$CPUE <- TBE_ONV_sum$TotalNumberofAnimalsCollectedinHaul/TBE_ONV_sum$NumberofHauls
+
+TBA_S_sum <- ddply(TB_A_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBA_S_sum$CPUE <- TBA_S_sum$TotalNumberofAnimalsCollectedinHaul/TBA_S_sum$NumberofHauls
+TBB_S_sum <- ddply(TB_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBB_S_sum$CPUE <- TBB_S_sum$TotalNumberofAnimalsCollectedinHaul/TBB_S_sum$NumberofHauls
+TBC_S_sum <- ddply(TB_C_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBC_S_sum$CPUE <- TBC_S_sum$TotalNumberofAnimalsCollectedinHaul/TBC_S_sum$NumberofHauls
+TBD_S_sum <- ddply(TB_D_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBD_S_sum$CPUE <- TBD_S_sum$TotalNumberofAnimalsCollectedinHaul/TBD_S_sum$NumberofHauls
+TBE_S_sum <- ddply(TB_E_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+  TBE_S_sum$CPUE <- TBE_S_sum$TotalNumberofAnimalsCollectedinHaul/TBE_S_sum$NumberofHauls
+
+####################################################################
 # >>>>>>>>> SUM recruitment over season ###
+
+
+APA_OV_sumrec <- ddply(APA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APA_OV_sumrec$CPUE <- APA_OV_sumrec$TotalCollected/APA_OV_sumrec$TotalNumberofHauls
+    write.csv(APA_OV_sumrec, "APA_OV_sumrec.csv")
+APB_OV_sumrec <- ddply(APB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APB_OV_sumrec$CPUE <- APB_OV_sumrec$TotalCollected/APB_OV_sumrec$TotalNumberofHauls
+    write.csv(APB_OV_sumrec, "APB_OV_sumrec.csv")
+
+APA_ONV_sumrec <- ddply(APA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APA_ONV_sumrec$CPUE <- APA_ONV_sumrec$TotalCollected/APA_ONV_sumrec$TotalNumberofHauls
+    write.csv(APA_ONV_sumrec, "APA_ONV_sumrec.csv")
+APB_ONV_sumrec <- ddply(APB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APB_ONV_sumrec$CPUE <- APB_ONV_sumrec$TotalCollected/APB_ONV_sumrec$TotalNumberofHauls
+    write.csv(APA_ONV_sumrec, "APB_ONV_sumrec.csv")
+
+APA_S_sumrec <- ddply(APA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APA_S_sumrec$CPUE <- APA_S_sumrec$TotalCollected/APA_S_sumrec$TotalNumberofHauls
+    write.csv(APA_S_sumrec, "APA_S_sumrec.csv")
+APB_S_sumrec <- ddply(APB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  APB_S_sumrec$CPUE <- APB_S_sumrec$TotalCollected/APB_S_sumrec$TotalNumberofHauls
+    write.csv(APB_S_sumrec, "APB_S_sumrec.csv")
+
+CHA_OV_sumrec <- ddply(CHA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHA_OV_sumrec$CPUE <- CHA_OV_sumrec$TotalCollected/CHA_OV_sumrec$TotalNumberofHauls
+    write.csv(CHA_OV_sumrec, "CHA_OV_sumrec.csv")
+CHB_OV_sumrec <- ddply(CHB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHB_OV_sumrec$CPUE <- CHB_OV_sumrec$TotalCollected/CHB_OV_sumrec$TotalNumberofHauls
+    write.csv(CHB_OV_sumrec, "CHB_OV_sumrec.csv")
+CHC_OV_sumrec <- ddply(CHC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHC_OV_sumrec$CPUE <- CHC_OV_sumrec$TotalCollected/CHC_OV_sumrec$TotalNumberofHauls
+    write.csv(CHC_OV_sumrec, "CHC_OV_sumrec.csv")
+CHD_OV_sumrec <- ddply(CHD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHD_OV_sumrec$CPUE <- CHD_OV_sumrec$TotalCollected/CHD_OV_sumrec$TotalNumberofHauls
+    write.csv(CHD_OV_sumrec, "CHD_OV_sumrec.csv")
+
+
+CHA_ONV_sumrec <- ddply(CHA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHA_ONV_sumrec$CPUE <- CHA_ONV_sumrec$TotalCollected/CHA_ONV_sumrec$TotalNumberofHauls
+    write.csv(CHA_ONV_sumrec, "CHA_ONV_sumrec.csv")
+CHB_ONV_sumrec <- ddply(CHB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHB_ONV_sumrec$CPUE <- CHB_ONV_sumrec$TotalCollected/CHB_ONV_sumrec$TotalNumberofHauls
+    write.csv(CHB_ONV_sumrec, "CHB_ONV_sumrec.csv")
+CHC_ONV_sumrec <- ddply(CHC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHC_ONV_sumrec$CPUE <- CHC_ONV_sumrec$TotalCollected/CHC_ONV_sumrec$TotalNumberofHauls
+    write.csv(CHC_ONV_sumrec, "CHC_ONV_sumrec.csv")
+CHD_ONV_sumrec <- ddply(CHD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHD_ONV_sumrec$CPUE <- CHD_ONV_sumrec$TotalCollected/CHD_ONV_sumrec$TotalNumberofHauls
+    write.csv(CHD_ONV_sumrec, "CHD_ONV_sumrec.csv")
+
+CHA_S_sumrec <- ddply(CHA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHA_S_sumrec$CPUE <- CHA_S_sumrec$TotalCollected/CHA_S_sumrec$TotalNumberofHauls
+    write.csv(CHA_S_sumrec, "CHA_S_sumrec.csv")
+CHB_S_sumrec <- ddply(CHB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHB_S_sumrec$CPUE <- CHB_S_sumrec$TotalCollected/CHB_S_sumrec$TotalNumberofHauls
+    write.csv(CHB_S_sumrec, "CHB_S_sumrec.csv")
+CHC_S_sumrec <- ddply(CHC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHC_S_sumrec$CPUE <- CHC_S_sumrec$TotalCollected/CHC_S_sumrec$TotalNumberofHauls
+    write.csv(CHC_S_sumrec, "CHC_S_sumrec.csv")
+CHD_S_sumrec <- ddply(CHD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CHD_S_sumrec$CPUE <- CHD_S_sumrec$TotalCollected/CHD_S_sumrec$TotalNumberofHauls
+    write.csv(CHD_S_sumrec, "CHD_S_sumrec.csv")
+
+CKB_OV_sumrec <- ddply(CKB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKB_OV_sumrec$CPUE <- CKB_OV_sumrec$TotalCollected/CKB_OV_sumrec$TotalNumberofHauls
+    write.csv(CKB_OV_sumrec, "CKB_OV_sumrec.csv")
+CKC_OV_sumrec <- ddply(CKC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKC_OV_sumrec$CPUE <- CKC_OV_sumrec$TotalCollected/CKC_OV_sumrec$TotalNumberofHauls
+    write.csv(CKC_OV_sumrec, "CKC_OV_sumrec.csv")
+
+CKB_ONV_sumrec <- ddply(CKB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKB_ONV_sumrec$CPUE <- CKB_ONV_sumrec$TotalCollected/CKB_ONV_sumrec$TotalNumberofHauls
+    write.csv(CKB_ONV_sumrec, "CKB_ONV_sumrec.csv")
+CKC_ONV_sumrec <- ddply(CKC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKC_ONV_sumrec$CPUE <- CKC_ONV_sumrec$TotalCollected/CKC_ONV_sumrec$TotalNumberofHauls
+    write.csv(CKC_ONV_sumrec, "CKC_ONV_sumrec.csv")
+
+CKB_S_sumrec <- ddply(CKB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKB_S_sumrec$CPUE <- CKB_S_sumrec$TotalCollected/CKB_S_sumrec$TotalNumberofHauls
+    write.csv(CKB_S_sumrec, "CKB_S_sumrec.csv")
+CKC_S_sumrec <- ddply(CKC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  CKC_S_sumrec$CPUE <- CKC_S_sumrec$TotalCollected/CKC_S_sumrec$TotalNumberofHauls
+    write.csv(CKC_S_sumrec, "CKC_S_sumrec.csv")
+
+IRA_OV_sumrec <- ddply(IRA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRA_OV_sumrec$CPUE <- IRA_OV_sumrec$TotalCollected/IRA_OV_sumrec$TotalNumberofHauls
+    write.csv(IRA_OV_sumrec, "IRA_OV_sumrec.csv")
+IRB_OV_sumrec <- ddply(IRB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRB_OV_sumrec$CPUE <- IRB_OV_sumrec$TotalCollected/IRB_OV_sumrec$TotalNumberofHauls
+    write.csv(IRB_OV_sumrec, "IRB_OV_sumrec.csv")
+IRC_OV_sumrec <- ddply(IRC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRC_OV_sumrec$CPUE <- IRC_OV_sumrec$TotalCollected/IRC_OV_sumrec$TotalNumberofHauls
+    write.csv(IRC_OV_sumrec, "IRC_OV_sumrec.csv")
+IRD_OV_sumrec <- ddply(IRD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRD_OV_sumrec$CPUE <- IRD_OV_sumrec$TotalCollected/IRD_OV_sumrec$TotalNumberofHauls
+    write.csv(IRD_OV_sumrec, "IRD_OV_sumrec.csv")
+IRE_OV_sumrec <- ddply(IRE_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRE_OV_sumrec$CPUE <- IRE_OV_sumrec$TotalCollected/IRE_OV_sumrec$TotalNumberofHauls
+    write.csv(IRE_OV_sumrec, "IRE_OV_sumrec.csv")
+IRH_OV_sumrec <- ddply(IRH_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRH_OV_sumrec$CPUE <- IRH_OV_sumrec$TotalCollected/IRH_OV_sumrec$TotalNumberofHauls
+    write.csv(IRH_OV_sumrec, "IRH_OV_sumrec.csv")
+
+IRA_ONV_sumrec <- ddply(IRA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRA_ONV_sumrec$CPUE <- IRA_ONV_sumrec$TotalCollected/IRA_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRA_ONV_sumrec, "IRA_ONV_sumrec.csv")
+IRB_ONV_sumrec <- ddply(IRB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRB_ONV_sumrec$CPUE <- IRB_ONV_sumrec$TotalCollected/IRB_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRB_ONV_sumrec, "IRB_ONV_sumrec.csv")
+IRC_ONV_sumrec <- ddply(IRC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRC_ONV_sumrec$CPUE <- IRC_ONV_sumrec$TotalCollected/IRC_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRC_ONV_sumrec, "IRC_ONV_sumrec.csv")
+IRD_ONV_sumrec <- ddply(IRD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRD_ONV_sumrec$CPUE <- IRD_ONV_sumrec$TotalCollected/IRD_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRD_ONV_sumrec, "IRD_ONV_sumrec.csv")
+IRE_ONV_sumrec <- ddply(IRE_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRE_ONV_sumrec$CPUE <- IRE_ONV_sumrec$TotalCollected/IRE_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRE_ONV_sumrec, "IRE_ONV_sumrec.csv")
+IRH_ONV_sumrec <- ddply(IRH_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRH_ONV_sumrec$CPUE <- IRH_ONV_sumrec$TotalCollected/IRH_ONV_sumrec$TotalNumberofHauls
+    write.csv(IRH_ONV_sumrec, "IRH_ONV_sumrec.csv")
+
+IRA_S_sumrec <- ddply(IRA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRA_S_sumrec$CPUE <- IRA_S_sumrec$TotalCollected/IRA_S_sumrec$TotalNumberofHauls
+    write.csv(IRA_S_sumrec, "IRA_S_sumrec.csv")
+IRB_S_sumrec <- ddply(IRB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRB_S_sumrec$CPUE <- IRB_S_sumrec$TotalCollected/IRB_S_sumrec$TotalNumberofHauls
+    write.csv(IRB_S_sumrec, "IRB_S_sumrec.csv")
+IRC_S_sumrec <- ddply(IRC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRC_S_sumrec$CPUE <- IRC_S_sumrec$TotalCollected/IRC_S_sumrec$TotalNumberofHauls
+    write.csv(IRC_S_sumrec, "IRC_S_sumrec.csv")
+IRD_S_sumrec <- ddply(IRD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRD_S_sumrec$CPUE <- IRD_S_sumrec$TotalCollected/IRD_S_sumrec$TotalNumberofHauls
+    write.csv(IRD_S_sumrec, "IRD_S_sumrec.csv")
+IRE_S_sumrec <- ddply(IRE_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRE_S_sumrec$CPUE <- IRE_S_sumrec$TotalCollected/IRE_S_sumrec$TotalNumberofHauls
+    write.csv(IRE_S_sumrec, "IRE_S_sumrec.csv")
+IRH_S_sumrec <- ddply(IRH_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  IRH_S_sumrec$CPUE <- IRH_S_sumrec$TotalCollected/IRH_S_sumrec$TotalNumberofHauls
+    write.csv(IRH_S_sumrec, "IRH_S_sumrec.csv")
+
+TBA_OV_sumrec <- ddply(TBA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBA_OV_sumrec$CPUE <- TBA_OV_sumrec$TotalCollected/TBA_OV_sumrec$TotalNumberofHauls
+    write.csv(TBA_OV_sumrec, "TBA_OV_sumrec.csv")
+TBB_OV_sumrec <- ddply(TBB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBB_OV_sumrec$CPUE <- TBB_OV_sumrec$TotalCollected/TBB_OV_sumrec$TotalNumberofHauls
+    write.csv(TBB_OV_sumrec, "TBB_OV_sumrec.csv")
+TBC_OV_sumrec <- ddply(TBC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBC_OV_sumrec$CPUE <- TBC_OV_sumrec$TotalCollected/TBC_OV_sumrec$TotalNumberofHauls
+    write.csv(TBC_OV_sumrec, "TBC_OV_sumrec.csv")
+TBD_OV_sumrec <- ddply(TBD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBD_OV_sumrec$CPUE <- TBD_OV_sumrec$TotalCollected/TBD_OV_sumrec$TotalNumberofHauls
+    write.csv(TBD_OV_sumrec, "TBD_OV_sumrec.csv")
+TBE_OV_sumrec <- ddply(TBE_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBE_OV_sumrec$CPUE <- TBE_OV_sumrec$TotalCollected/TBE_OV_sumrec$TotalNumberofHauls
+    write.csv(TBE_OV_sumrec, "TBE_OV_sumrec.csv")
+
+TBA_ONV_sumrec <- ddply(TBA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBA_ONV_sumrec$CPUE <- TBA_ONV_sumrec$TotalCollected/TBA_ONV_sumrec$TotalNumberofHauls
+    write.csv(TBA_ONV_sumrec, "TBA_ONV_sumrec.csv")
+TBB_ONV_sumrec <- ddply(TBB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBB_ONV_sumrec$CPUE <- TBB_ONV_sumrec$TotalCollected/TBB_ONV_sumrec$TotalNumberofHauls
+    write.csv(TBB_ONV_sumrec, "TBB_ONV_sumrec.csv")
+TBC_ONV_sumrec <- ddply(TBC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBC_ONV_sumrec$CPUE <- TBC_ONV_sumrec$TotalCollected/TBC_ONV_sumrec$TotalNumberofHauls
+    write.csv(TBC_ONV_sumrec, "TBC_ONV_sumrec.csv")
+TBD_ONV_sumrec <- ddply(TBD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBD_ONV_sumrec$CPUE <- TBD_ONV_sumrec$TotalCollected/TBD_ONV_sumrec$TotalNumberofHauls
+    write.csv(TBD_ONV_sumrec, "TBD_ONV_sumrec.csv")
+TBE_ONV_sumrec <- ddply(TBE_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBE_ONV_sumrec$CPUE <- TBE_ONV_sumrec$TotalCollected/TBE_ONV_sumrec$TotalNumberofHauls
+    write.csv(TBE_ONV_sumrec, "TBE_ONV_sumrec.csv")
+
+TBA_S_sumrec <- ddply(TBA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBA_S_sumrec$CPUE <- TBA_S_sumrec$TotalCollected/TBA_S_sumrec$TotalNumberofHauls
+    write.csv(TBA_S_sumrec, "TBA_S_sumrec.csv")
+TBB_S_sumrec <- ddply(TBB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBB_S_sumrec$CPUE <- TBB_S_sumrec$TotalCollected/TBB_S_sumrec$TotalNumberofHauls
+    write.csv(TBB_S_sumrec, "TBB_S_sumrec.csv")
+TBC_S_sumrec <- ddply(TBC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBC_S_sumrec$CPUE <- TBC_S_sumrec$TotalCollected/TBC_S_sumrec$TotalNumberofHauls
+    write.csv(TBC_S_sumrec, "TBC_S_sumrec.csv")
+TBD_S_sumrec <- ddply(TBD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+  TBD_S_sumrec$CPUE <- TBD_S_sumrec$TotalCollected/TBD_S_sumrec$TotalNumberofHauls
+    write.csv(TBD_S_sumrec, "TBD_S_sumrec.csv")
 TBE_S_sumrec <- ddply(TBE_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-TBE_S_sumrec$CPUE <- TBE_S_sumrec$TotalCollected/TBE_S_sumrec$TotalNumberofHauls
+  TBE_S_sumrec$CPUE <- TBE_S_sumrec$TotalCollected/TBE_S_sumrec$TotalNumberofHauls
+    write.csv(TBE_S_sumrec, "TBE_S_sumrec.csv")
+
+
+######################### PLOT ############
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+library(ggplot2)
+
+plot_IRA_S_sumrec <- ggplot(IRA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Shoreline Stratum")
+
+plot_IRB_S_sumrec <- ggplot(IRB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Shoreline Stratum")
+
+plot_IRC_S_sumrec <- ggplot(IRC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Shoreline Stratum")
+
+plot_IRD_S_sumrec <- ggplot(IRD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Shoreline Stratum")
+
+plot_IRE_S_sumrec <- ggplot(IRE_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Shoreline Stratum")
+
+plot_IRH_S_sumrec <- ggplot(IRH_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone H Shoreline Stratum")
+
+multiplot(plot_IRA_S_sumrec,plot_IRB_S_sumrec,plot_IRC_S_sumrec,plot_IRD_S_sumrec,plot_IRE_S_sumrec,plot_IRH_S_sumrec, cols=2)
+
+plot_IRA_OV_sumrec <- ggplot(IRA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore Veg Stratum")
+
+plot_IRB_OV_sumrec <- ggplot(IRB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore Veg Stratum")
+
+plot_IRC_OV_sumrec <- ggplot(IRC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore Veg Stratum")
+
+plot_IRD_OV_sumrec <- ggplot(IRD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore Veg Stratum")
+
+plot_IRE_OV_sumrec <- ggplot(IRE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Offshore Veg Stratum")
+
+plot_IRH_OV_sumrec <- ggplot(IRH_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone H Offshore Veg Stratum")
+
+multiplot(plot_IRA_OV_sumrec,plot_IRB_OV_sumrec,plot_IRC_OV_sumrec,plot_IRD_OV_sumrec,plot_IRE_OV_sumrec,plot_IRH_OV_sumrec, cols=2)
+
+plot_IRA_ONV_sumrec <- ggplot(IRA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore Nonveg Stratum")
+
+plot_IRB_ONV_sumrec <- ggplot(IRB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore Nonveg Stratum")
+
+plot_IRC_ONV_sumrec <- ggplot(IRC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore Nonveg Stratum")
+
+plot_IRD_ONV_sumrec <- ggplot(IRD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore Nonveg Stratum")
+
+plot_IRE_ONV_sumrec <- ggplot(IRE_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Offshore Nonveg Stratum")
+
+plot_IRH_ONV_sumrec <- ggplot(IRH_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone H Offshore Nonveg Stratum")
+
+multiplot(plot_IRA_ONV_sumrec,plot_IRB_ONV_sumrec,plot_IRC_ONV_sumrec,plot_IRD_ONV_sumrec,plot_IRE_ONV_sumrec,plot_IRH_ONV_sumrec, cols=2)
+
+
+
+plot_TBA_S_sumrec <- ggplot(TBA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Shoreline Stratum")
+
+plot_TBB_S_sumrec <- ggplot(TBB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Shoreline Stratum")
+
+plot_TBC_S_sumrec <- ggplot(TBC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Shoreline Stratum")
+
+plot_TBD_S_sumrec <- ggplot(TBD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Shoreline Stratum")
+
+plot_TBE_S_sumrec <- ggplot(TBE_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Shoreline Stratum")
+
+multiplot(plot_TBA_S_sumrec, plot_TBB_S_sumrec, plot_TBC_S_sumrec, plot_TBD_S_sumrec, plot_TBE_S_sumrec, cols=2)
+
+library(ggplot2)
+plot_TBA_OV_sumrec <- ggplot(TBA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore NonVeg Stratum")
+
+plot_TBB_OV_sumrec <- ggplot(TBB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore NonVeg Stratum")
+
+plot_TBC_OV_sumrec <- ggplot(TBC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore NonVeg Stratum")
+
+plot_TBD_OV_sumrec <- ggplot(TBD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore NonVeg Stratum")
+
+plot_TBE_OV_sumrec <- ggplot(TBE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Offshore NonVeg Stratum")
+
+multiplot(plot_TBA_OV_sumrec, plot_TBB_OV_sumrec, plot_TBC_OV_sumrec, plot_TBD_OV_sumrec, plot_TBE_OV_sumrec, cols=2)
+
+library(ggplot2)
+plot_TBA_ONV_sumrec <- ggplot(TBA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore NonVeg Stratum")
+
+plot_TBB_ONV_sumrec <- ggplot(TBB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore NonVeg Stratum")
+
+plot_TBC_ONV_sumrec <- ggplot(TBC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore NonVeg Stratum")
+
+plot_TBD_ONV_sumrec <- ggplot(TBD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore NonVeg Stratum")
+
+plot_TBE_ONV_sumrec <- ggplot(TBE_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone E Offshore NonVeg Stratum")
+
+multiplot(plot_TBA_ONV_sumrec, plot_TBB_ONV_sumrec, plot_TBC_ONV_sumrec, plot_TBD_ONV_sumrec, plot_TBE_ONV_sumrec, cols=2)
 
 
