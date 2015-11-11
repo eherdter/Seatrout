@@ -1,9 +1,7 @@
 # This script tests creates lagged scatterplots, tests for autocorrelation and tests for linear trends in the 
-# output files of Seatrout Raw.R
+# output files of Summarized by Zone.R
 setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
 
-
-# to do next: (COPIED FROM Seatrout IOA.R)
 # 1. plot each time series (Done in Seatrout Raw.R)
 # 2. test autocorrelation for each 
 #   a. graphically summarize autocorrelation- lagged scatterplot (Done below)
@@ -197,6 +195,242 @@ MannKendall(CH_M$CPUE)
 MannKendall(CH_P$CPUE)
 
  
+##### TEST STRATUMS WITHIN ZONES ######
 
+APA_ONV <- read.csv("APA_ONV_sumrec.csv")
+APA_OV <- read.csv("APA_OV_sumrec.csv")
+APA_S <- read.csv("APA_S_sumrec.csv")
+
+APB_ONV<- read.csv("APB_ONV_sumrec.csv")
+APB_OV <- read.csv("APB_OV_sumrec.csv")
+APB_S <- read.csv("APB_S_sumrec.csv")
+
+CHA_ONV <- read.csv("CHA_ONV_sumrec.csv")
+CHA_OV <- read.csv("CHA_OV_sumrec.csv")
+CHA_S <- read.csv("CHA_S_sumrec.csv")
+
+CHB_ONV <- read.csv("CHB_ONV_sumrec.csv")
+CHB_OV <- read.csv("CHB_OV_sumrec.csv")
+CHB_S <- read.csv("CHB_S_sumrec.csv")
+
+CHC_ONV <- read.csv("CHC_ONV_sumrec.csv")
+CHC_OV <- read.csv("CHC_OV_sumrec.csv")
+CHC_S <- read.csv("CHC_S_sumrec.csv")
+
+CHD_ONV <- read.csv("CHD_ONV_sumrec.csv")
+CHD_OV<- read.csv("CHD_OV_sumrec.csv")
+CHD_S <- read.csv("CHD_S_sumrec.csv")
+
+CKB_ONV <- read.csv("CKB_ONV_sumrec.csv")
+CKB_OV <- read.csv("CKB_OV_sumrec.csv")
+CKB_S <- read.csv("CKB_S_sumrec.csv")
+
+CKC_ONV<- read.csv("CKC_ONV_sumrec.csv")
+CKC_OV <- read.csv("CKC_OV_sumrec.csv")
+CKC_S<- read.csv("CKC_S_sumrec.csv")
+
+IRA_ONV <- read.csv("IRA_ONV_sumrec.csv")
+IRA_OV <- read.csv("IRA_OV_sumrec.csv")
+IRA_S <- read.csv("IRA_S_sumrec.csv")
+
+IRB_ONV <- read.csv("IRB_ONV_sumrec.csv")
+IRB_OV <- read.csv("IRB_OV_sumrec.csv")
+IRB_S <- read.csv("IRB_S_sumrec.csv")
+
+IRC_ONV <- read.csv("IRC_ONV_sumrec.csv")
+IRC_OV <- read.csv("IRC_OV_sumrec.csv")
+IRC_S <- read.csv("IRC_S_sumrec.csv")
+
+IRD_ONV <- read.csv("IRD_ONV_sumrec.csv")
+IRD_OV <- read.csv("IRD_OV_sumrec.csv")
+IRD_S <- read.csv("IRD_S_sumrec.csv")
+
+IRE_ONV <- read.csv("IRE_ONV_sumrec.csv")
+IRE_OV <- read.csv("IRE_OV_sumrec.csv")
+IRE_S <- read.csv("IRE_S_sumrec.csv")
+
+IRH_ONV <- read.csv("IRH_ONV_sumrec.csv")
+IRH_OV <- read.csv("IRH_OV_sumrec.csv")
+IRH_S <- read.csv("IRH_S_sumrec.csv")
+
+TBA_ONV <- read.csv("TBA_ONV_sumrec.csv")
+TBA_OV <- read.csv("TBA_OV_sumrec.csv")
+TBA_S <- read.csv("TBA_S_sumrec.csv")
+
+TBB_ONV <- read.csv("TBB_ONV_sumrec.csv")
+TBB_OV <- read.csv("TBB_OV_sumrec.csv")
+TBB_S <- read.csv("TBB_S_sumrec.csv")
+
+TBC_ONV <- read.csv("TBC_ONV_sumrec.csv")
+TBC_OV <- read.csv("TBC_OV_sumrec.csv")
+TBC_S <- read.csv("TBC_S_sumrec.csv")
+
+TBD_ONV <- read.csv("TBD_ONV_sumrec.csv")
+TBD_OV <- read.csv("TBD_OV_sumrec.csv")
+TBD_S <- read.csv("TBD_S_sumrec.csv")
+
+TBE_ONV <- read.csv("TBE_ONV_sumrec.csv")
+TBE_OV <- read.csv("TBE_OV_sumrec.csv")
+TBE_S <- read.csv("TBE_S_sumrec.csv")
+
+###########################
+#LAGGED SCATTERPLOTS ###############
+library(astsa)
+# Critical level of correlation for 95% significance (alpha = 0.5) r= 0+- 2/sqrt(N)
+# r= 0+- 2/sqrt(17) (GEOS 585A)= .485
+lag1.plot(APA_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(APA_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(APA_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(APB_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(APB_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(APB_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CHA_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHA_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHA_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CHB_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHB_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHB_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CHC_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHC_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHC_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CHD_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHD_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CHD_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CKB_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CKB_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CKB_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(CKC_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CKC_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(CKC_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRA_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRA_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRA_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRB_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRB_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRB_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRC_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRC_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRC_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRD_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRD_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRD_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRE_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRE_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRE_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(IRH_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRH_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(IRH_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(TBA_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBA_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBA_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(TBB_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBB_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBB_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(TBC_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBC_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBC_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(TBD_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBD_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBD_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+lag1.plot(TBE_ONV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBE_OV$CPUE, 4, corr=TRUE, smooth=TRUE)
+lag1.plot(TBE_S$CPUE, 4, corr=TRUE, smooth=TRUE)
+
+#### MANN KENDALL TREND TESTING ######
+library(Kendall)
+
+MannKendall(APA_ONV$CPUE)
+MannKendall(APA_OV$CPUE)
+MannKendall(APA_S$CPUE)
+
+MannKendall(APB_ONV$CPUE)
+MannKendall(APB_OV$CPUE)
+MannKendall(APB_S$CPUE)
+
+MannKendall(CHA_ONV$CPUE)
+MannKendall(CHA_OV$CPUE)
+MannKendall(CHA_S$CPUE)
+
+MannKendall(CHB_ONV$CPUE)
+MannKendall(CHB_OV$CPUE)
+MannKendall(CHB_S$CPUE)
+
+MannKendall(CHC_ONV$CPUE)
+MannKendall(CHC_OV$CPUE)
+MannKendall(CHC_S$CPUE)
+
+MannKendall(CHD_ONV$CPUE)
+MannKendall(CHD_OV$CPUE)
+MannKendall(CHD_S$CPUE)
+
+MannKendall(CKB_ONV$CPUE)
+MannKendall(CKB_OV$CPUE)
+MannKendall(CKB_S$CPUE)
+
+MannKendall(CKC_ONV$CPUE)
+MannKendall(CKC_OV$CPUE)
+MannKendall(CKC_S$CPUE)
+
+MannKendall(IRA_ONV$CPUE)
+MannKendall(IRA_OV$CPUE)
+MannKendall(IRA_S$CPUE)
+
+MannKendall(IRB_ONV$CPUE)
+MannKendall(IRB_OV$CPUE)
+MannKendall(IRB_S$CPUE)
+
+MannKendall(IRC_ONV$CPUE)
+MannKendall(IRC_OV$CPUE)
+MannKendall(IRC_S$CPUE)
+
+MannKendall(IRD_ONV$CPUE)
+MannKendall(IRD_OV$CPUE)
+MannKendall(IRD_S$CPUE)
+
+MannKendall(IRE_ONV$CPUE)
+MannKendall(IRE_OV$CPUE)
+MannKendall(IRE_S$CPUE)
+
+MannKendall(IRH_ONV$CPUE)
+MannKendall(IRH_OV$CPUE)
+MannKendall(IRH_S$CPUE)
+
+MannKendall(TBA_ONV$CPUE)
+MannKendall(TBA_OV$CPUE)
+MannKendall(TBA_S$CPUE)
+
+MannKendall(TBB_ONV$CPUE)
+MannKendall(TBB_OV$CPUE)
+MannKendall(TBB_S$CPUE)
+
+MannKendall(TBC_ONV$CPUE)
+MannKendall(TBC_OV$CPUE)
+MannKendall(TBC_S$CPUE)
+
+MannKendall(TBD_ONV$CPUE)
+MannKendall(TBD_OV$CPUE)
+MannKendall(TBD_S$CPUE)
+
+MannKendall(TBE_ONV$CPUE)
+MannKendall(TBE_OV$CPUE)
+MannKendall(TBE_S$CPUE)
 
 
