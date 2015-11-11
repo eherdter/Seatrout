@@ -148,7 +148,7 @@ CKC_OV_sum <- ddply(CK_C_OV, c("year", "month"), summarise, NumberofHauls=length
 
 CKB_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   CKB_ONV_sum$CPUE <- CKB_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_ONV_sum$NumberofHauls
-CKC_ONV_sum <- ddply(CK_B_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CKC_ONV_sum <- ddply(CK_C_ONV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   CKC_ONV_sum$CPUE <- CKC_ONV_sum$TotalNumberofAnimalsCollectedinHaul/CKC_ONV_sum$NumberofHauls
   
 CKB_S_sum <- ddply(CK_B_S, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
@@ -494,6 +494,199 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 
 library(ggplot2)
+plot_APA_S_sumrec <- ggplot(APA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Shoreline Stratum")
+
+plot_APB_S_sumrec <- ggplot(APB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Shoreline Stratum")
+
+multiplot(plot_APB_S_sumrec,plot_APB_S_sumrec, cols=1)
+
+plot_APA_OV_sumrec <- ggplot(APA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore Veg Stratum")
+
+plot_APB_OV_sumrec <- ggplot(APB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore Veg Stratum")
+
+multiplot(plot_APA_OV_sumrec,plot_APB_OV_sumrec, cols=1)
+
+plot_APA_ONV_sumrec <- ggplot(APA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore NonVeg Stratum")
+
+plot_APB_ONV_sumrec <- ggplot(APB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore NonVeg Stratum")
+
+multiplot(plot_APA_ONV_sumrec,plot_APB_ONV_sumrec, cols=1)
+
+
+
+plot_CHA_S_sumrec <- ggplot(CHA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Shoreline Stratum")
+
+plot_CHB_S_sumrec <- ggplot(CHB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Shoreline Stratum")
+
+plot_CHC_S_sumrec <- ggplot(CHC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Shoreline Stratum")
+
+plot_CHD_S_sumrec <- ggplot(CHD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Shoreline Stratum")
+
+multiplot(plot_CHA_S_sumrec,plot_CHB_S_sumrec,plot_CHC_S_sumrec,plot_CHD_S_sumrec, cols=2)
+
+plot_CHA_OV_sumrec <- ggplot(CHA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore Veg Stratum")
+
+plot_CHB_OV_sumrec <- ggplot(CHB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore Veg Stratum")
+
+plot_CHC_OV_sumrec <- ggplot(CHC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore Veg Stratum")
+
+plot_CHD_OV_sumrec <- ggplot(CHD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore Veg Stratum")
+
+multiplot(plot_CHA_OV_sumrec,plot_CHB_OV_sumrec,plot_CHC_OV_sumrec,plot_CHD_OV_sumrec, cols=2)
+
+plot_CHA_ONV_sumrec <- ggplot(CHA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone A Offshore NonVeg Stratum")
+
+plot_CHB_ONV_sumrec <- ggplot(CHB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore NonVeg Stratum")
+
+plot_CHC_ONV_sumrec <- ggplot(CHC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore NonVeg Stratum")
+
+plot_CHD_ONV_sumrec <- ggplot(CHD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone D Offshore NonVeg Stratum")
+
+multiplot(plot_CHA_ONV_sumrec,plot_CHB_ONV_sumrec,plot_CHC_ONV_sumrec,plot_CHD_ONV_sumrec, cols=2)
+
+
+
+plot_CKB_S_sumrec <- ggplot(CKB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Shoreline Stratum")
+
+plot_CKC_S_sumrec <- ggplot(CKC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Shoreline Stratum")
+
+multiplot(plot_CKB_S_sumrec, plot_CKC_S_sumrec, cols=1)
+
+plot_CKB_OV_sumrec <- ggplot(CKB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore Veg Stratum")
+
+plot_CKC_OV_sumrec <- ggplot(CKC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore Veg Stratum")
+
+multiplot(plot_CKB_OV_sumrec, plot_CKC_OV_sumrec, cols=1)
+
+plot_CKB_ONV_sumrec <- ggplot(CKB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone B Offshore NonVeg Stratum")
+
+plot_CKC_ONV_sumrec <- ggplot(CKC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("CPUE C.neb")+
+  scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        panel.background=element_rect(fill='white', colour='black'))+
+  ggtitle( "Zone C Offshore NonVeg Stratum")
+
+multiplot(plot_CKB_ONV_sumrec, plot_CKC_ONV_sumrec, cols=1)
+
+
+
+
 
 plot_IRA_S_sumrec <- ggplot(IRA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
@@ -672,35 +865,35 @@ plot_TBA_OV_sumrec <- ggplot(TBA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
-  ggtitle( "Zone A Offshore NonVeg Stratum")
+  ggtitle( "Zone A Offshore Veg Stratum")
 
 plot_TBB_OV_sumrec <- ggplot(TBB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
-  ggtitle( "Zone B Offshore NonVeg Stratum")
+  ggtitle( "Zone B Offshore Veg Stratum")
 
 plot_TBC_OV_sumrec <- ggplot(TBC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
-  ggtitle( "Zone C Offshore NonVeg Stratum")
+  ggtitle( "Zone C Offshore Veg Stratum")
 
 plot_TBD_OV_sumrec <- ggplot(TBD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
-  ggtitle( "Zone D Offshore NonVeg Stratum")
+  ggtitle( "Zone D Offshore Veg Stratum")
 
 plot_TBE_OV_sumrec <- ggplot(TBE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
-  ggtitle( "Zone E Offshore NonVeg Stratum")
+  ggtitle( "Zone E Offshore Veg Stratum")
 
 multiplot(plot_TBA_OV_sumrec, plot_TBB_OV_sumrec, plot_TBC_OV_sumrec, plot_TBD_OV_sumrec, plot_TBE_OV_sumrec, cols=2)
 
