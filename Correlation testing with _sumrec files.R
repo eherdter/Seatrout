@@ -455,13 +455,14 @@ TBE_S$logCPUEe  <- log(TBE_S$CPUE + 0.01)
 # First, add NA to missing years of all data frames so that they can be compared together rather than in steps
 
     #TB#_S missing 1996, 1997. Will rbind to the beginning. 
+library(plyr)
 newrow_TB <- matrix(c(1,2, 1996,1997), ncol=2, nrow=2 )
 colnames(newrow_TB) <- c("X", "year")
 TBA_S_up<- data.frame(rbind.fill.matrix(newrow_TB, TBA_S))
-TBB_S_up<- rbind.fill.matrix(newrow_TB, TBB_S)
-TBC_S_up<- rbind.fill.matrix(newrow_TB, TBC_S)
-TBD_S_up<- rbind.fill.matrix(newrow_TB, TBD_S)
-TBE_S_up<- rbind.fill.matrix(newrow_TB, TBE_S)
+TBB_S_up<- data.frame(rbind.fill.matrix(newrow_TB, TBB_S))
+TBC_S_up<- data.frame(rbind.fill.matrix(newrow_TB, TBC_S))
+TBD_S_up<- data.frame(rbind.fill.matrix(newrow_TB, TBD_S))
+TBE_S_up<- data.frame(rbind.fill.matrix(newrow_TB, TBE_S))
 
     # CKB_OV missing 2009 and 2014. Will insert 2009 and then rbind 2014 to the end.
 insertRow <- function(existingDF, newrow, r) {
@@ -480,29 +481,29 @@ CKB_OV_up <- rbind(CKB_OV, newrow19) #for some reason the insertRow command is n
     #CK#_S missing 1996,1997, 1998, 1999, 2000
 newrow_CK <-  matrix(c(1,2,3,4,5, 1996,1997, 1998, 1999, 2000), ncol=2, nrow=5 )
 colnames(newrow_CK) <- c("X", "year")
-CKB_S_up<- rbind.fill.matrix(newrow_CK, CKB_S)
-CKC_S_up<- rbind.fill.matrix(newrow_CK, CKC_S)
+CKB_S_up<- data.frame(rbind.fill.matrix(newrow_CK, CKB_S))
+CKC_S_up<- data.frame(rbind.fill.matrix(newrow_CK, CKC_S))
 
     #AP#_S missing 96, 97
 newrow_AP <- matrix(c(1,2, 1996,1997), ncol=2, nrow=2 )
 colnames(newrow_AP) <- c("X", "year")
-APA_S_up <- rbind.fill.matrix(newrow_AP, APA_S)
-APB_S_up <- rbind.fill.matrix(newrow_AP, APB_S)
+APA_S_up <- data.frame(rbind.fill.matrix(newrow_AP, APA_S))
+APB_S_up <- data.frame(rbind.fill.matrix(newrow_AP, APB_S))
 
     #AP#_OV missing 96, 97
-APA_OV_up <- rbind.fill.matrix(newrow_AP, APA_OV)
-APB_OV_up <- rbind.fill.matrix(newrow_AP, APB_OV)
+APA_OV_up <- data.frame(rbind.fill.matrix(newrow_AP, APA_OV))
+APB_OV_up <- data.frame(rbind.fill.matrix(newrow_AP, APB_OV))
 
     #AP#_ONV missing 96, 97
-APA_ONV_up <- rbind.fill.matrix(newrow_AP, APA_ONV)
-APB_ONV_up <- rbind.fill.matrix(newrow_AP, APB_ONV)
+APA_ONV_up <- data.frame(rbind.fill.matrix(newrow_AP, APA_ONV))
+APB_ONV_up <- data.frame(rbind.fill.matrix(newrow_AP, APB_ONV))
 
     #CHD_OV missing 98,99, 2000,2001,2002,2003
 newrow_CH <- matrix(c(3,4,5,6,7,8, 1998,1999,2000,2001,2002,2003 ), ncol=2, nrow=6)
 colnames(newrow_CH) <- c("X", "year")
 CHD_OV_start <- CHD_OV[1:2,]
 CHD_OV_end   <- CHD_OV[3:13,]
-CHD_OV_test <- rbind.fill.matrix(newrow_CH,CHD_OV_end) #for some reason this only works if the matrix that needs filling is called first
+CHD_OV_test <- data.frame(rbind.fill.matrix(newrow_CH,CHD_OV_end)) #for some reason this only works if the matrix that needs filling is called first
 CHD_OV_up <- rbind(CHD_OV_start, CHD_OV_test)
 
     #CH#_S missing 96, 97 and CHD_S missing 1996-2003
@@ -526,50 +527,147 @@ IRH_S_up<- data.frame(rbind.fill.matrix(newrow_IR, IRH_S))
 IRH_OV_up <- data.frame(rbind.fill.matrix(newrow_IR, IRH_OV))
 IRH_ONV_up <- data.frame(rbind.fill.matrix(newrow_IR, IRH_ONV))
 
+newrow17 <- cbind(17, 2012, "NA", "NA", "NA", "NA")
+r17 <- 17
+IRC_OV_up <- data.frame(insertRow(IRC_OV, newrow17, r17))
 
-# Bind series together to then correlate the variable named logCPUEe
-#
-#1996-2014 
-ninetysix_Stratum <- cbind(TBA_ONV$logCPUEe, TBA_OV$logCPUEe, TBA_S_up$logCPUEe,
+
+
+
+    # Bind series together to then correlate the variable named logCPUEe
+
+    #1996-2014 
+Stratum_CPUEe_data <- cbind(TBA_ONV$logCPUEe, TBA_OV$logCPUEe, TBA_S_up$logCPUEe,
                            TBB_ONV$logCPUEe, TBB_OV$logCPUEe, TBB_S_up$logCPUEe,
                            TBC_ONV$logCPUEe, TBC_OV$logCPUEe, TBC_S_up$logCPUEe,
                            TBD_ONV$logCPUEe, TBD_OV$logCPUEe, TBD_S_up$logCPUEe,
                            TBE_ONV$logCPUEe, TBE_OV$logCPUEe, TBE_S_up$logCPUEe,
                            CKC_ONV$logCPUEe, CKC_OV$logCPUEe, CKC_S_up$logCPUEe, 
-                           CKB_ONV$logCPUEe, CKB_OV$logCPUEe, CKB_S_up$logCPUEe, 
+                           CKB_ONV$logCPUEe, CKB_OV_up$logCPUEe, CKB_S_up$logCPUEe, 
                            CHA_ONV$logCPUEe, CHA_OV$logCPUEe, CHA_S_up$logCPUEe,
                            CHB_ONV$logCPUEe, CHB_OV$logCPUEe, CHB_S_up$logCPUEe,
                            CHC_ONV$logCPUEe, CHC_OV$logCPUEe, CHC_S_up$logCPUEe,
                             CHD_OV_up$logCPUEe, CHD_S_up$logCPUEe,
                            APA_ONV_up$logCPUEe,  APA_OV_up$logCPUEe, APA_S_up$logCPUEe,
                            APB_ONV_up$logCPUEe,  APB_OV_up$logCPUEe, APB_S_up$logCPUEe,
-                           IRC_ONV$logCPUEe,IRC_OV$logCPUEe, IRC_S_up$logCPUEe, 
+                           IRC_ONV$logCPUEe,IRC_OV_up$logCPUEe, IRC_S_up$logCPUEe, 
                            IRD_ONV$logCPUEe,IRD_OV$logCPUEe, IRD_S_up$logCPUEe,
-                           IRH_ONV$logCPUEe,IRH_OV$logCPUEe, IRH_S_up$logCPUEe)
+                           IRH_ONV_up$logCPUEe,IRH_OV_up$logCPUEe, IRH_S_up$logCPUEe)
 
+Stratum_CPUE_data <- cbind(TBA_ONV$CPUE, TBA_OV$CPUE, TBA_S_up$CPUE,
+                            TBB_ONV$CPUE, TBB_OV$CPUE, TBB_S_up$CPUE,
+                            TBC_ONV$CPUE, TBC_OV$CPUE, TBC_S_up$CPUE,
+                            TBD_ONV$CPUE, TBD_OV$CPUE, TBD_S_up$CPUE,
+                            TBE_ONV$CPUE, TBE_OV$CPUE, TBE_S_up$CPUE,
+                            CKC_ONV$CPUE, CKC_OV$CPUE, CKC_S_up$CPUE, 
+                            CKB_ONV$CPUE, CKB_OV_up$CPUE, CKB_S_up$CPUE, 
+                            CHA_ONV$CPUE, CHA_OV$CPUE, CHA_S_up$CPUE,
+                            CHB_ONV$CPUE, CHB_OV$CPUE, CHB_S_up$CPUE,
+                            CHC_ONV$CPUE, CHC_OV$CPUE, CHC_S_up$CPUE,
+                            CHD_OV_up$CPUE, CHD_S_up$CPUE,
+                            APA_ONV_up$CPUE,  APA_OV_up$CPUE, APA_S_up$CPUE,
+                            APB_ONV_up$CPUE,  APB_OV_up$CPUE, APB_S_up$CPUE,
+                            IRC_ONV$CPUE,IRC_OV_up$CPUE, IRC_S_up$CPUE, 
+                            IRD_ONV$CPUE,IRD_OV$CPUE, IRD_S_up$CPUE,
+                            IRH_ONV_up$CPUE,IRH_OV_up$CPUE, IRH_S_up$CPUE)
+write.csv(Stratum_CPUE_data, file="Stratum_CPUE_data.csv")
+Stratum_CPUE_data_edited <- read.csv("Stratum_CPUE_data_edited.csv")
 
-                   
-                   
-                   
-                  
-colnames(ninetysix_Stratum) <- c("TBA_ONV","TBA_OV","TBA_S", 
+colnames(Stratum_CPUEe_data) <- c("TBA_ONV","TBA_OV","TBA_S", 
                                  "TBB_ONV","TBB_OV","TBB_S", 
                                  "TBC_ONV","TBC_OV","TBC_S", 
                                  "TBD_ONV","TBD_OV","TBD_S", 
                                  "TBE_ONV","TBE_OV","TBE_S", 
-                                 "CKB_ONV","CKB_OV","CKB_S",
                                  "CKC_ONV","CKC_OV","CKC_S",
+                                 "CKB_ONV","CKB_OV","CKB_S",
                                  "CHA_ONV","CHA_OV","CHA_S",
                                  "CHB_ONV","CHB_OV","CHB_S",
-                                 "CHC_ONV","CHC_OV","CHC_S")
-                                 
-                                 
-                                 
-                               
+                                 "CHC_ONV","CHC_OV","CHC_S",
+                                 "CHD_OV", "CHD_S",
+                                 "APA_ONV","APA_OV","APA_S",
+                                 "APB_ONV","APB_OV","APB_S",
+                                 "IRC_ONV","IRC_OV","IRC_S",
+                                 "IRD_ONV","IRD_OV","IRD_S",
+                                 "IRH_ONV","IRH_OV","IRH_S")
+    ## Efforts to get data.frame to go to numeric ##
+test1 <- as.matrix(sapply(ninetysix_Stratum,as.numeric))
+test2 <- as.matrix(as.numeric(unlist(ninetysix_Stratum),nrow=nrow(ninetysix_Stratum)))
+test3 <- as.matrix(as.data.frame(sapply (ninetysix_Stratum, as.numeric, nrow=nrow(ninetysix_Stratum)))) #data.matrix(ninetysix_Stratum)
+test4 <- data.matrix(ninetysix_Stratum)
+class(ninetysix_Stratum) <- "numeric"
+    ##### Cant effing get the dataframe to go to numeric!! Finally giving up and just exporting and then deleting the NAs. 
 
-library(ltm)
-cors_ninetysix_stratum <- rcor.test(ninetysix_STRATUM, p.adjust=TRUE, p.adjust.method="bonferroni", method="pearson")
-cors_ninetysix_stratum_mat <- cors_ninetysix_stratum$cor.mat
-cors_ninetysix_stratum_pval <- data.frame(cors_ninetysix_stratum$p.values)
-cors_ninetysix_stratum_sig <- subset(cors_ninetysix_stratum_pval, pvals <0.05)
+write.csv(Stratum_CPUEe_data, file="Stratum_CPUEe_data.csv")
+Stratum_CPUEe_data_edited <- as.matrix(read.csv("Stratum_CPUEe_data_NAs_removed.csv")) #must be converted to a matrix for the rcorr function of the hmisc command to work
+
+
+# Perform correlation testing. Two methods listed below. 
+library(hmisc)  #rcorr- missing values are deleted in pairs rather than deleting all rows of x having any missing variables
+Stratum_corr_hmisc <- rcorr(Stratum_CPUEe_data_edited,type=c("pearson"))
+Stratum_corr_hmisc_cormat <- Stratum_corr_hmisc$r
+Stratum_corr_hmisc_n <- Stratum_corr_hmisc$n
+Stratum_corr_hmisc_Pval <- Stratum_corr_hmisc$P
+write.csv(Stratum_corr_hmisc_Pval, file="Stratum_corr_hmisc_Pval.csv")
+# No internal method of pvalue correction using the hmisc package, though.. will have to manually do this. 
+
+# Load edited Pval matrix. Top half removed. 
+Stratum_corr_hmisc_Pval_edited <- as.matrix(read.csv("Stratum_corr_hmisc_Pval_edited.csv"))
+P2<- p.adjust((Stratum_corr_hmisc_Pval_edited[,2]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,2]))
+P3<- p.adjust((Stratum_corr_hmisc_Pval_edited[,3]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,3]))
+P4<- p.adjust((Stratum_corr_hmisc_Pval_edited[,4]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,4]))
+P5<- p.adjust((Stratum_corr_hmisc_Pval_edited[,5]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,5]))
+P6<- p.adjust((Stratum_corr_hmisc_Pval_edited[,6]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,6]))
+P7<- p.adjust((Stratum_corr_hmisc_Pval_edited[,7]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,7]))
+P8<- p.adjust((Stratum_corr_hmisc_Pval_edited[,8]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,8]))
+P9<- p.adjust((Stratum_corr_hmisc_Pval_edited[,9]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,9]))
+P10<- p.adjust((Stratum_corr_hmisc_Pval_edited[,10]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,10]))
+P11<- p.adjust((Stratum_corr_hmisc_Pval_edited[,11]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,11]))
+P12<- p.adjust((Stratum_corr_hmisc_Pval_edited[,12]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,12]))
+P13<- p.adjust((Stratum_corr_hmisc_Pval_edited[,13]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,13]))
+P14<-p.adjust((Stratum_corr_hmisc_Pval_edited[,14]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,14]))
+P15<- p.adjust((Stratum_corr_hmisc_Pval_edited[,15]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,15]))
+P16<- p.adjust((Stratum_corr_hmisc_Pval_edited[,16]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,16]))
+P17<- p.adjust((Stratum_corr_hmisc_Pval_edited[,17]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,17]))
+P18<- p.adjust((Stratum_corr_hmisc_Pval_edited[,18]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,18]))
+P19<- p.adjust((Stratum_corr_hmisc_Pval_edited[,19]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,19]))
+P20<- p.adjust((Stratum_corr_hmisc_Pval_edited[,20]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,20]))
+P21<- p.adjust((Stratum_corr_hmisc_Pval_edited[,21]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,21]))
+P22<- p.adjust((Stratum_corr_hmisc_Pval_edited[,22]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,22]))
+P23<- p.adjust((Stratum_corr_hmisc_Pval_edited[,23]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,23]))
+P24<- p.adjust((Stratum_corr_hmisc_Pval_edited[,24]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,24]))
+P25<- p.adjust((Stratum_corr_hmisc_Pval_edited[,25]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,25]))
+P26<- p.adjust((Stratum_corr_hmisc_Pval_edited[,26]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,26]))
+P27<- p.adjust((Stratum_corr_hmisc_Pval_edited[,27]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,27]))
+P28<- p.adjust((Stratum_corr_hmisc_Pval_edited[,28]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,28]))
+P29<- p.adjust((Stratum_corr_hmisc_Pval_edited[,29]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,29]))
+P30<- p.adjust((Stratum_corr_hmisc_Pval_edited[,30]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,30]))
+P31<- p.adjust((Stratum_corr_hmisc_Pval_edited[,31]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,31]))
+P32<- p.adjust((Stratum_corr_hmisc_Pval_edited[,32]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,32]))
+P33<- p.adjust((Stratum_corr_hmisc_Pval_edited[,33]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,33]))
+P34<- p.adjust((Stratum_corr_hmisc_Pval_edited[,34]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,34]))
+P35<- p.adjust((Stratum_corr_hmisc_Pval_edited[,35]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,35]))
+P36<- p.adjust((Stratum_corr_hmisc_Pval_edited[,36]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,36]))
+P37<- p.adjust((Stratum_corr_hmisc_Pval_edited[,37]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,37]))
+P38<- p.adjust((Stratum_corr_hmisc_Pval_edited[,38]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,38]))
+P39<- p.adjust((Stratum_corr_hmisc_Pval_edited[,39]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,39]))
+P40<- p.adjust((Stratum_corr_hmisc_Pval_edited[,40]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,40]))
+P41<- p.adjust((Stratum_corr_hmisc_Pval_edited[,41]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,41]))
+P42<- p.adjust((Stratum_corr_hmisc_Pval_edited[,42]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,42]))
+P43<- p.adjust((Stratum_corr_hmisc_Pval_edited[,43]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,43]))
+P44<- p.adjust((Stratum_corr_hmisc_Pval_edited[,44]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,44]))
+P45<- p.adjust((Stratum_corr_hmisc_Pval_edited[,45]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,45]))
+P46<- p.adjust((Stratum_corr_hmisc_Pval_edited[,46]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,46]))
+P47<- p.adjust((Stratum_corr_hmisc_Pval_edited[,47]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,47]))
+P48<- p.adjust((Stratum_corr_hmisc_Pval_edited[,48]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,48]))
+P49<- p.adjust((Stratum_corr_hmisc_Pval_edited[,49]), method= "bonferroni", n=length(Stratum_corr_hmisc_Pval_edited[,49]))
+
+adjusted_pvals <-cbind(P2, P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,
+      P25,P26,P27,P28,P29,P30,P31,P32,P33,P34,P35,P36,P37,P38,P39,P40,P41,P42, P43, P44, P45, P46, P47, P48, P49   )
+
+library(ltm) # not sure about this below method-- might delete any row with missing data. 
+Stratum_corr_ltm <- rcor.test(Stratum_CPUEe_data_edited, p.adjust=TRUE, p.adjust.method="bonferroni", method="pearson")
+Stratum_corr_ltm_cormat <- Stratum_corr_ltm$cor.mat
+Stratum_corr_ltm_pval <- data.frame(Stratum_corr_ltm$p.values)
+Stratum_corr_ltm_sig <- subset(Stratum_corr_ltm_pval, pvals <0.05)
+
 
