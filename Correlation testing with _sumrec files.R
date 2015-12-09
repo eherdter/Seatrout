@@ -1,4 +1,4 @@
-
+#Correlation testing with both ZONE and Stratum
 
 setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
 TB_A <- read.csv("TampaBay_Bay_A_sumrec.csv")
