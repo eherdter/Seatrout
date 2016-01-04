@@ -82,82 +82,83 @@ plot_APB_Asum <- ggplot(APB_Asum, aes(x=date, y=CPUE, group=1))+
 #Another option for plotting below
 #http://stackoverflow.com/questions/20571306/multi-row-x-axis-labels-in-ggplot-line-chart
 
-APB_Bsum <- ddply(AP_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+APB_Bsum <- ddply(AP_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 APB_Bsum$CPUE <- APB_Bsum$TotalNumberofAnimalsCollectedinHauls/APB_Bsum$NumberofHauls
-APR_Csum <- ddply(AP_RIV_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+APR_Csum <- ddply(AP_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 APR_Csum$CPUE <- APR_Csum$TotalNumberofAnimalsCollectedinHauls/APR_Csum$NumberofHauls
 
-CHB_Asum <- ddply(CH_BAY_AUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHB_Asum <- ddply(CH_A, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHB_Asum$CPUE <- CHB_Asum$TotalNumberofAnimalsCollectedinHauls/CHB_Asum$NumberofHauls
-CHB_Bsum <- ddply(CH_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHB_Bsum <- ddply(CH_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHB_Bsum$CPUE <- CHB_Bsum$TotalNumberofAnimalsCollectedinHauls/CHB_Bsum$NumberofHauls
-CHB_Csum <- ddply(CH_BAY_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHB_Csum <- ddply(CH_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHB_Csum$CPUE <- CHB_Csum$TotalNumberofAnimalsCollectedinHauls/CHB_Csum$NumberofHauls
-CHB_Dsum <- ddply(CH_BAY_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHB_Dsum <- ddply(CH_D, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHB_Dsum$CPUE <- CHB_Dsum$TotalNumberofAnimalsCollectedinHauls/CHB_Dsum$NumberofHauls
-CHR_Msum <- ddply(CH_RIV_MUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHR_Msum <- ddply(CH_M, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHR_Msum$CPUE <- CHR_Msum$TotalNumberofAnimalsCollectedinHauls/CHR_Msum$NumberofHauls
-CHR_Psum <- ddply(CH_RIV_PUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CHR_Psum <- ddply(CH_P, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CHR_Psum$CPUE <- CHR_Psum$TotalNumberofAnimalsCollectedinHauls/CHR_Psum$NumberofHauls
 
-CKB_Bsum <- ddply(CK_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CKB_Bsum <- ddply(CK_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CKB_Bsum$CPUE <- CKB_Bsum$TotalNumberofAnimalsCollectedinHauls/CKB_Bsum$NumberofHauls
-CKB_Csum <- ddply(CK_BAY_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CKB_Csum <- ddply(CK_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CKB_Csum$CPUE <- CKB_Csum$TotalNumberofAnimalsCollectedinHauls/CKB_Csum$NumberofHauls
-CKR_Fsum <- ddply(CK_RIV_FUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+CKR_Fsum <- ddply(CK_F, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 CKR_Fsum$CPUE <- CKR_Fsum$TotalNumberofAnimalsCollectedinHauls/CKR_Fsum$NumberofHauls
 
-IRB_Asum <- ddply(IR_BAY_AUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Asum <- ddply(IR_A, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Asum$CPUE <- IRB_Asum$TotalNumberofAnimalsCollectedinHauls/IRB_Asum$NumberofHauls
-IRB_Bsum <- ddply(IR_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Bsum <- ddply(IR_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Bsum$CPUE <- IRB_Bsum$TotalNumberofAnimalsCollectedinHauls/IRB_Bsum$NumberofHauls
-IRB_Csum <- ddply(IR_BAY_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Csum <- ddply(IR_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Csum$CPUE <- IRB_Csum$TotalNumberofAnimalsCollectedinHauls/IRB_Csum$NumberofHauls
-IRB_Dsum <- ddply(IR_BAY_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Dsum <- ddply(IR_D, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Dsum$CPUE <- IRB_Dsum$TotalNumberofAnimalsCollectedinHauls/IRB_Dsum$NumberofHauls
-IRB_Esum <- ddply(IR_BAY_EUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Esum <- ddply(IR_E, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Esum$CPUE <- IRB_Esum$TotalNumberofAnimalsCollectedinHauls/IRB_Esum$NumberofHauls
-IRB_Hsum <- ddply(IR_BAY_HUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRB_Hsum <- ddply(IR_H, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRB_Hsum$CPUE <- IRB_Hsum$TotalNumberofAnimalsCollectedinHauls/IRB_Hsum$NumberofHauls
-IRR_Fsum <- ddply(IR_RIV_FUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+IRR_Fsum <- ddply(IR_F, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 IRR_Fsum$CPUE <- IRR_Fsum$TotalNumberofAnimalsCollectedinHauls/IRR_Fsum$NumberofHauls
 
 
-JXR_Asum <- ddply(JX_RIV_AUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Asum <- ddply(JX_A, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Asum$CPUE <- JXR_Asum$TotalNumberofAnimalsCollectedinHauls/JXR_Asum$NumberofHauls
-JXR_Bsum <- ddply(JX_RIV_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Bsum <- ddply(JX_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Bsum$CPUE <- JXR_Bsum$TotalNumberofAnimalsCollectedinHauls/JXR_Bsum$NumberofHauls
-JXR_Csum <- ddply(JX_RIV_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Csum <- ddply(JX_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Csum$CPUE <- JXR_Csum$TotalNumberofAnimalsCollectedinHauls/JXR_Csum$NumberofHauls
-JXR_Dsum <- ddply(JX_RIV_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Dsum <- ddply(JX_D, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Dsum$CPUE <- JXR_Dsum$TotalNumberofAnimalsCollectedinHauls/JXR_Dsum$NumberofHauls
-JXR_Esum <- ddply(JX_RIV_EUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Esum <- ddply(JX_E, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Esum$CPUE <- JXR_Esum$TotalNumberofAnimalsCollectedinHauls/JXR_Esum$NumberofHauls
-JXR_Fsum <- ddply(JX_RIV_FUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+JXR_Fsum <- ddply(JX_F, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 JXR_Fsum$CPUE <- JXR_Fsum$TotalNumberofAnimalsCollectedinHauls/JXR_Fsum$NumberofHauls
 
-TBB_Asum <- ddply(TB_BAY_AUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBB_Asum <- ddply(TB_A, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Asum$CPUE <- TBB_Asum$TotalNumberofAnimalsCollectedinHauls/TBB_Asum$NumberofHauls
-TBB_Bsum <- ddply(TB_BAY_BUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBB_Bsum <- ddply(TB_B, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Bsum$CPUE <- TBB_Bsum$TotalNumberofAnimalsCollectedinHauls/TBB_Bsum$NumberofHauls
-TBB_Csum <- ddply(TB_BAY_CUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBB_Csum <- ddply(TB_C, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Csum$CPUE <- TBB_Csum$TotalNumberofAnimalsCollectedinHauls/TBB_Csum$NumberofHauls
-TBB_Dsum <- ddply(TB_BAY_DUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBB_Dsum <- ddply(TB_D, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Dsum$CPUE <- TBB_Dsum$TotalNumberofAnimalsCollectedinHauls/TBB_Dsum$NumberofHauls
-TBB_Esum <- ddply(TB_BAY_EUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBB_Esum <- ddply(TB_E, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBB_Esum$CPUE <- TBB_Esum$TotalNumberofAnimalsCollectedinHauls/TBB_Esum$NumberofHauls
 
-TBR_Ksum <- ddply(TB_RIV_KUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Ksum <- ddply(TB_K, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBR_Ksum$CPUE <- TBR_Ksum$TotalNumberofAnimalsCollectedinHauls/TBR_Ksum$NumberofHauls
-TBR_Lsum <- ddply(TB_RIV_LUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Lsum <- ddply(TB_L, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBR_Lsum$CPUE <- TBR_Lsum$TotalNumberofAnimalsCollectedinHauls/TBR_Lsum$NumberofHauls
-TBR_Msum <- ddply(TB_RIV_MUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Msum <- ddply(TB_M, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBR_Msum$CPUE <- TBR_Msum$TotalNumberofAnimalsCollectedinHauls/TBR_Msum$NumberofHauls
-TBR_Nsum <- ddply(TB_RIV_NUn, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
+TBR_Nsum <- ddply(TB_N, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBR_Nsum$CPUE <- TBR_Nsum$TotalNumberofAnimalsCollectedinHauls/TBR_Nsum$NumberofHauls
 
-# >>>>>>>>> SUM recruitment over season ###
-TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
+# >>>>>>>>> Find median CPUE over recruitment season ###
+      
+TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MedianCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 TBB_A_sumrec$CPUE <- TBB_A_sumrec$TotalCollected/TBB_A_sumrec$TotalNumberofHauls
 library(ggplot2)
 plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
@@ -168,7 +169,7 @@ plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
   ggtitle( "Zone A")
 write.csv(TBB_A_sumrec, "TampaBay_Bay_A_sumrec.csv")
 
-TBB_B_sumrec <- ddply(TBB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
+TBB_B_sumrec <- ddply(subset(TBB_Bsum, TotalNumberofAnimalsCollectedinHauls>0), c("year"), summarise, NumberSamplingMonths=length(month),TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
 TBB_B_sumrec$CPUE <- TBB_B_sumrec$TotalCollected/TBB_B_sumrec$TotalNumberofHauls
 plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
