@@ -120,48 +120,48 @@ durbinWatsonTest(TBN_model, max.lag=1, simulate=TRUE, reps=1000, method="resampl
 
 
 ###############################################
-#2. Add log transformed CPUE to each data frame
+#2. Add log transformed MeanMeanCPUE to each data frame
 
-TB_A$logCPUE <- log(TB_A$CPUE)
-TB_B$logCPUE <- log(TB_B$CPUE)
-TB_C$logCPUE <- log(TB_C$CPUE)
-TB_D$logCPUE <- log(TB_D$CPUE)
-TB_E$logCPUE <- log(TB_E$CPUE)
-TB_K$logCPUE <- log(TB_K$CPUE)
-TB_L$logCPUE <- log(TB_L$CPUE)
-TB_M$logCPUE <- log(TB_M$CPUE)
-TB_N$logCPUE <- log(TB_N$CPUE)
+TB_A$logMeanCPUE <- log(TB_A$MeanCPUE)
+TB_B$logMeanCPUE <- log(TB_B$MeanCPUE)
+TB_C$logMeanCPUE <- log(TB_C$MeanCPUE)
+TB_D$logMeanCPUE <- log(TB_D$MeanCPUE)
+TB_E$logMeanCPUE <- log(TB_E$MeanCPUE)
+TB_K$logMeanCPUE <- log(TB_K$MeanCPUE)
+TB_L$logMeanCPUE <- log(TB_L$MeanCPUE)
+TB_M$logMeanCPUE <- log(TB_M$MeanCPUE)
+TB_N$logMeanCPUE <- log(TB_N$MeanCPUE)
 
-AP_A$logCPUE <- log(AP_A$CPUE)
-AP_B$logCPUE <- log(AP_B$CPUE)
-AP_C$logCPUE <- log(AP_C$CPUE)
+AP_A$logMeanCPUE <- log(AP_A$MeanCPUE)
+AP_B$logMeanCPUE <- log(AP_B$MeanCPUE)
+AP_C$logMeanCPUE <- log(AP_C$MeanCPUE)
 
-CK_B$logCPUE <- log(CK_B$CPUE)
-CK_C$logCPUE <- log(CK_C$CPUE)
-CK_F$logCPUE <- log(CK_F$CPUE)
+CK_B$logMeanCPUE <- log(CK_B$MeanCPUE)
+CK_C$logMeanCPUE <- log(CK_C$MeanCPUE)
+CK_F$logMeanCPUE <- log(CK_F$MeanCPUE)
 
 
-CH_A$logCPUE <- log(CH_A$CPUE)
-CH_B$logCPUE <- log(CH_B$CPUE)
-CH_C$logCPUE <- log(CH_C$CPUE)
-CH_D$logCPUE <- log(CH_D$CPUE)
-CH_M$logCPUE <- log(CH_M$CPUE)
-CH_P$logCPUE <- log(CH_P$CPUE)
+CH_A$logMeanCPUE <- log(CH_A$MeanCPUE)
+CH_B$logMeanCPUE <- log(CH_B$MeanCPUE)
+CH_C$logMeanCPUE <- log(CH_C$MeanCPUE)
+CH_D$logMeanCPUE <- log(CH_D$MeanCPUE)
+CH_M$logMeanCPUE <- log(CH_M$MeanCPUE) 
+CH_P$logMeanCPUE <- log(CH_P$MeanCPUE)
 
-IR_A$logCPUE <- log(IR_A$CPUE)
-IR_B$logCPUE <- log(IR_B$CPUE)
-IR_C$logCPUE <- log(IR_C$CPUE)
-IR_D$logCPUE <- log(IR_D$CPUE)
-IR_E$logCPUE <- log(IR_E$CPUE)
-IR_H$logCPUE <- log(IR_H$CPUE)
-IR_F$logCPUE <- log(IR_F$CPUE)
+IR_A$logMeanCPUE <- log(IR_A$MeanCPUE)
+IR_B$logMeanCPUE <- log(IR_B$MeanCPUE)
+IR_C$logMeanCPUE <- log(IR_C$MeanCPUE)
+IR_D$logMeanCPUE <- log(IR_D$MeanCPUE)
+IR_E$logMeanCPUE <- log(IR_E$MeanCPUE)
+IR_H$logMeanCPUE <- log(IR_H$MeanCPUE)
+IR_F$logMeanCPUE <- log(IR_F$MeanCPUE)
 
-JX_A$logCPUE <- log(JX_A$CPUE)
-JX_B$logCPUE <- log(JX_B$CPUE)
-JX_C$logCPUE <- log(JX_C$CPUE)
-JX_D$logCPUE <- log(JX_D$CPUE)
-JX_E$logCPUE <- log(JX_E$CPUE)
-JX_F$logCPUE <- log(JX_F$CPUE)
+JX_A$logMeanCPUE <- log(JX_A$MeanCPUE)
+JX_B$logMeanCPUE <- log(JX_B$MeanCPUE)
+JX_C$logMeanCPUE <- log(JX_C$MeanCPUE)
+JX_D$logMeanCPUE <- log(JX_D$MeanCPUE)
+JX_E$logMeanCPUE <- log(JX_E$MeanCPUE)
+JX_F$logMeanCPUE <- log(JX_F$MeanCPUE)
 
 
 ###############################################
@@ -180,7 +180,7 @@ JX_F$logCPUE <- log(JX_F$CPUE)
 
 
 #1996-2014 
-ninetysix <- cbind(TB_A$logCPUE, TB_B$logCPUE, TB_C$logCPUE, TB_D$logCPUE, TB_E$logCPUE, TB_K$logCPUE, TB_L$logCPUE, TB_M$logCPUE, TB_N$logCPUE, CK_B$logCPUE, CK_C$logCPUE, IR_D$logCPUE, IR_C$logCPUE, CH_A$logCPUE, CH_B$logCPUE, CH_C$logCPUE, CH_M$logCPUE, CH_P$logCPUE)
+ninetysix <- cbind(TB_A$logMeanCPUE, TB_B$logMeanCPUE, TB_C$logMeanCPUE, TB_D$logMeanCPUE, TB_E$logMeanCPUE, TB_K$logMeanCPUE, TB_L$logMeanCPUE, TB_M$logMeanCPUE, TB_N$logMeanCPUE, CK_B$logMeanCPUE, CK_C$logMeanCPUE, IR_D$logMeanCPUE, IR_C$logMeanCPUE, CH_A$logMeanCPUE, CH_B$logMeanCPUE, CH_C$logMeanCPUE, CH_M$logMeanCPUE, CH_P$logMeanCPUE)
 colnames(ninetysix) <- c("TB_A", "TB_B", "TB_C", "TB_D", "TB_E", "TB_K", "TB_L", "TB_M", "TB_N", "CK_B", "CK_C", "IR_D", "IR_C", "CH_A", "CH_B", "CH_C", "CH_M", "CH_N")
 
 library(ltm)
@@ -366,83 +366,83 @@ hist(TBC_ONV_resid)
 
 ###############################################
 #Add log transformed CPUE to each data frame
-#CPUEe is log transformed (CPUE +0.01) to deal with zeros present in data
+#MeanCPUEe is = log transformed (MeanCPUE +0.01) to deal with zeros present in data
 
-APA_ONV$logCPUEe <- log(APA_ONV$CPUE + 0.01)
-APA_OV$logCPUEe  <- log(APA_OV$CPUE + 0.01)
-APA_S$logCPUEe  <- log(APA_S$CPUE + 0.01)
+APA_ONV$logMeanCPUEe <- log(APA_ONV$MeanCPUE + 0.01)
+APA_OV$logMeanCPUEe  <- log(APA_OV$MeanCPUE + 0.01)
+APA_S$logMeanCPUEe  <- log(APA_S$MeanCPUE + 0.01)
 
-APB_ONV$logCPUEe <- log(APB_ONV$CPUE + 0.01)
-APB_OV$logCPUEe  <- log(APB_OV$CPUE + 0.01)
-APB_S$logCPUEe  <- log(APB_S$CPUE + 0.01)
+APB_ONV$logMeanCPUEe <- log(APB_ONV$MeanCPUE + 0.01)
+APB_OV$logMeanCPUEe  <- log(APB_OV$MeanCPUE + 0.01)
+APB_S$logMeanCPUEe  <- log(APB_S$MeanCPUE + 0.01)
 
-CHA_ONV$logCPUEe <- log(CHA_ONV$CPUE + 0.01)
-CHA_OV$logCPUEe  <- log(CHA_OV$CPUE + 0.01)
-CHA_S$logCPUEe  <- log(CHA_S$CPUE + 0.01)
+CHA_ONV$logMeanCPUEe <- log(CHA_ONV$MeanCPUE + 0.01)
+CHA_OV$logMeanCPUEe  <- log(CHA_OV$MeanCPUE + 0.01)
+CHA_S$logMeanCPUEe  <- log(CHA_S$MeanCPUE + 0.01)
 
-CHB_ONV$logCPUEe <- log(CHB_ONV$CPUE + 0.01)
-CHB_OV$logCPUEe  <- log(CHB_OV$CPUE + 0.01)
-CHB_S$logCPUEe  <- log(CHB_S$CPUE + 0.01)
+CHB_ONV$logMeanCPUEe <- log(CHB_ONV$MeanCPUE + 0.01)
+CHB_OV$logMeanCPUEe  <- log(CHB_OV$MeanCPUE + 0.01)
+CHB_S$logMeanCPUEe  <- log(CHB_S$MeanCPUE + 0.01)
 
-CHC_ONV$logCPUEe <- log(CHC_ONV$CPUE + 0.01)
-CHC_OV$logCPUEe  <- log(CHC_OV$CPUE + 0.01)
-CHC_S$logCPUEe  <- log(CHC_S$CPUE + 0.01)
+CHC_ONV$logMeanCPUEe <- log(CHC_ONV$MeanCPUE + 0.01)
+CHC_OV$logMeanCPUEe  <- log(CHC_OV$MeanCPUE + 0.01)
+CHC_S$logMeanCPUEe  <- log(CHC_S$MeanCPUE + 0.01)
 
-CHD_ONV$logCPUEe <- log(CHD_ONV$CPUE + 0.01)
-CHD_OV$logCPUEe  <- log(CHD_OV$CPUE + 0.01)
-CHD_S$logCPUEe  <- log(CHD_S$CPUE + 0.01)
+CHD_ONV$logMeanCPUEe <- log(CHD_ONV$MeanCPUE + 0.01)
+CHD_OV$logMeanCPUEe  <- log(CHD_OV$MeanCPUE + 0.01)
+CHD_S$logMeanCPUEe  <- log(CHD_S$MeanCPUE + 0.01)
 
-CKB_ONV$logCPUEe <- log(CKB_ONV$CPUE + 0.01)
-CKB_OV$logCPUEe  <- log(CKB_OV$CPUE + 0.01)
-CKB_S$logCPUEe  <- log(CKB_S$CPUE + 0.01)
+CKB_ONV$logMeanCPUEe <- log(CKB_ONV$MeanCPUE + 0.01)
+CKB_OV$logMeanCPUEe  <- log(CKB_OV$MeanCPUE + 0.01)
+CKB_S$logMeanCPUEe  <- log(CKB_S$MeanCPUE + 0.01)
 
-CKC_ONV$logCPUEe <- log(CKC_ONV$CPUE + 0.01)
-CKC_OV$logCPUEe  <- log(CKC_OV$CPUE + 0.01)
-CKC_S$logCPUEe  <- log(CKC_S$CPUE + 0.01)
+CKC_ONV$logMeanCPUEe <- log(CKC_ONV$MeanCPUE + 0.01)
+CKC_OV$logMeanCPUEe  <- log(CKC_OV$MeanCPUE + 0.01)
+CKC_S$logMeanCPUEe  <- log(CKC_S$MeanCPUE + 0.01)
 
-IRA_ONV$logCPUEe <- log(IRA_ONV$CPUE + 0.01)
-IRA_OV$logCPUEe  <- log(IRA_OV$CPUE + 0.01)
-IRA_S$logCPUEe  <- log(IRA_S$CPUE + 0.01)
+IRA_ONV$logMeanCPUEe <- log(IRA_ONV$MeanCPUE + 0.01)
+IRA_OV$logMeanCPUEe  <- log(IRA_OV$MeanCPUE + 0.01)
+IRA_S$logMeanCPUEe  <- log(IRA_S$MeanCPUE + 0.01)
 
-IRB_ONV$logCPUEe <- log(IRB_ONV$CPUE + 0.01)
-IRB_OV$logCPUEe  <- log(IRB_OV$CPUE + 0.01)
-IRB_S$logCPUEe  <- log(IRB_S$CPUE + 0.01)
+IRB_ONV$logMeanCPUEe <- log(IRB_ONV$MeanCPUE + 0.01)
+IRB_OV$logMeanCPUEe  <- log(IRB_OV$MeanCPUE + 0.01)
+IRB_S$logMeanCPUEe  <- log(IRB_S$MeanCPUE + 0.01)
 
-IRC_ONV$logCPUEe <- log(IRC_ONV$CPUE + 0.01)
-IRC_OV$logCPUEe  <- log(IRC_OV$CPUE + 0.01)
-IRC_S$logCPUEe  <- log(IRC_S$CPUE + 0.01)
+IRC_ONV$logMeanCPUEe <- log(IRC_ONV$MeanCPUE + 0.01)
+IRC_OV$logMeanCPUEe  <- log(IRC_OV$MeanCPUE + 0.01)
+IRC_S$logMeanCPUEe  <- log(IRC_S$MeanCPUE + 0.01)
 
-IRD_ONV$logCPUEe <- log(IRD_ONV$CPUE + 0.01)
-IRD_OV$logCPUEe  <- log(IRD_OV$CPUE + 0.01)
-IRD_S$logCPUEe  <- log(IRD_S$CPUE + 0.01)
+IRD_ONV$logMeanCPUEe <- log(IRD_ONV$MeanCPUE + 0.01)
+IRD_OV$logMeanCPUEe  <- log(IRD_OV$MeanCPUE + 0.01)
+IRD_S$logMeanCPUEe  <- log(IRD_S$MeanCPUE + 0.01)
 
-IRE_ONV$logCPUEe <- log(IRE_ONV$CPUE + 0.01)
-IRE_OV$logCPUEe  <- log(IRE_OV$CPUE + 0.01)
-IRE_S$logCPUEe  <- log(IRE_S$CPUE + 0.01)
+IRE_ONV$logMeanCPUEe <- log(IRE_ONV$MeanCPUE + 0.01)
+IRE_OV$logMeanCPUEe  <- log(IRE_OV$MeanCPUE + 0.01)
+IRE_S$logMeanCPUEe  <- log(IRE_S$MeanCPUE + 0.01)
 
-IRH_ONV$logCPUEe <- log(IRH_ONV$CPUE + 0.01)
-IRH_OV$logCPUEe  <- log(IRH_OV$CPUE + 0.01)
-IRH_S$logCPUEe  <- log(IRH_S$CPUE + 0.01)
+IRH_ONV$logMeanCPUEe <- log(IRH_ONV$MeanCPUE + 0.01)
+IRH_OV$logMeanCPUEe  <- log(IRH_OV$MeanCPUE + 0.01)
+IRH_S$logMeanCPUEe  <- log(IRH_S$MeanCPUE + 0.01)
 
-TBA_ONV$logCPUEe <- log(TBA_ONV$CPUE + 0.01)
-TBA_OV$logCPUEe  <- log(TBA_OV$CPUE + 0.01)
-TBA_S$logCPUEe  <- log(TBA_S$CPUE + 0.01)
+TBA_ONV$logMeanCPUEe <- log(TBA_ONV$MeanCPUE + 0.01)
+TBA_OV$logMeanCPUEe  <- log(TBA_OV$MeanCPUE + 0.01)
+TBA_S$logMeanCPUEe  <- log(TBA_S$MeanCPUE + 0.01)
 
-TBB_ONV$logCPUEe <- log(TBB_ONV$CPUE + 0.01)
-TBB_OV$logCPUEe  <- log(TBB_OV$CPUE + 0.01)
-TBB_S$logCPUEe  <- log(TBB_S$CPUE + 0.01)
+TBB_ONV$logMeanCPUEe <- log(TBB_ONV$MeanCPUE + 0.01)
+TBB_OV$logMeanCPUEe  <- log(TBB_OV$MeanCPUE + 0.01)
+TBB_S$logMeanCPUEe  <- log(TBB_S$MeanCPUE + 0.01)
 
-TBC_ONV$logCPUEe <- log(TBC_ONV$CPUE + 0.01)
-TBC_OV$logCPUEe  <- log(TBC_OV$CPUE + 0.01)
-TBC_S$logCPUEe  <- log(TBC_S$CPUE + 0.01)
+TBC_ONV$logMeanCPUEe <- log(TBC_ONV$MeanCPUE + 0.01)
+TBC_OV$logMeanCPUEe  <- log(TBC_OV$MeanCPUE + 0.01)
+TBC_S$logMeanCPUEe  <- log(TBC_S$MeanCPUE + 0.01)
 
-TBD_ONV$logCPUEe <- log(TBD_ONV$CPUE + 0.01)
-TBD_OV$logCPUEe  <- log(TBD_OV$CPUE + 0.01)
-TBD_S$logCPUEe  <- log(TBD_S$CPUE + 0.01)
+TBD_ONV$logMeanCPUEe <- log(TBD_ONV$MeanCPUE + 0.01)
+TBD_OV$logMeanCPUEe  <- log(TBD_OV$MeanCPUE + 0.01)
+TBD_S$logMeanCPUEe  <- log(TBD_S$MeanCPUE + 0.01)
 
-TBE_ONV$logCPUEe <- log(TBE_ONV$CPUE + 0.01)
-TBE_OV$logCPUEe  <- log(TBE_OV$CPUE + 0.01)
-TBE_S$logCPUEe  <- log(TBE_S$CPUE + 0.01)
+TBE_ONV$logMeanCPUEe <- log(TBE_ONV$MeanCPUE + 0.01)
+TBE_OV$logMeanCPUEe  <- log(TBE_OV$MeanCPUE + 0.01)
+TBE_S$logMeanCPUEe  <- log(TBE_S$MeanCPUE + 0.01)
 
 ###############################################
 # Correlation between the ecological phenomenon of interest  using all years for which data from both sites are available

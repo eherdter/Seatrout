@@ -72,11 +72,18 @@ AP_C <- read.csv("AP_C.csv")
 
 
 AP_A_OV <- subset(AP_A, Stratum =="A")
+  write.csv(AP_A_OV, "AP_A_OV.csv")
 AP_B_OV <- subset(AP_B, Stratum=="A")
+  write.csv(AP_B_OV, "AP_B_OV.csv")
 AP_A_ONV <- subset(AP_A, Stratum=="B")
+  write.csv(AP_A_ONV, "AP_A_ONV.csv")
 AP_B_ONV <- subset(AP_B, Stratum=="B")
+  write.csv(AP_A_ONV, "AP_B_ONV.csv")
 AP_A_S <- subset(AP_A, Stratum=="S")
+  write.csv(AP_A_S, "AP_A_S.csv")
 AP_B_S <- subset(AP_B, Stratum=="S")
+  write.csv(AP_B_S, "AP_B_S.csv")
+
 library(plyr)
 APA_OV_sum <- ddply(AP_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   APA_OV_sum$CPUE <- APA_OV_sum$TotalNumberofAnimalsCollectedinHaul/APA_OV_sum$NumberofHauls
@@ -94,17 +101,29 @@ APB_S_sum <- ddply(AP_B_S, c("year", "month"), summarise, NumberofHauls=length(R
   APB_S_sum$CPUE <- APB_S_sum$TotalNumberofAnimalsCollectedinHaul/APB_S_sum$NumberofHauls
 
 CH_A_OV <- subset(CH_A, Stratum=="A")
+  write.csv(CH_A_OV, "CH_A_OV.csv")
 CH_B_OV <- subset(CH_B, Stratum=="A")
+  write.csv(CH_B_OV, "CH_B_OV.csv")
 CH_C_OV <- subset(CH_C, Stratum=="A")
+  write.csv(CH_C_OV, "CH_C_OV.csv")
 CH_D_OV <- subset(CH_D, Stratum=="A")
+  write.csv(CH_D_OV, "CH_D_OV.csv")
 CH_A_ONV <- subset(CH_A, Stratum=="B")
+  write.csv(CH_A_ONV, "CH_A_ONV.csv")
 CH_B_ONV <- subset(CH_B, Stratum=="B")
+  write.csv(CH_B_ONV, "CH_B_ONV.csv")
 CH_C_ONV <- subset(CH_C, Stratum=="B")
+  write.csv(CH_C_ONV, "CH_C_ONV.csv")
 CH_D_ONV <- subset(CH_D, Stratum=="B")
+  write.csv(CH_D_ONV, "CH_D_ONV.csv")
 CH_A_S <- subset(CH_A, Stratum=="S")
+  write.csv(CH_A_S, "CH_A_S.csv")
 CH_B_S <- subset(CH_B, Stratum=="S")
+  write.csv(CH_B_S, "CH_B_S.csv")
 CH_C_S <- subset(CH_C, Stratum=="S")
+  write.csv(CH_C_S, "CH_C_S.csv")
 CH_D_S <- subset(CH_D, Stratum=="S")
+  write.csv(CH_D_S, "CH_D_S.csv")
 
 CHA_OV_sum <- ddply(CH_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   CHA_OV_sum$CPUE <- CHA_OV_sum$TotalNumberofAnimalsCollectedinHaul/CHA_OV_sum$NumberofHauls
@@ -135,11 +154,17 @@ CHD_S_sum <- ddply(CH_D_S, c("year", "month"), summarise, NumberofHauls=length(R
 
 
 CK_B_OV <- subset(CK_B, Stratum=="A")
+  write.csv(CK_B_OV, "CK_B_OV.csv")
 CK_C_OV <- subset(CK_C, Stratum=="A")
+  write.csv(CK_C_OV, "CK_C_OV.csv")
 CK_B_ONV <- subset(CK_B, Stratum=="B")
+  write.csv(CK_B_ONV, "CK_B_ONV.csv")
 CK_C_ONV <- subset(CK_C, Stratum=="B")
+  write.csv(CK_C_ONV, "CK_C_ONV.csv")
 CK_B_S <- subset(CK_B, Stratum=="S")
+  write.csv(CK_B_S, "CK_B_S.csv")
 CK_C_S <- subset(CK_C, Stratum=="S")
+  write.csv(CK_C_S, "CK_C_S.csv")
 
 CKB_OV_sum <- ddply(CK_B_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   CKB_OV_sum$CPUE <- CKB_OV_sum$TotalNumberofAnimalsCollectedinHaul/CKB_OV_sum$NumberofHauls
@@ -158,23 +183,41 @@ CKC_S_sum <- ddply(CK_C_S, c("year", "month"), summarise, NumberofHauls=length(R
 
 
 IR_A_OV <- subset(IR_A, Stratum=="A")
+  write.csv(IR_A_OV, "IR_A_OV.csv")
 IR_B_OV <- subset(IR_B, Stratum=="A")
+  write.csv(IR_B_OV, "IR_B_OV.csv")
 IR_C_OV <- subset(IR_C, Stratum=="A")
+  write.csv(IR_C_OV, "IR_C_OV.csv")
 IR_D_OV <- subset(IR_D, Stratum=="A")
+  write.csv(IR_D_OV, "IR_D_OV.csv")
 IR_E_OV <- subset(IR_E, Stratum=="A")
+  write.csv(IR_E_OV, "IR_E_OV.csv")
 IR_H_OV <- subset(IR_H, Stratum=="A")
+  write.csv(IR_H_OV, "IR_H_OV.csv")
 IR_A_ONV <- subset(IR_A, Stratum=="B")
+  write.csv(IR_A_ONV, "IR_A_ONV.csv")
 IR_B_ONV <- subset(IR_B, Stratum=="B")
+  write.csv(IR_B_ONV, "IR_B_ONV.csv")
 IR_C_ONV <- subset(IR_C, Stratum=="B")
+  write.csv(IR_C_ONV, "IR_C_ONV.csv")
 IR_D_ONV <- subset(IR_D, Stratum=="B")
+  write.csv(IR_D_ONV, "IR_D_ONV.csv")
 IR_E_ONV <- subset(IR_E, Stratum=="B")
+  write.csv(IR_E_ONV, "IR_E_ONV.csv")
 IR_H_ONV <- subset(IR_H, Stratum=="B")
+  write.csv(IR_H_ONV, "IR_H_ONV.csv")
 IR_A_S <- subset(IR_A, Stratum=="S")
+  write.csv(IR_A_S, "IR_A_S.csv")
 IR_B_S <- subset(IR_B, Stratum=="S")
+  write.csv(IR_B_S, "IR_B_S.csv")
 IR_C_S <- subset(IR_C, Stratum=="S")
+  write.csv(IR_C_S, "IR_C_S.csv")
 IR_D_S <- subset(IR_D, Stratum=="S")
+  write.csv(IR_D_S, "IR_D_S.csv")
 IR_E_S <- subset(IR_E, Stratum=="S")
+  write.csv(IR_E_S, "IR_E_S.csv")
 IR_H_S <- subset(IR_H, Stratum=="S")
+  write.csv(IR_H_S, "IR_H_S.csv")
 
 IRA_OV_sum <- ddply(IR_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   IRA_OV_sum$CPUE <- IRA_OV_sum$TotalNumberofAnimalsCollectedinHaul/IRA_OV_sum$NumberofHauls
@@ -216,20 +259,35 @@ IRH_S_sum <- ddply(IR_H_S, c("year", "month"), summarise, NumberofHauls=length(R
   IRH_S_sum$CPUE <- IRH_S_sum$TotalNumberofAnimalsCollectedinHaul/IRH_S_sum$NumberofHauls
 
 TB_A_OV <- subset(TB_A, Stratum=="A")
+  write.csv(TB_A_OV, "TB_A_OV.csv")
 TB_B_OV <- subset(TB_B, Stratum=="A")
+  write.csv(TB_B_OV, "TB_B_OV.csv")
 TB_C_OV <- subset(TB_C, Stratum=="A")
+  write.csv(TB_C_OV, "TB_C_OV.csv")
 TB_D_OV <- subset(TB_D, Stratum=="A")
+  write.csv(TB_D_OV, "TB_D_OV.csv")
 TB_E_OV <- subset(TB_E, Stratum=="A")
+  write.csv(TB_E_OV, "TB_E_OV.csv")
 TB_A_ONV <- subset(TB_A, Stratum=="B")
+  write.csv(TB_A_ONV, "TB_A_ONV.csv")
 TB_B_ONV <- subset(TB_B, Stratum=="B")
+  write.csv(TB_B_ONV, "TB_B_ONV.csv")
 TB_C_ONV <- subset(TB_C, Stratum=="B")
+  write.csv(TB_C_ONV, "TB_C_ONV.csv")
 TB_D_ONV <- subset(TB_D, Stratum=="B")
+  write.csv(TB_D_ONV, "TB_D_ONV.csv")
 TB_E_ONV <- subset(TB_E, Stratum=="B")
+  write.csv(TB_E_ONV, "TB_E_ONV.csv")
 TB_A_S <- subset(TB_A, Stratum=="S")
+  write.csv(TB_A_S, "TB_A_S.csv")
 TB_B_S <- subset(TB_B, Stratum=="S")
+  write.csv(TB_B_S, "TB_B_S.csv")
 TB_C_S <- subset(TB_C, Stratum=="S")
+  write.csv(TB_C_S, "TB_C_S.csv")
 TB_D_S <- subset(TB_D, Stratum=="S")
+  write.csv(TB_D_S, "TB_D_S.csv")
 TB_E_S <- subset(TB_E, Stratum=="S")
+  write.csv(TB_E_S, "TB_E_S.csv")
 
 TBA_OV_sum <- ddply(TB_A_OV, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
   TBA_OV_sum$CPUE <- TBA_OV_sum$TotalNumberofAnimalsCollectedinHaul/TBA_OV_sum$NumberofHauls
@@ -268,191 +326,134 @@ TBE_S_sum <- ddply(TB_E_S, c("year", "month"), summarise, NumberofHauls=length(R
 # >>>>>>>>> SUM recruitment over season ###
 
 
-APA_OV_sumrec <- ddply(APA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APA_OV_sumrec$CPUE <- APA_OV_sumrec$TotalCollected/APA_OV_sumrec$TotalNumberofHauls
+APA_OV_sumrec <- ddply(APA_OV_sum, c("year"), summarise,  NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(APA_OV_sumrec, "APA_OV_sumrec.csv")
-APB_OV_sumrec <- ddply(APB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APB_OV_sumrec$CPUE <- APB_OV_sumrec$TotalCollected/APB_OV_sumrec$TotalNumberofHauls
-    write.csv(APB_OV_sumrec, "APB_OV_sumrec.csv")
+APB_OV_sumrec <- ddply(APB_OV_sum, c("year"), summarise,  NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+      write.csv(APB_OV_sumrec, "APB_OV_sumrec.csv")
 
-APA_ONV_sumrec <- ddply(APA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APA_ONV_sumrec$CPUE <- APA_ONV_sumrec$TotalCollected/APA_ONV_sumrec$TotalNumberofHauls
+APA_ONV_sumrec <- ddply(APA_ONV_sum, c("year"), summarise,  NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(APA_ONV_sumrec, "APA_ONV_sumrec.csv")
-APB_ONV_sumrec <- ddply(APB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APB_ONV_sumrec$CPUE <- APB_ONV_sumrec$TotalCollected/APB_ONV_sumrec$TotalNumberofHauls
-    write.csv(APA_ONV_sumrec, "APB_ONV_sumrec.csv")
+APB_ONV_sumrec <- ddply(APB_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+    write.csv(APB_ONV_sumrec, "APB_ONV_sumrec.csv")
 
-APA_S_sumrec <- ddply(APA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APA_S_sumrec$CPUE <- APA_S_sumrec$TotalCollected/APA_S_sumrec$TotalNumberofHauls
+APA_S_sumrec <- ddply(APA_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(APA_S_sumrec, "APA_S_sumrec.csv")
-APB_S_sumrec <- ddply(APB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  APB_S_sumrec$CPUE <- APB_S_sumrec$TotalCollected/APB_S_sumrec$TotalNumberofHauls
+APB_S_sumrec <- ddply(APB_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(APB_S_sumrec, "APB_S_sumrec.csv")
 
-CHA_OV_sumrec <- ddply(CHA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHA_OV_sumrec$CPUE <- CHA_OV_sumrec$TotalCollected/CHA_OV_sumrec$TotalNumberofHauls
+CHA_OV_sumrec <- ddply(CHA_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHA_OV_sumrec, "CHA_OV_sumrec.csv")
-CHB_OV_sumrec <- ddply(CHB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHB_OV_sumrec$CPUE <- CHB_OV_sumrec$TotalCollected/CHB_OV_sumrec$TotalNumberofHauls
+CHB_OV_sumrec <- ddply(CHB_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHB_OV_sumrec, "CHB_OV_sumrec.csv")
-CHC_OV_sumrec <- ddply(CHC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHC_OV_sumrec$CPUE <- CHC_OV_sumrec$TotalCollected/CHC_OV_sumrec$TotalNumberofHauls
+CHC_OV_sumrec <- ddply(CHC_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHC_OV_sumrec, "CHC_OV_sumrec.csv")
-CHD_OV_sumrec <- ddply(CHD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHD_OV_sumrec$CPUE <- CHD_OV_sumrec$TotalCollected/CHD_OV_sumrec$TotalNumberofHauls
+CHD_OV_sumrec <- ddply(CHD_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHD_OV_sumrec, "CHD_OV_sumrec.csv")
 
 
-CHA_ONV_sumrec <- ddply(CHA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHA_ONV_sumrec$CPUE <- CHA_ONV_sumrec$TotalCollected/CHA_ONV_sumrec$TotalNumberofHauls
+CHA_ONV_sumrec <- ddply(CHA_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHA_ONV_sumrec, "CHA_ONV_sumrec.csv")
-CHB_ONV_sumrec <- ddply(CHB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHB_ONV_sumrec$CPUE <- CHB_ONV_sumrec$TotalCollected/CHB_ONV_sumrec$TotalNumberofHauls
+CHB_ONV_sumrec <- ddply(CHB_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHB_ONV_sumrec, "CHB_ONV_sumrec.csv")
-CHC_ONV_sumrec <- ddply(CHC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHC_ONV_sumrec$CPUE <- CHC_ONV_sumrec$TotalCollected/CHC_ONV_sumrec$TotalNumberofHauls
+CHC_ONV_sumrec <- ddply(CHC_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHC_ONV_sumrec, "CHC_ONV_sumrec.csv")
-CHD_ONV_sumrec <- ddply(CHD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHD_ONV_sumrec$CPUE <- CHD_ONV_sumrec$TotalCollected/CHD_ONV_sumrec$TotalNumberofHauls
+CHD_ONV_sumrec <- ddply(CHD_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHD_ONV_sumrec, "CHD_ONV_sumrec.csv")
 
-CHA_S_sumrec <- ddply(CHA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHA_S_sumrec$CPUE <- CHA_S_sumrec$TotalCollected/CHA_S_sumrec$TotalNumberofHauls
+CHA_S_sumrec <- ddply(CHA_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHA_S_sumrec, "CHA_S_sumrec.csv")
-CHB_S_sumrec <- ddply(CHB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHB_S_sumrec$CPUE <- CHB_S_sumrec$TotalCollected/CHB_S_sumrec$TotalNumberofHauls
+CHB_S_sumrec <- ddply(CHB_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHB_S_sumrec, "CHB_S_sumrec.csv")
-CHC_S_sumrec <- ddply(CHC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHC_S_sumrec$CPUE <- CHC_S_sumrec$TotalCollected/CHC_S_sumrec$TotalNumberofHauls
-    write.csv(CHC_S_sumrec, "CHC_S_sumrec.csv")
-CHD_S_sumrec <- ddply(CHD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CHD_S_sumrec$CPUE <- CHD_S_sumrec$TotalCollected/CHD_S_sumrec$TotalNumberofHauls
+CHC_S_sumrec <- ddply(CHC_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(CHC_S_sumrec, "CHC_S_sumrec.csv")
+CHD_S_sumrec <- ddply(CHD_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CHD_S_sumrec, "CHD_S_sumrec.csv")
 
-CKB_OV_sumrec <- ddply(CKB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKB_OV_sumrec$CPUE <- CKB_OV_sumrec$TotalCollected/CKB_OV_sumrec$TotalNumberofHauls
+CKB_OV_sumrec <- ddply(CKB_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKB_OV_sumrec, "CKB_OV_sumrec.csv")
-CKC_OV_sumrec <- ddply(CKC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKC_OV_sumrec$CPUE <- CKC_OV_sumrec$TotalCollected/CKC_OV_sumrec$TotalNumberofHauls
+CKC_OV_sumrec <- ddply(CKC_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKC_OV_sumrec, "CKC_OV_sumrec.csv")
 
-CKB_ONV_sumrec <- ddply(CKB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKB_ONV_sumrec$CPUE <- CKB_ONV_sumrec$TotalCollected/CKB_ONV_sumrec$TotalNumberofHauls
+CKB_ONV_sumrec <- ddply(CKB_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKB_ONV_sumrec, "CKB_ONV_sumrec.csv")
-CKC_ONV_sumrec <- ddply(CKC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKC_ONV_sumrec$CPUE <- CKC_ONV_sumrec$TotalCollected/CKC_ONV_sumrec$TotalNumberofHauls
+CKC_ONV_sumrec <- ddply(CKC_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKC_ONV_sumrec, "CKC_ONV_sumrec.csv")
 
-CKB_S_sumrec <- ddply(CKB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKB_S_sumrec$CPUE <- CKB_S_sumrec$TotalCollected/CKB_S_sumrec$TotalNumberofHauls
+CKB_S_sumrec <- ddply(CKB_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKB_S_sumrec, "CKB_S_sumrec.csv")
-CKC_S_sumrec <- ddply(CKC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  CKC_S_sumrec$CPUE <- CKC_S_sumrec$TotalCollected/CKC_S_sumrec$TotalNumberofHauls
+CKC_S_sumrec <- ddply(CKC_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(CKC_S_sumrec, "CKC_S_sumrec.csv")
 
-IRA_OV_sumrec <- ddply(IRA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRA_OV_sumrec$CPUE <- IRA_OV_sumrec$TotalCollected/IRA_OV_sumrec$TotalNumberofHauls
-    write.csv(IRA_OV_sumrec, "IRA_OV_sumrec.csv")
-IRB_OV_sumrec <- ddply(IRB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRB_OV_sumrec$CPUE <- IRB_OV_sumrec$TotalCollected/IRB_OV_sumrec$TotalNumberofHauls
+IRA_OV_sumrec <- ddply(IRA_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(IRA_OV_sumrec, "IRA_OV_sumrec.csv")
+IRB_OV_sumrec <- ddply(IRB_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRB_OV_sumrec, "IRB_OV_sumrec.csv")
-IRC_OV_sumrec <- ddply(IRC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRC_OV_sumrec$CPUE <- IRC_OV_sumrec$TotalCollected/IRC_OV_sumrec$TotalNumberofHauls
+IRC_OV_sumrec <- ddply(IRC_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRC_OV_sumrec, "IRC_OV_sumrec.csv")
-IRD_OV_sumrec <- ddply(IRD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRD_OV_sumrec$CPUE <- IRD_OV_sumrec$TotalCollected/IRD_OV_sumrec$TotalNumberofHauls
+IRD_OV_sumrec <- ddply(IRD_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRD_OV_sumrec, "IRD_OV_sumrec.csv")
-IRE_OV_sumrec <- ddply(IRE_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRE_OV_sumrec$CPUE <- IRE_OV_sumrec$TotalCollected/IRE_OV_sumrec$TotalNumberofHauls
+IRE_OV_sumrec <- ddply(IRE_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRE_OV_sumrec, "IRE_OV_sumrec.csv")
-IRH_OV_sumrec <- ddply(IRH_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRH_OV_sumrec$CPUE <- IRH_OV_sumrec$TotalCollected/IRH_OV_sumrec$TotalNumberofHauls
+IRH_OV_sumrec <- ddply(IRH_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRH_OV_sumrec, "IRH_OV_sumrec.csv")
 
-IRA_ONV_sumrec <- ddply(IRA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRA_ONV_sumrec$CPUE <- IRA_ONV_sumrec$TotalCollected/IRA_ONV_sumrec$TotalNumberofHauls
-    write.csv(IRA_ONV_sumrec, "IRA_ONV_sumrec.csv")
-IRB_ONV_sumrec <- ddply(IRB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRB_ONV_sumrec$CPUE <- IRB_ONV_sumrec$TotalCollected/IRB_ONV_sumrec$TotalNumberofHauls
+IRA_ONV_sumrec <- ddply(IRA_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(IRA_ONV_sumrec, "IRA_ONV_sumrec.csv")
+IRB_ONV_sumrec <- ddply(IRB_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRB_ONV_sumrec, "IRB_ONV_sumrec.csv")
-IRC_ONV_sumrec <- ddply(IRC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRC_ONV_sumrec$CPUE <- IRC_ONV_sumrec$TotalCollected/IRC_ONV_sumrec$TotalNumberofHauls
-    write.csv(IRC_ONV_sumrec, "IRC_ONV_sumrec.csv")
-IRD_ONV_sumrec <- ddply(IRD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRD_ONV_sumrec$CPUE <- IRD_ONV_sumrec$TotalCollected/IRD_ONV_sumrec$TotalNumberofHauls
+IRC_ONV_sumrec <- ddply(IRC_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(IRC_ONV_sumrec, "IRC_ONV_sumrec.csv")
+IRD_ONV_sumrec <- ddply(IRD_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRD_ONV_sumrec, "IRD_ONV_sumrec.csv")
-IRE_ONV_sumrec <- ddply(IRE_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRE_ONV_sumrec$CPUE <- IRE_ONV_sumrec$TotalCollected/IRE_ONV_sumrec$TotalNumberofHauls
+IRE_ONV_sumrec <- ddply(IRE_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRE_ONV_sumrec, "IRE_ONV_sumrec.csv")
-IRH_ONV_sumrec <- ddply(IRH_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRH_ONV_sumrec$CPUE <- IRH_ONV_sumrec$TotalCollected/IRH_ONV_sumrec$TotalNumberofHauls
+IRH_ONV_sumrec <- ddply(IRH_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRH_ONV_sumrec, "IRH_ONV_sumrec.csv")
 
-IRA_S_sumrec <- ddply(IRA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRA_S_sumrec$CPUE <- IRA_S_sumrec$TotalCollected/IRA_S_sumrec$TotalNumberofHauls
+IRA_S_sumrec <- ddply(IRA_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRA_S_sumrec, "IRA_S_sumrec.csv")
-IRB_S_sumrec <- ddply(IRB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRB_S_sumrec$CPUE <- IRB_S_sumrec$TotalCollected/IRB_S_sumrec$TotalNumberofHauls
+IRB_S_sumrec <- ddply(IRB_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRB_S_sumrec, "IRB_S_sumrec.csv")
-IRC_S_sumrec <- ddply(IRC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRC_S_sumrec$CPUE <- IRC_S_sumrec$TotalCollected/IRC_S_sumrec$TotalNumberofHauls
+IRC_S_sumrec <- ddply(IRC_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRC_S_sumrec, "IRC_S_sumrec.csv")
-IRD_S_sumrec <- ddply(IRD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRD_S_sumrec$CPUE <- IRD_S_sumrec$TotalCollected/IRD_S_sumrec$TotalNumberofHauls
+IRD_S_sumrec <- ddply(IRD_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRD_S_sumrec, "IRD_S_sumrec.csv")
-IRE_S_sumrec <- ddply(IRE_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRE_S_sumrec$CPUE <- IRE_S_sumrec$TotalCollected/IRE_S_sumrec$TotalNumberofHauls
-    write.csv(IRE_S_sumrec, "IRE_S_sumrec.csv")
-IRH_S_sumrec <- ddply(IRH_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  IRH_S_sumrec$CPUE <- IRH_S_sumrec$TotalCollected/IRH_S_sumrec$TotalNumberofHauls
+IRE_S_sumrec <- ddply(IRE_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(IRE_S_sumrec, "IRE_S_sumrec.csv")
+IRH_S_sumrec <- ddply(IRH_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(IRH_S_sumrec, "IRH_S_sumrec.csv")
 
-TBA_OV_sumrec <- ddply(TBA_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBA_OV_sumrec$CPUE <- TBA_OV_sumrec$TotalCollected/TBA_OV_sumrec$TotalNumberofHauls
-    write.csv(TBA_OV_sumrec, "TBA_OV_sumrec.csv")
-TBB_OV_sumrec <- ddply(TBB_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBB_OV_sumrec$CPUE <- TBB_OV_sumrec$TotalCollected/TBB_OV_sumrec$TotalNumberofHauls
+TBA_OV_sumrec <- ddply(TBA_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(TBA_OV_sumrec, "TBA_OV_sumrec.csv")
+TBB_OV_sumrec <- ddply(TBB_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBB_OV_sumrec, "TBB_OV_sumrec.csv")
-TBC_OV_sumrec <- ddply(TBC_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBC_OV_sumrec$CPUE <- TBC_OV_sumrec$TotalCollected/TBC_OV_sumrec$TotalNumberofHauls
-    write.csv(TBC_OV_sumrec, "TBC_OV_sumrec.csv")
-TBD_OV_sumrec <- ddply(TBD_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBD_OV_sumrec$CPUE <- TBD_OV_sumrec$TotalCollected/TBD_OV_sumrec$TotalNumberofHauls
+TBC_OV_sumrec <- ddply(TBC_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(TBC_OV_sumrec, "TBC_OV_sumrec.csv")
+TBD_OV_sumrec <- ddply(TBD_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBD_OV_sumrec, "TBD_OV_sumrec.csv")
-TBE_OV_sumrec <- ddply(TBE_OV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBE_OV_sumrec$CPUE <- TBE_OV_sumrec$TotalCollected/TBE_OV_sumrec$TotalNumberofHauls
-    write.csv(TBE_OV_sumrec, "TBE_OV_sumrec.csv")
+TBE_OV_sumrec <- ddply(TBE_OV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(TBE_OV_sumrec, "TBE_OV_sumrec.csv")
 
-TBA_ONV_sumrec <- ddply(TBA_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBA_ONV_sumrec$CPUE <- TBA_ONV_sumrec$TotalCollected/TBA_ONV_sumrec$TotalNumberofHauls
-    write.csv(TBA_ONV_sumrec, "TBA_ONV_sumrec.csv")
-TBB_ONV_sumrec <- ddply(TBB_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBB_ONV_sumrec$CPUE <- TBB_ONV_sumrec$TotalCollected/TBB_ONV_sumrec$TotalNumberofHauls
+TBA_ONV_sumrec <- ddply(TBA_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+     write.csv(TBA_ONV_sumrec, "TBA_ONV_sumrec.csv")
+TBB_ONV_sumrec <- ddply(TBB_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBB_ONV_sumrec, "TBB_ONV_sumrec.csv")
-TBC_ONV_sumrec <- ddply(TBC_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBC_ONV_sumrec$CPUE <- TBC_ONV_sumrec$TotalCollected/TBC_ONV_sumrec$TotalNumberofHauls
+TBC_ONV_sumrec <- ddply(TBC_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBC_ONV_sumrec, "TBC_ONV_sumrec.csv")
-TBD_ONV_sumrec <- ddply(TBD_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBD_ONV_sumrec$CPUE <- TBD_ONV_sumrec$TotalCollected/TBD_ONV_sumrec$TotalNumberofHauls
+TBD_ONV_sumrec <- ddply(TBD_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBD_ONV_sumrec, "TBD_ONV_sumrec.csv")
-TBE_ONV_sumrec <- ddply(TBE_ONV_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBE_ONV_sumrec$CPUE <- TBE_ONV_sumrec$TotalCollected/TBE_ONV_sumrec$TotalNumberofHauls
+TBE_ONV_sumrec <- ddply(TBE_ONV_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBE_ONV_sumrec, "TBE_ONV_sumrec.csv")
 
-TBA_S_sumrec <- ddply(TBA_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBA_S_sumrec$CPUE <- TBA_S_sumrec$TotalCollected/TBA_S_sumrec$TotalNumberofHauls
+TBA_S_sumrec <- ddply(TBA_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBA_S_sumrec, "TBA_S_sumrec.csv")
-TBB_S_sumrec <- ddply(TBB_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBB_S_sumrec$CPUE <- TBB_S_sumrec$TotalCollected/TBB_S_sumrec$TotalNumberofHauls
+TBB_S_sumrec <- ddply(TBB_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBB_S_sumrec, "TBB_S_sumrec.csv")
-TBC_S_sumrec <- ddply(TBC_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBC_S_sumrec$CPUE <- TBC_S_sumrec$TotalCollected/TBC_S_sumrec$TotalNumberofHauls
+TBC_S_sumrec <- ddply(TBC_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBC_S_sumrec, "TBC_S_sumrec.csv")
-TBD_S_sumrec <- ddply(TBD_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBD_S_sumrec$CPUE <- TBD_S_sumrec$TotalCollected/TBD_S_sumrec$TotalNumberofHauls
+TBD_S_sumrec <- ddply(TBD_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBD_S_sumrec, "TBD_S_sumrec.csv")
-TBE_S_sumrec <- ddply(TBE_S_sum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls) )
-  TBE_S_sumrec$CPUE <- TBE_S_sumrec$TotalCollected/TBE_S_sumrec$TotalNumberofHauls
+TBE_S_sumrec <- ddply(TBE_S_sum, c("year"), summarise, NumberSamplingMonths=length(month), MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
     write.csv(TBE_S_sumrec, "TBE_S_sumrec.csv")
 
 
@@ -494,15 +495,15 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 
 library(ggplot2)
-plot_APA_S_sumrec <- ggplot(APA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APA_S_sumrec <- ggplot(APA_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Shoreline Stratum")
 
-plot_APB_S_sumrec <- ggplot(APB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APB_S_sumrec <- ggplot(APB_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -510,15 +511,15 @@ plot_APB_S_sumrec <- ggplot(APB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
 
 multiplot(plot_APB_S_sumrec,plot_APB_S_sumrec, cols=1)
 
-plot_APA_OV_sumrec <- ggplot(APA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APA_OV_sumrec <- ggplot(APA_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore Veg Stratum")
 
-plot_APB_OV_sumrec <- ggplot(APB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APB_OV_sumrec <- ggplot(APB_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -526,15 +527,15 @@ plot_APB_OV_sumrec <- ggplot(APB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
 
 multiplot(plot_APA_OV_sumrec,plot_APB_OV_sumrec, cols=1)
 
-plot_APA_ONV_sumrec <- ggplot(APA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APA_ONV_sumrec <- ggplot(APA_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore NonVeg Stratum")
 
-plot_APB_ONV_sumrec <- ggplot(APB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_APB_ONV_sumrec <- ggplot(APB_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -544,29 +545,29 @@ multiplot(plot_APA_ONV_sumrec,plot_APB_ONV_sumrec, cols=1)
 
 
 
-plot_CHA_S_sumrec <- ggplot(CHA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHA_S_sumrec <- ggplot(CHA_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Shoreline Stratum")
 
-plot_CHB_S_sumrec <- ggplot(CHB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHB_S_sumrec <- ggplot(CHB_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Shoreline Stratum")
 
-plot_CHC_S_sumrec <- ggplot(CHC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHC_S_sumrec <- ggplot(CHC_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Shoreline Stratum")
 
-plot_CHD_S_sumrec <- ggplot(CHD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHD_S_sumrec <- ggplot(CHD_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -574,29 +575,29 @@ plot_CHD_S_sumrec <- ggplot(CHD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
 
 multiplot(plot_CHA_S_sumrec,plot_CHB_S_sumrec,plot_CHC_S_sumrec,plot_CHD_S_sumrec, cols=2)
 
-plot_CHA_OV_sumrec <- ggplot(CHA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHA_OV_sumrec <- ggplot(CHA_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore Veg Stratum")
 
-plot_CHB_OV_sumrec <- ggplot(CHB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHB_OV_sumrec <- ggplot(CHB_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore Veg Stratum")
 
-plot_CHC_OV_sumrec <- ggplot(CHC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHC_OV_sumrec <- ggplot(CHC_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore Veg Stratum")
 
-plot_CHD_OV_sumrec <- ggplot(CHD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHD_OV_sumrec <- ggplot(CHD_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -604,29 +605,29 @@ plot_CHD_OV_sumrec <- ggplot(CHD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
 
 multiplot(plot_CHA_OV_sumrec,plot_CHB_OV_sumrec,plot_CHC_OV_sumrec,plot_CHD_OV_sumrec, cols=2)
 
-plot_CHA_ONV_sumrec <- ggplot(CHA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHA_ONV_sumrec <- ggplot(CHA_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore NonVeg Stratum")
 
-plot_CHB_ONV_sumrec <- ggplot(CHB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHB_ONV_sumrec <- ggplot(CHB_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore NonVeg Stratum")
 
-plot_CHC_ONV_sumrec <- ggplot(CHC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHC_ONV_sumrec <- ggplot(CHC_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore NonVeg Stratum")
 
-plot_CHD_ONV_sumrec <- ggplot(CHD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CHD_ONV_sumrec <- ggplot(CHD_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -636,15 +637,15 @@ multiplot(plot_CHA_ONV_sumrec,plot_CHB_ONV_sumrec,plot_CHC_ONV_sumrec,plot_CHD_O
 
 
 
-plot_CKB_S_sumrec <- ggplot(CKB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKB_S_sumrec <- ggplot(CKB_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Shoreline Stratum")
 
-plot_CKC_S_sumrec <- ggplot(CKC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKC_S_sumrec <- ggplot(CKC_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -652,15 +653,15 @@ plot_CKC_S_sumrec <- ggplot(CKC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
 
 multiplot(plot_CKB_S_sumrec, plot_CKC_S_sumrec, cols=1)
 
-plot_CKB_OV_sumrec <- ggplot(CKB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKB_OV_sumrec <- ggplot(CKB_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore Veg Stratum")
 
-plot_CKC_OV_sumrec <- ggplot(CKC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKC_OV_sumrec <- ggplot(CKC_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -668,15 +669,15 @@ plot_CKC_OV_sumrec <- ggplot(CKC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
 
 multiplot(plot_CKB_OV_sumrec, plot_CKC_OV_sumrec, cols=1)
 
-plot_CKB_ONV_sumrec <- ggplot(CKB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKB_ONV_sumrec <- ggplot(CKB_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore NonVeg Stratum")
 
-plot_CKC_ONV_sumrec <- ggplot(CKC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_CKC_ONV_sumrec <- ggplot(CKC_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -688,43 +689,43 @@ multiplot(plot_CKB_ONV_sumrec, plot_CKC_ONV_sumrec, cols=1)
 
 
 
-plot_IRA_S_sumrec <- ggplot(IRA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRA_S_sumrec <- ggplot(IRA_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Shoreline Stratum")
 
-plot_IRB_S_sumrec <- ggplot(IRB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRB_S_sumrec <- ggplot(IRB_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Shoreline Stratum")
 
-plot_IRC_S_sumrec <- ggplot(IRC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRC_S_sumrec <- ggplot(IRC_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Shoreline Stratum")
 
-plot_IRD_S_sumrec <- ggplot(IRD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRD_S_sumrec <- ggplot(IRD_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Shoreline Stratum")
 
-plot_IRE_S_sumrec <- ggplot(IRE_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRE_S_sumrec <- ggplot(IRE_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone E Shoreline Stratum")
 
-plot_IRH_S_sumrec <- ggplot(IRH_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRH_S_sumrec <- ggplot(IRH_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -732,43 +733,43 @@ plot_IRH_S_sumrec <- ggplot(IRH_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
 
 multiplot(plot_IRA_S_sumrec,plot_IRB_S_sumrec,plot_IRC_S_sumrec,plot_IRD_S_sumrec,plot_IRE_S_sumrec,plot_IRH_S_sumrec, cols=2)
 
-plot_IRA_OV_sumrec <- ggplot(IRA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRA_OV_sumrec <- ggplot(IRA_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore Veg Stratum")
 
-plot_IRB_OV_sumrec <- ggplot(IRB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRB_OV_sumrec <- ggplot(IRB_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore Veg Stratum")
 
-plot_IRC_OV_sumrec <- ggplot(IRC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRC_OV_sumrec <- ggplot(IRC_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore Veg Stratum")
 
-plot_IRD_OV_sumrec <- ggplot(IRD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRD_OV_sumrec <- ggplot(IRD_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Offshore Veg Stratum")
 
-plot_IRE_OV_sumrec <- ggplot(IRE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRE_OV_sumrec <- ggplot(IRE_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone E Offshore Veg Stratum")
 
-plot_IRH_OV_sumrec <- ggplot(IRH_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRH_OV_sumrec <- ggplot(IRH_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -776,43 +777,43 @@ plot_IRH_OV_sumrec <- ggplot(IRH_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
 
 multiplot(plot_IRA_OV_sumrec,plot_IRB_OV_sumrec,plot_IRC_OV_sumrec,plot_IRD_OV_sumrec,plot_IRE_OV_sumrec,plot_IRH_OV_sumrec, cols=2)
 
-plot_IRA_ONV_sumrec <- ggplot(IRA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRA_ONV_sumrec <- ggplot(IRA_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore Nonveg Stratum")
 
-plot_IRB_ONV_sumrec <- ggplot(IRB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRB_ONV_sumrec <- ggplot(IRB_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore Nonveg Stratum")
 
-plot_IRC_ONV_sumrec <- ggplot(IRC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRC_ONV_sumrec <- ggplot(IRC_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore Nonveg Stratum")
 
-plot_IRD_ONV_sumrec <- ggplot(IRD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRD_ONV_sumrec <- ggplot(IRD_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Offshore Nonveg Stratum")
 
-plot_IRE_ONV_sumrec <- ggplot(IRE_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRE_ONV_sumrec <- ggplot(IRE_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone E Offshore Nonveg Stratum")
 
-plot_IRH_ONV_sumrec <- ggplot(IRH_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_IRH_ONV_sumrec <- ggplot(IRH_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -822,36 +823,36 @@ multiplot(plot_IRA_ONV_sumrec,plot_IRB_ONV_sumrec,plot_IRC_ONV_sumrec,plot_IRD_O
 
 
 
-plot_TBA_S_sumrec <- ggplot(TBA_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBA_S_sumrec <- ggplot(TBA_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Shoreline Stratum")
 
-plot_TBB_S_sumrec <- ggplot(TBB_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBB_S_sumrec <- ggplot(TBB_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Shoreline Stratum")
 
-plot_TBC_S_sumrec <- ggplot(TBC_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBC_S_sumrec <- ggplot(TBC_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Shoreline Stratum")
 
-plot_TBD_S_sumrec <- ggplot(TBD_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBD_S_sumrec <- ggplot(TBD_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Shoreline Stratum")
 
-plot_TBE_S_sumrec <- ggplot(TBE_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBE_S_sumrec <- ggplot(TBE_S_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -860,36 +861,36 @@ plot_TBE_S_sumrec <- ggplot(TBE_S_sumrec, aes(x=year, y=CPUE))+ geom_line() + ge
 multiplot(plot_TBA_S_sumrec, plot_TBB_S_sumrec, plot_TBC_S_sumrec, plot_TBD_S_sumrec, plot_TBE_S_sumrec, cols=2)
 
 library(ggplot2)
-plot_TBA_OV_sumrec <- ggplot(TBA_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBA_OV_sumrec <- ggplot(TBA_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore Veg Stratum")
 
-plot_TBB_OV_sumrec <- ggplot(TBB_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBB_OV_sumrec <- ggplot(TBB_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore Veg Stratum")
 
-plot_TBC_OV_sumrec <- ggplot(TBC_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBC_OV_sumrec <- ggplot(TBC_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore Veg Stratum")
 
-plot_TBD_OV_sumrec <- ggplot(TBD_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBD_OV_sumrec <- ggplot(TBD_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Offshore Veg Stratum")
 
-plot_TBE_OV_sumrec <- ggplot(TBE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBE_OV_sumrec <- ggplot(TBE_OV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
@@ -898,36 +899,36 @@ plot_TBE_OV_sumrec <- ggplot(TBE_OV_sumrec, aes(x=year, y=CPUE))+ geom_line() + 
 multiplot(plot_TBA_OV_sumrec, plot_TBB_OV_sumrec, plot_TBC_OV_sumrec, plot_TBD_OV_sumrec, plot_TBE_OV_sumrec, cols=2)
 
 library(ggplot2)
-plot_TBA_ONV_sumrec <- ggplot(TBA_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBA_ONV_sumrec <- ggplot(TBA_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone A Offshore NonVeg Stratum")
 
-plot_TBB_ONV_sumrec <- ggplot(TBB_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBB_ONV_sumrec <- ggplot(TBB_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone B Offshore NonVeg Stratum")
 
-plot_TBC_ONV_sumrec <- ggplot(TBC_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBC_ONV_sumrec <- ggplot(TBC_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone C Offshore NonVeg Stratum")
 
-plot_TBD_ONV_sumrec <- ggplot(TBD_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBD_ONV_sumrec <- ggplot(TBD_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+
   ggtitle( "Zone D Offshore NonVeg Stratum")
 
-plot_TBE_ONV_sumrec <- ggplot(TBE_ONV_sumrec, aes(x=year, y=CPUE))+ geom_line() + geom_point()+
-  xlab("Year")+ ylab("CPUE C.neb")+
+plot_TBE_ONV_sumrec <- ggplot(TBE_ONV_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
+  xlab("Year")+ ylab("MeanCPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
         panel.background=element_rect(fill='white', colour='black'))+

@@ -156,8 +156,8 @@ TBR_Msum$CPUE <- TBR_Msum$TotalNumberofAnimalsCollectedinHauls/TBR_Msum$Numberof
 TBR_Nsum <- ddply(TB_N, c("year", "month"), summarise, NumberofHauls=length(Reference) , TotalNumberofAnimalsCollectedinHauls=sum(number), avgofnumbercollectedinhauls=mean(number), mediannumbercollected=median(number))
 TBR_Nsum$CPUE <- TBR_Nsum$TotalNumberofAnimalsCollectedinHauls/TBR_Nsum$NumberofHauls
 
-# >>>>>>>>> Find median CPUE over recruitment season ###    
-TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+# >>>>>>>>> Find mean CPUE over recruitment season ###    
+TBB_A_sumrec <- ddply(TBB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls),TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
 library(ggplot2)
 plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() + geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
@@ -167,7 +167,7 @@ plot_TBB_A_sumrec <- ggplot(TBB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line() 
   ggtitle( "Zone A")
 write.csv(TBB_A_sumrec, "TampaBay_Bay_A_sumrec.csv")
 
-TBB_B_sumrec <- ddply(TBB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBB_B_sumrec <- ddply(TBB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -176,7 +176,7 @@ plot_TBB_B_sumrec <- ggplot(TBB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone B")
 write.csv(TBB_B_sumrec, "TampaBay_Bay_B_sumrec.csv")
 
-TBB_C_sumrec <- ddply(TBB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBB_C_sumrec <- ddply(TBB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBB_C_sumrec <- ggplot(TBB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -185,7 +185,7 @@ plot_TBB_C_sumrec <- ggplot(TBB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone C")
 write.csv(TBB_C_sumrec, "TampaBay_Bay_C_sumrec.csv")
 
-TBB_D_sumrec <- ddply(TBB_Dsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBB_D_sumrec <- ddply(TBB_Dsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBB_D_sumrec <- ggplot(TBB_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -194,7 +194,7 @@ plot_TBB_D_sumrec <- ggplot(TBB_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone D")
 write.csv(TBB_D_sumrec, "TampaBay_Bay_D_sumrec.csv")
 
-TBB_E_sumrec <- ddply(TBB_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBB_E_sumrec <- ddply(TBB_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBB_E_sumrec <- ggplot(TBB_E_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -243,7 +243,8 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 ## Plot ##
 TBB_ZONE_sumrec_multiplot <- multiplot(plot_TBB_A_sumrec, plot_TBB_B_sumrec, plot_TBB_C_sumrec, plot_TBB_D_sumrec, plot_TBB_E_sumrec,cols=2)
 
-TBR_K_sumrec <- ddply(TBR_Ksum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+
+TBR_K_sumrec <- ddply(TBR_Ksum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBR_K_sumrec <- ggplot(TBR_K_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -252,7 +253,7 @@ plot_TBR_K_sumrec <- ggplot(TBR_K_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone K")
 write.csv(TBR_K_sumrec, "TampaBay_Riv_K_sumrec.csv")
 
-TBR_L_sumrec <- ddply(TBR_Lsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBR_L_sumrec <- ddply(TBR_Lsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBR_L_sumrec <- ggplot(TBR_L_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -261,7 +262,7 @@ plot_TBR_L_sumrec <- ggplot(TBR_L_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone L")
 write.csv(TBR_L_sumrec, "TampaBay_Riv_L_sumrec.csv")
 
-TBR_M_sumrec <- ddply(TBR_Msum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBR_M_sumrec <- ddply(TBR_Msum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBR_M_sumrec <- ggplot(TBR_M_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -270,7 +271,7 @@ plot_TBR_M_sumrec <- ggplot(TBR_M_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone M")
 write.csv(TBR_M_sumrec, "TampaBay_Riv_M_sumrec.csv")
 
-TBR_N_sumrec <- ddply(TBR_Nsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+TBR_N_sumrec <- ddply(TBR_Nsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_TBR_N_sumrec <- ggplot(TBR_N_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -282,7 +283,7 @@ write.csv(TBR_N_sumrec, "TampaBay_Riv_N_sumrec.csv")
 
 TBR_ZONE_sumrec_multiplot <- multiplot(plot_TBR_K_sumrec, plot_TBR_L_sumrec,plot_TBR_M_sumrec,plot_TBR_N_sumrec, cols=2)
 
-JXR_A_sumrec <- ddply(JXR_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_A_sumrec <- ddply(JXR_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
 plot_JXR_A_sumrec <- ggplot(JXR_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -291,7 +292,7 @@ plot_JXR_A_sumrec <- ggplot(JXR_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone A")
 write.csv(JXR_A_sumrec, "Jax_Riv_A_sumrec.csv")
 
-JXR_B_sumrec <- ddply(JXR_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_B_sumrec <- ddply(JXR_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_JXR_B_sumrec <- ggplot(JXR_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -300,7 +301,7 @@ plot_JXR_B_sumrec <- ggplot(JXR_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone B")
 write.csv(JXR_B_sumrec, "Jax_Riv_B_sumrec.csv")
 
-JXR_C_sumrec <- ddply(JXR_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_C_sumrec <- ddply(JXR_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_JXR_C_sumrec <- ggplot(JXR_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -310,7 +311,7 @@ plot_JXR_C_sumrec <- ggplot(JXR_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
 write.csv(JXR_C_sumrec, "Jax_Riv_C_sumrec.csv")
 
 
-JXR_D_sumrec <- ddply(JXR_Dsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_D_sumrec <- ddply(JXR_Dsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_JXR_D_sumrec <- ggplot(JXR_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -319,7 +320,7 @@ plot_JXR_D_sumrec <- ggplot(JXR_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone D")
 write.csv(JXR_D_sumrec, "Jax_Riv_D_sumrec.csv")
 
-JXR_E_sumrec <- ddply(JXR_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_E_sumrec <- ddply(JXR_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_JXR_E_sumrec <- ggplot(JXR_E_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -328,7 +329,7 @@ plot_JXR_E_sumrec <- ggplot(JXR_E_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone E")
 write.csv(JXR_E_sumrec, "Jax_Riv_E_sumrec.csv")
 
-JXR_F_sumrec <- ddply(JXR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+JXR_F_sumrec <- ddply(JXR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_JXR_F_sumrec <- ggplot(JXR_F_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(2001,2014), breaks=seq(2001, 2014, 2))+
@@ -341,7 +342,7 @@ write.csv(JXR_F_sumrec, "Jax_Riv_F_sumrec.csv")
 multiplot(plot_JXR_A_sumrec,plot_JXR_B_sumrec,plot_JXR_C_sumrec,plot_JXR_D_sumrec,plot_JXR_E_sumrec,plot_JXR_F_sumrec, cols=2) 
 
 # - Stations A, B, and E of Indian River were only sampled only in October and November
-IRB_A_sumrec <- ddply(IRB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_A_sumrec <- ddply(IRB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_A_sumrec <- ggplot(IRB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -350,7 +351,7 @@ plot_IRB_A_sumrec <- ggplot(IRB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone A")
 write.csv(IRB_A_sumrec, "IndianRiver_Bay_A_sumrec.csv")
 
-IRB_B_sumrec <- ddply(IRB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_B_sumrec <- ddply(IRB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_B_sumrec <- ggplot(IRB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -359,7 +360,7 @@ plot_IRB_B_sumrec <- ggplot(IRB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone B")
 write.csv(IRB_B_sumrec, "IndianRiver_Bay_B_sumrec.csv")
 
-IRB_C_sumrec <- ddply(IRB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_C_sumrec <- ddply(IRB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_C_sumrec <- ggplot(IRB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -368,7 +369,7 @@ plot_IRB_C_sumrec <- ggplot(IRB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone C")
 write.csv(IRB_C_sumrec, "IndianRiver_Bay_C_sumrec.csv")
 
-IRB_D_sumrec <- ddply(IRB_Dsum, c("year"), summarise,NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_D_sumrec <- ddply(IRB_Dsum, c("year"), summarise,NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_D_sumrec <- ggplot(IRB_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -377,7 +378,7 @@ plot_IRB_D_sumrec <- ggplot(IRB_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone D")
 write.csv(IRB_D_sumrec, "IndianRiver_Bay_D_sumrec.csv")
 
-IRB_E_sumrec <- ddply(IRB_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_E_sumrec <- ddply(IRB_Esum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_E_sumrec <- ggplot(IRB_E_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -386,7 +387,7 @@ plot_IRB_E_sumrec <- ggplot(IRB_E_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone E")
 write.csv(IRB_E_sumrec, "IndianRiver_Bay_E_sumrec.csv")
 
-IRB_H_sumrec <- ddply(IRB_Hsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRB_H_sumrec <- ddply(IRB_Hsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRB_H_sumrec <- ggplot(IRB_H_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -395,7 +396,7 @@ plot_IRB_H_sumrec <- ggplot(IRB_H_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone H")
 write.csv(IRB_H_sumrec, "IndianRiver_Bay_H_sumrec.csv")
 
-IRR_F_sumrec <- ddply(IRR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+IRR_F_sumrec <- ddply(IRR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_IRR_F_sumrec <- ggplot(IRR_F_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -406,7 +407,7 @@ write.csv(IRR_F_sumrec, "IndianRiver_Riv_F_sumrec.csv")
 
 multiplot(plot_IRB_A_sumrec,plot_IRB_B_sumrec,plot_IRB_C_sumrec,plot_IRB_D_sumrec,plot_IRB_E_sumrec,plot_IRB_H_sumrec,plot_IRR_F_sumrec, cols=3) 
 
-CKB_B_sumrec <- ddply(CKB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+CKB_B_sumrec <- ddply(CKB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_CKB_B_sumrec <- ggplot(CKB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -415,7 +416,7 @@ plot_CKB_B_sumrec <- ggplot(CKB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone B")
 write.csv(CKB_B_sumrec, "CedarKey_Bay_B_sumrec.csv")
 
-CKB_C_sumrec <- ddply(CKB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+CKB_C_sumrec <- ddply(CKB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_CKB_C_sumrec <- ggplot(CKB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -424,7 +425,7 @@ plot_CKB_C_sumrec <- ggplot(CKB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
   ggtitle( "Zone C")
 write.csv(CKB_C_sumrec, "CedarKey_Bay_C_sumrec.csv")
 
-CKR_F_sumrec <- ddply(CKR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=median(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+CKR_F_sumrec <- ddply(CKR_Fsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
 plot_CKR_F_sumrec <- ggplot(CKR_F_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
@@ -434,9 +435,8 @@ plot_CKR_F_sumrec <- ggplot(CKR_F_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+
 write.csv(CKR_F_sumrec, "CedarKey_Riv_F_sumrec.csv")
 multiplot(plot_CKB_B_sumrec,plot_CKB_C_sumrec,plot_CKR_F_sumrec, cols=1)
 
-APB_A_sumrec <- ddply(APB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-APB_A_sumrec$CPUE <- APB_A_sumrec$TotalCollected/APB_A_sumrec$TotalNumberofHauls
-plot_APB_A_sumrec <- ggplot(APB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+APB_A_sumrec <- ddply(APB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_APB_A_sumrec <- ggplot(APB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -444,9 +444,8 @@ plot_APB_A_sumrec <- ggplot(APB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone A")
 write.csv(APB_A_sumrec, "Appalachicola_Bay_A_sumrec.csv")
 
-APB_B_sumrec <- ddply(APB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-APB_B_sumrec$CPUE <- APB_B_sumrec$TotalCollected/APB_B_sumrec$TotalNumberofHauls
-plot_APB_B_sumrec <- ggplot(APB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+APB_B_sumrec <- ddply(APB_Bsum, c("year"), summarise,NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_APB_B_sumrec <- ggplot(APB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -454,9 +453,8 @@ plot_APB_B_sumrec <- ggplot(APB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone B")
 write.csv(APB_B_sumrec, "Appalachicola_Bay_B_sumrec.csv")
 
-APR_C_sumrec <- ddply(APR_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-APR_C_sumrec$CPUE <- APR_C_sumrec$TotalCollected/APR_C_sumrec$TotalNumberofHauls
-plot_APR_C_sumrec <- ggplot(APR_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+APR_C_sumrec <- ddply(APR_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_APR_C_sumrec <- ggplot(APR_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -466,9 +464,8 @@ write.csv(APR_C_sumrec, "Appalachicola_Riv_C_sumrec.csv")
 
 multiplot(plot_APB_A_sumrec,plot_APB_B_sumrec,plot_APR_C_sumrec, cols=1)
 
-CHB_A_sumrec <- ddply(CHB_Asum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHB_A_sumrec$CPUE <- CHB_A_sumrec$TotalCollected/CHB_A_sumrec$TotalNumberofHauls
-plot_CHB_A_sumrec <- ggplot(CHB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHB_A_sumrec <- ddply(CHB_Asum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHB_A_sumrec <- ggplot(CHB_A_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -476,9 +473,8 @@ plot_CHB_A_sumrec <- ggplot(CHB_A_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone A")
 write.csv(CHB_A_sumrec, "CharlotteHarbor_Bay_A_sumrec.csv")
 
-CHB_B_sumrec <- ddply(CHB_Bsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHB_B_sumrec$CPUE <- CHB_B_sumrec$TotalCollected/CHB_B_sumrec$TotalNumberofHauls
-plot_CHB_B_sumrec <- ggplot(CHB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHB_B_sumrec <- ddply(CHB_Bsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHB_B_sumrec <- ggplot(CHB_B_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -486,9 +482,8 @@ plot_CHB_B_sumrec <- ggplot(CHB_B_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone B")
 write.csv(CHB_B_sumrec, "CharlotteHarbor_Bay_B_sumrec.csv")
 
-CHB_C_sumrec <- ddply(CHB_Csum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHB_C_sumrec$CPUE <- CHB_C_sumrec$TotalCollected/CHB_C_sumrec$TotalNumberofHauls
-plot_CHB_C_sumrec <- ggplot(CHB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHB_C_sumrec <- ddply(CHB_Csum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHB_C_sumrec <- ggplot(CHB_C_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -496,9 +491,8 @@ plot_CHB_C_sumrec <- ggplot(CHB_C_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone C")
 write.csv(CHB_C_sumrec, "CharlotteHarbor_Bay_C_sumrec.csv")
 
-CHB_D_sumrec <- ddply(CHB_Dsum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHB_D_sumrec$CPUE <- CHB_D_sumrec$TotalCollected/CHB_D_sumrec$TotalNumberofHauls
-plot_CHB_D_sumrec <- ggplot(CHB_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHB_D_sumrec <- ddply(CHB_Dsum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHB_D_sumrec <- ggplot(CHB_D_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -506,9 +500,8 @@ plot_CHB_D_sumrec <- ggplot(CHB_D_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone D")
 write.csv(CHB_D_sumrec, "CharlotteHarbor_Bay_D_sumrec.csv")
 
-CHR_M_sumrec <- ddply(CHR_Msum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHR_M_sumrec$CPUE <- CHR_M_sumrec$TotalCollected/CHR_M_sumrec$TotalNumberofHauls
-plot_CHR_M_sumrec <- ggplot(CHR_M_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHR_M_sumrec <- ddply(CHR_Msum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHR_M_sumrec <- ggplot(CHR_M_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
@@ -516,9 +509,8 @@ plot_CHR_M_sumrec <- ggplot(CHR_M_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geo
   ggtitle( "Zone M")
 write.csv(CHR_M_sumrec, "CharlotteHarbor_Riv_M_sumrec.csv")
 
-CHR_P_sumrec <- ddply(CHR_Psum, c("year"), summarise, TotalNumberofHauls=sum(NumberofHauls), TotalCollected=sum(TotalNumberofAnimalsCollectedinHauls))
-CHR_P_sumrec$CPUE <- CHR_P_sumrec$TotalCollected/CHR_P_sumrec$TotalNumberofHauls
-plot_CHR_P_sumrec <- ggplot(CHR_P_sumrec, aes(x=year, y=CPUE))+ geom_line()+ geom_point()+
+CHR_P_sumrec <- ddply(CHR_Psum, c("year"), summarise, NumberSamplingMonths=length(month),MeanCPUE=mean(CPUE), TotalNumberofHauls=sum(NumberofHauls))
+plot_CHR_P_sumrec <- ggplot(CHR_P_sumrec, aes(x=year, y=MeanCPUE))+ geom_line()+ geom_point()+
   xlab("Year")+ ylab("CPUE C.neb")+
   scale_x_continuous(limits=c(1996,2014), breaks=seq(1996, 2014, 2))+
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),

@@ -1,0 +1,10 @@
+
+*.pdf
+
+*.docx
+
+Data/Raw Survey Data/Seatrout FIM Data/tqm_weather.sas7bdat
+
+*.sas7bdat
+
+*.csv

@@ -2,45 +2,108 @@
 
 setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
 
-TB_A <- read.csv("TB_A_coordinates.csv")
-TB_B <- read.csv("TB_B_coordinates.csv")
-TB_C <- read.csv("TB_C_coordinates.csv")
-TB_D <- read.csv("TB_D_coordinates.csv")
-TB_E <- read.csv("TB_E_coordinates.csv")
-TB_K <- read.csv("TB_K_coordinates.csv")
-TB_L <- read.csv("TB_L_coordinates.csv")
-TB_M <- read.csv("TB_M_coordinates.csv")
-TB_N <- read.csv("TB_N_coordinates.csv")
+TB_A <- read.csv("TB_A.csv")
+TB_B <- read.csv("TB_B.csv")
+TB_C <- read.csv("TB_C.csv")
+TB_D <- read.csv("TB_D.csv")
+TB_E <- read.csv("TB_E.csv")
+TB_K <- read.csv("TB_K.csv")
+TB_L <- read.csv("TB_L.csv")
+TB_M <- read.csv("TB_M.csv")
+TB_N <- read.csv("TB_N.csv")
 
-JX_A <- read.csv("JX_A_coordinates.csv")
-JX_B <- read.csv("JX_B_coordinates.csv")
-JX_C <- read.csv("JX_C_coordinates.csv")
-JX_D <- read.csv("JX_D_coordinates.csv")
-JX_E <- read.csv("JX_E_coordinates.csv")
-JX_F <- read.csv("JX_F_coordinates.csv")
+JX_A <- read.csv("JX_A.csv")
+JX_B <- read.csv("JX_B.csv")
+JX_C <- read.csv("JX_C.csv")
+JX_D <- read.csv("JX_D.csv")
+JX_E <- read.csv("JX_E.csv")
+JX_F <- read.csv("JX_F.csv")
 
-IR_A <- read.csv("IR_A_coordinates.csv")
-IR_B <- read.csv("IR_B_coordinates.csv")
-IR_C <- read.csv("IR_C_coordinates.csv")
-IR_D <- read.csv("IR_D_coordinates.csv")
-IR_E <- read.csv("IR_E_coordinates.csv")
-IR_F <- read.csv("IR_F_coordinates.csv")
-IR_H <- read.csv("IR_H_coordinates.csv")
+IR_A <- read.csv("IR_A.csv")
+IR_B <- read.csv("IR_B.csv")
+IR_C <- read.csv("IR_C.csv")
+IR_D <- read.csv("IR_D.csv")
+IR_E <- read.csv("IR_E.csv")
+IR_F <- read.csv("IR_F.csv")
+IR_H <- read.csv("IR_H.csv")
 
-CK_B <- read.csv("CK_B_coordinates.csv")
-CK_C <- read.csv("CK_C_coordinates.csv")
-CK_F <- read.csv("CK_F_coordinates.csv")
+CK_B <- read.csv("CK_B.csv")
+CK_C <- read.csv("CK_C.csv")
+CK_F <- read.csv("CK_F.csv")
 
-CH_A <- read.csv("CH_A_coordinates.csv")
-CH_B <- read.csv("CH_B_coordinates.csv")
-CH_C <- read.csv("CH_C_coordinates.csv")
-CH_D <- read.csv("CH_D_coordinates.csv")
-CH_M <- read.csv("CH_M_coordinates.csv")
-CH_P <- read.csv("CH_P_coordinates.csv")
+CH_A <- read.csv("CH_A.csv")
+CH_B <- read.csv("CH_B.csv")
+CH_C <- read.csv("CH_C.csv")
+CH_D <- read.csv("CH_D.csv")
+CH_M <- read.csv("CH_M.csv")
+CH_P <- read.csv("CH_P.csv")
 
-AP_A <- read.csv("AP_A_coordinates.csv")
-AP_B <- read.csv("AP_B_coordinates.csv")
-AP_C <- read.csv("AP_C_coordinates.csv")
+AP_A <- read.csv("AP_A.csv")
+AP_B <- read.csv("AP_B.csv")
+AP_C <- read.csv("AP_C.csv")
+
+TB_A_OV <- read.csv("TB_A_OV.csv")
+TB_B_OV <- read.csv("TB_B_OV.csv")
+TB_C_OV <- read.csv("TB_C_OV.csv")
+TB_D_OV <- read.csv("TB_D_OV.csv")
+TB_E_OV <- read.csv("TB_E_OV.csv")
+TB_A_ONV <- read.csv("TB_A_ONV.csv")
+TB_B_ONV <- read.csv("TB_B_ONV.csv")
+TB_C_ONV <- read.csv("TB_C_ONV.csv")
+TB_D_ONV <- read.csv("TB_D_ONV.csv")
+TB_E_ONV <- read.csv("TB_E_ONV.csv")
+TB_A_S <- read.csv("TB_A_S.csv")
+TB_B_S <- read.csv("TB_B_S.csv")
+TB_C_S <- read.csv("TB_C_S.csv")
+TB_D_S <- read.csv("TB_D_S.csv")
+TB_E_S <- read.csv("TB_E_S.csv")
+
+
+AP_A_OV <- read.csv("AP_A_OV.csv")
+AP_B_OV <- read.csv("AP_B_OV.csv")
+AP_A_ONV <- read.csv("AP_A_ONV.csv")
+AP_B_ONV <- read.csv("AP_B_ONV.csv")
+AP_A_S <- read.csv("AP_A_S.csv")
+AP_B_S <- read.csv("AP_B_S.csv")
+
+CH_A_OV <- read.csv("CH_A_OV.csv")
+CH_B_OV <- read.csv("CH_B_OV.csv")
+CH_C_OV <- read.csv("CH_C_OV.csv")
+CH_D_OV <- read.csv("CH_D_OV.csv")
+CH_A_ONV <- read.csv("CH_A_ONV.csv")
+CH_B_ONV <- read.csv("CH_B_ONV.csv")
+CH_C_ONV <- read.csv("CH_C_ONV.csv")
+CH_D_ONV <- read.csv("CH_D_ONV.csv")
+CH_A_S <- read.csv("CH_A_S.csv")
+CH_B_S <- read.csv("CH_B_S.csv")
+CH_C_S <- read.csv("CH_C_S.csv")
+CH_D_S <- read.csv("CH_D_S.csv")
+
+CK_B_OV <- read.csv("CK_B_OV.csv")
+CK_C_OV <- read.csv("CK_C_OV.csv")
+CK_B_ONV <- read.csv("CK_B_ONV.csv")
+CK_C_ONV <- read.csv("CK_C_ONV.csv")
+CK_B_S <- read.csv("CK_B_S.csv")
+CK_C_S <- read.csv("CK_C_S.csv")
+
+IR_A_OV <- read.csv("IR_A_OV.csv")
+IR_B_OV <- read.csv("IR_B_OV.csv")
+IR_C_OV <- read.csv("IR_C_OV.csv")
+IR_D_OV <- read.csv("IR_D_OV.csv")
+IR_E_OV <- read.csv("IR_E_OV.csv")
+IR_H_OV <- read.csv("IR_H_OV.csv")
+IR_A_ONV <- read.csv("IR_A_ONV.csv")
+IR_B_ONV <- read.csv("IR_B_ONV.csv")
+IR_C_ONV <- read.csv("IR_C_ONV.csv")
+IR_D_ONV <- read.csv("IR_D_ONV.csv")
+IR_E_ONV <- read.csv("IR_E_ONV.csv")
+IR_H_ONV <- read.csv("IR_H_ONV.csv")
+IR_A_S <- read.csv("IR_A_S.csv")
+IR_B_S <- read.csv("IR_B_S.csv")
+IR_C_S <- read.csv("IR_C_S.csv")
+IR_D_S <- read.csv("IR_D_S.csv")
+IR_E_S <- read.csv("IR_E_S.csv")
+IR_H_S <- read.csv("IR_H_S.csv")
 
 ### Figuring out whether to use the mediod or the mean. The mediod is an actual point in the data set whereas the mean is a number not included. 
 TBA_LL <- subset(TB_A, select=c("Longitude", "Latitude")) 
@@ -166,8 +229,228 @@ APC_LL <-subset(AP_C, select=c("Longitude", "Latitude"))
   APCmed <- pam(APC_LL,1)$medoids
     #write.csv(APCmed, "AP_C_medoid.csv")
 
+#Use Low_frequency_Stratum_hmisc_adjusted_Pvals_edited.csv to determine which comparisons need to be made
+library(cluster)
+TBA_ONVLL <- subset(TB_A_ONV, select=c("Longitude", "Latitude"))
+  TBA_ONVmed <- pam(TBA_ONVLL,1)$medoids
 
-## Calculating great-circle distances between medoids ##
+TBB_ONVLL <- subset(TB_B_ONV, select=c("Longitude", "Latitude"))
+  TBB_ONVmed <- pam(TBB_ONVLL,1)$medoids
+
+TBB_OVLL <- subset(TB_B_OV, select=c("Longitude", "Latitude"))
+TBB_OVmed <- pam(TBB_OVLL,1)$medoids
+
+TBB_SLL <- subset(TB_B_S, select=c("Longitude", "Latitude"))
+TBB_Smed <- pam(TBB_SLL,1)$medoids
+
+TBC_ONVLL <- subset(TB_C_ONV, select=c("Longitude", "Latitude"))
+TBC_ONVmed <- pam(TBC_ONVLL,1)$medoids
+
+TBD_ONVLL <- subset(TB_D_ONV, select=c("Longitude", "Latitude"))
+  TBD_ONVmed <- pam(TBD_ONVLL,1)$medoids
+
+TBD_OVLL <- subset(TB_D_OV, select=c("Longitude", "Latitude"))
+TBD_OVmed <- pam(TBD_OVLL,1)$medoids
+
+TBE_ONVLL <- subset(TB_E_ONV, select=c("Longitude", "Latitude"))
+TBE_ONVmed <- pam(TBE_ONVLL,1)$medoids
+
+TBE_OVLL <- subset(TB_E_OV, select=c("Longitude", "Latitude"))
+TBE_OVmed <- pam(TBE_OVLL,1)$medoids
+
+TBE_SLL <- subset(TB_E_S, select=c("Longitude", "Latitude"))
+  TBE_Smed <- pam(TBE_SLL,1)$medoids
+
+CKC_ONVLL <- subset(CK_C_ONV, select=c("Longitude", "Latitude"))
+CKC_ONVmed <- pam(CKC_ONVLL,1)$medoids
+
+CKB_ONVLL <- subset(CK_B_ONV, select=c("Longitude", "Latitude"))
+CKB_ONVmed <- pam(CKB_ONVLL,1)$medoids
+
+CKB_OVLL <- subset(CK_B_OV, select=c("Longitude", "Latitude"))
+CKB_OVmed <- pam(CKB_OVLL,1)$medoids
+
+CKB_SLL <- subset(CK_B_S, select=c("Longitude", "Latitude"))
+CKB_Smed <- pam(CKB_SLL,1)$medoids
+
+
+
+CKC_OVLL <- subset(CK_C_OV, select=c("Longitude", "Latitude"))
+CKC_OVmed <- pam(CKC_OVLL,1)$medoids
+
+CKC_SLL <- subset(CK_C_S, select=c("Longitude", "Latitude"))
+CKC_Smed <- pam(CKC_SLL,1)$medoids
+
+
+
+CHB_OVLL <- subset(CH_B_OV, select=c("Longitude", "Latitude"))
+CHB_OVmed <- pam(CHB_OVLL,1)$medoids
+
+CHA_ONVLL <- subset(CH_A_ONV, select=c("Longitude", "Latitude"))
+CHA_ONVmed <- pam(CHA_ONVLL,1)$medoids
+
+CHA_OVLL <- subset(CH_A_OV, select=c("Longitude", "Latitude"))
+CHA_OVmed <- pam(CHA_OVLL,1)$medoids
+
+CHB_ONVLL <- subset(CH_B_ONV, select=c("Longitude", "Latitude"))
+CHB_ONVmed <- pam(CHB_ONVLL,1)$medoids
+
+CHB_SLL <- subset(CH_B_S, select=c("Longitude", "Latitude"))
+CHB_Smed <- pam(CHB_SLL,1)$medoids
+
+CHC_ONVLL <- subset(CH_C_ONV, select=c("Longitude", "Latitude"))
+CHC_ONVmed <- pam(CHC_ONVLL,1)$medoids
+
+CHC_OVLL <- subset(CH_C_OV, select=c("Longitude", "Latitude"))
+CHC_OVmed <- pam(CHC_OVLL,1)$medoids
+
+CHC_SLL <- subset(CH_C_S, select=c("Longitude", "Latitude"))
+CHC_Smed <- pam(CHC_SLL,1)$medoids
+
+CHD_OVLL <- subset(CH_D_OV, select=c("Longitude", "Latitude"))
+CHD_OVmed <- pam(CHD_OVLL,1)$medoids
+
+
+
+APB_ONVLL <- subset(AP_B_ONV, select=c("Longitude", "Latitude"))
+APB_ONVmed <- pam(APB_ONVLL,1)$medoids
+
+APA_ONVLL <- subset(AP_A_ONV, select=c("Longitude", "Latitude"))
+APA_ONVmed <- pam(APA_ONVLL,1)$medoids
+
+APA_SLL <- subset(AP_A_S, select=c("Longitude", "Latitude"))
+APA_Smed <- pam(APA_SLL,1)$medoids
+
+APB_OVLL <- subset(AP_B_OV, select=c("Longitude", "Latitude"))
+APB_OVmed <- pam(APB_OVLL,1)$medoids
+
+TBA_OVLL <- subset(TB_A_OV, select=c("Longitude", "Latitude"))
+TBA_OVmed <- pam(TBA_OVLL,1)$medoids
+
+IRD_OVLL <- subset(IR_D_OV, select=c("Longitude", "Latitude"))
+IRD_OVmed <- pam(IRD_OVLL,1)$medoids
+
+IRD_SLL <- subset(IR_D_S, select=c("Longitude", "Latitude"))
+IRD_Smed <- pam(IRD_SLL,1)$medoids
+
+IRH_SLL <- subset(IR_H_S, select=c("Longitude", "Latitude"))
+IRH_Smed <- pam(IRH_SLL,1)$medoids
+
+IRH_ONVLL <- subset(IR_H_ONV, select=c("Longitude", "Latitude"))
+IRH_ONVmed <- pam(IRH_ONVLL,1)$medoids
+
+
+IRC_OVLL <- subset(IR_C_OV, select=c("Longitude", "Latitude"))
+IRC_OVmed <- pam(IRC_OVLL,1)$medoids
+
+IRC_SLL <- subset(IR_C_S, select=c("Longitude", "Latitude"))
+IRC_Smed <- pam(IRC_SLL,1)$medoids
+
+
+## Calculating great-circle distances between medoids- STRATUMS #
+library(geosphere)
+TBA_ONV_compars = rbind(distGeo(TBA_ONVmed, TBB_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, TBD_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, TBE_Smed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, CKC_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, CHB_OVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, CHC_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_ONVmed, APB_ONVmed, a=6378137, f=1/298.257223563))
+
+TBA_OV_compars <- rbind(distGeo(TBA_OVmed, TBD_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBA_OVmed, CKC_ONVmed, a=6378137, f=1/298.257223563))
+
+TBB_ONV_compars <- rbind(distGeo(TBB_ONVmed, CKC_ONVmed, a=6378137, f=1/298.257223563),
+                         distGeo(TBB_ONVmed, CHB_OVmed, a=6378137, f=1/298.257223563),
+                         distGeo(TBB_ONVmed, CHC_OVmed, a=6378137, f=1/298.257223563),
+                         distGeo(TBB_ONVmed, IRD_OVmed, a=6378137, f=1/298.257223563))
+
+TBB_OV_compars <- rbind(distGeo(TBB_OVmed, TBD_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBB_OVmed, TBE_ONVmed, a=6378137, f=1/298.257223563))
+
+distGeo(TBB_Smed, TBE_Smed, a=6378137, f=1/298.257223563)
+
+TBC_ONV_compars <- rbind(distGeo(TBC_ONVmed, TBD_OVmed, a=6378137, f=1/298.257223563),
+                          distGeo(TBC_ONVmed, CHA_ONVmed, a=6378137, f=1/298.257223563),
+                          distGeo(TBC_ONVmed, CHB_ONVmed, a=6378137, f=1/298.257223563),
+                          distGeo(TBC_ONVmed, CHB_OVmed, a=6378137, f=1/298.257223563))
+
+distGeo(TBD_ONVmed, CKC_ONVmed, a=6378137, f=1/298.257223563)
+
+TBD_OV_compars <- rbind(distGeo(TBD_OVmed, CHA_ONVmed, a=6378137, f=1/298.257223563),
+                        distGeo(TBD_OVmed, CHB_Smed, a=6378137, f=1/298.257223563),
+                        distGeo(TBD_OVmed, IRD_OVmed, a=6378137, f=1/298.257223563))
+
+distGeo(TBE_OVmed, IRC_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(TBE_Smed, APB_ONVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CKC_OVmed, CHA_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CKC_Smed, IRD_Smed, a=6378137, f=1/298.257223563)
+
+distGeo(CKB_ONVmed, APB_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CKB_OVmed, CHB_ONVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CKB_Smed, CHB_OVmed, a=6378137, f=1/298.257223563)
+distGeo(CKB_Smed, CHD_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CHA_ONVmed, CHB_ONVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CHB_ONVmed, CHB_OVmed, a=6378137, f=1/298.257223563)
+distGeo(CHB_ONVmed, CHC_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CHB_OVmed, CHC_ONVmed, a=6378137, f=1/298.257223563)
+distGeo(CHB_OVmed, CHC_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(CHC_ONVmed, APB_ONVmed, a=6378137, f=1/298.257223563)
+distGeo(CHC_ONVmed, IRH_Smed, a=6378137, f=1/298.257223563)
+
+distGeo(CHC_OVmed, IRH_Smed, a=6378137, f=1/298.257223563)
+
+distGeo(CHC_Smed, CHD_OVmed, a=6378137, f=1/298.257223563)
+
+distGeo(APA_ONVmed, APA_Smed, a=6378137, f=1/298.257223563)
+
+distGeo(IRC_Smed, IRH_ONVmed, a=6378137, f=1/298.257223563)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Calculating great-circle distances between medoids- ZONES ##
 
 # https://cran.r-project.org/web/packages/geosphere/geosphere.pdf
 # distCosine - law of cosines great circle distance 
