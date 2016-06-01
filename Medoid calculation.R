@@ -1,16 +1,28 @@
 # Script for figuring out the medoids in all zones so they can be used as distance references
+# 6/1/2016 - Edited script for determining medoids of each estuary so they can be used as distance references
+setwd("~/Desktop/Github Repo/Seatrout/Data/FIM SAS Data")
+library(haven)
 
-setwd("~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes ")
+APBay <- read_sas("ap_yoy_bay_cn_c.sas7bdat")
+CHBay <- read_sas ("ch_yoy_bay_cn_c.sas7bdat")
+CKBay <- read_sas ("ck_yoy_bay_cn_c.sas7bdat")
+CKRiv <- read_sas ("ck_yoy_riv_cn_c.sas7bdat")
+IRRiv <- read_sas ("ir_yoy_riv_cn_c.sas7bdat")
+JXBay <- read_sas ("jx_yoy_bay_cn_c.sas7bdat")
+JXRiv <- read_sas ("jx_yoy_riv_cn_c.sas7bdat")
+TBBay <- read_sas ("tb_yoy_bay_cn_c.sas7bdat")
+TBRiv <- read_sas ("tb_yoy_riv_cn_c.sas7bdat")
 
-TB_A <- read.csv("TB_A.csv")
-TB_B <- read.csv("TB_B.csv")
-TB_C <- read.csv("TB_C.csv")
-TB_D <- read.csv("TB_D.csv")
-TB_E <- read.csv("TB_E.csv")
-TB_K <- read.csv("TB_K.csv")
-TB_L <- read.csv("TB_L.csv")
-TB_M <- read.csv("TB_M.csv")
-TB_N <- read.csv("TB_N.csv")
+
+
+
+
+
+
+
+
+
+
 
 JX_A <- read.csv("JX_A.csv")
 JX_B <- read.csv("JX_B.csv")
