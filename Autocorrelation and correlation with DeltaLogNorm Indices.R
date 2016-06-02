@@ -51,24 +51,24 @@ jx_riv_mean<- subset(read.csv("index_jxriv_yoy.csv", header=T), select=c(year, M
 #TB = +- 2/sqrt(27) = 0.38 ***
 #Jx= +- 2/sqrt(14) = 0.53
 
-lag1.plot(ap_bay_mean$Mean, 4, corr=TRUE)
-lag1.plot(ch_bay_mean$Mean, 4, corr=TRUE)
-lag1.plot(ch_riv_mean$Mean, 4, corr=TRUE)
-lag1.plot(ck_bay_mean$Mean, 4, corr=TRUE)
-lag1.plot(ir_bay_mean$Mean, 4, corr=TRUE)
-lag1.plot(tb_bay_mean$Mean, 4, corr=TRUE) #autocorrelation at 1st and 2nd lag
-lag1.plot(tb_riv_mean$Mean, 4, corr=TRUE)
-lag1.plot(jx_riv_mean$Mean, 4, corr=TRUE)
+lag1.plot(ap_bay_mean, 4, corr=TRUE)
+lag1.plot(ch_bay_mean, 4, corr=TRUE)
+lag1.plot(ch_riv_mean, 4, corr=TRUE)
+lag1.plot(ck_bay_mean, 4, corr=TRUE)
+lag1.plot(ir_bay_mean, 4, corr=TRUE)
+lag1.plot(tb_bay_mean, 4, corr=TRUE) #autocorrelation at 1st and 2nd lag
+lag1.plot(tb_riv_mean, 4, corr=TRUE)
+lag1.plot(jx_riv_mean, 4, corr=TRUE)
 
 #1B. ACF and correlograms
-acf2(ap_bay_mean$Mean)
-acf2(ch_bay_mean$Mean)
-acf2(ch_riv_mean$Mean)
-acf2(ck_bay_mean$Mean)
-acf2(ir_bay_mean$Mean)
-acf2(tb_bay_mean$Mean)
-acf2(tb_riv_mean$Mean)
-acf2(jx_riv_mean$Mean)
+acf2(ap_bay_mean$ap_bay_mean)
+acf2(ch_bay_mean$ch_bay_mean)
+acf2(ch_riv_mean$ch_riv_mean)
+acf2(ck_bay_mean$ck_bay_mean)
+acf2(ir_bay_mean$ir_bay_mean)
+acf2(tb_bay_mean$tb_bay_mean)
+acf2(tb_riv_mean$tb_riv_mean)
+acf2(jx_riv_mean$jx_riv_mean)
 
 #little evidence of interseries correlation so can use standard significance test for pairwise correlations
 
@@ -87,8 +87,33 @@ mat<- as.matrix(arrange(test, year))
 mattest=mat[,-1]
 
 # 2B. Computer pearson correlations
-library(hmisc)  #rcorr- missing values are deleted in pairs rather than deleting all rows of x having any missing variables
+library(Hmisc)  #rcorr- missing values are deleted in pairs rather than deleting all rows of x having any missing variables
 
 corr_mat <- rcorr(mattest, type="pearson")
+rho_mat <- corr_mat$r #rho values
 n_mat <- corr_mat$n #number of samples used to compute correlation
-P_mat <- corr_mat$P
+P_mat <- corr_mat$P #P values
+
+#unwrap rho_mat into a vector
+library(gdata)
+rho_vec <- as.data.frame(lowerTriangle(rho_mat, diag=FALSE, byrow=FALSE))
+p_vec   <- as.data.frame(lowerTriangle(P_mat, diag=FALSE, byrow=FALSE))
+n_mat <- as.data.frame(lowerTriangle(n_mat, diag=FALSE, byrow=FALSE))
+rho_P_vec <- cbind(rho_vec, p_vec, n_mat)
+rownames <- c("chb_AP", "chr_AP", "ck_AP", "ir_AP", "tbb_AP", "tbr_AP", "jx_AP", 
+             "chr_CHB", "ck_CHB", "ir_CHB", "tbb_CHB", "tbr_CHB", "jx_CHB", 
+             "ck_CHR", "ir_CHR", "tbb_CHR", "tbr_CHR", "jx_CHR", 
+             "ir_CK", "tbb_CK", "tbr_CK", "jx_CK",
+             "tbb_IR", "tbr_IR", "jx_IR", 
+             "tbr_TBB", "jx_TBB",
+             "jx_TBR")
+             
+# for example, chb_AP means the distance between charlotteharbor bay and appalachicola        
+
+
+row.names(rho_P_vec)<- rownames
+data.frame(rho_P_vec)
+colnames(rho_P_vec)<-  c("rho", "P", "N")
+
+#export
+write.csv(rho_P_vec, '~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/rho_P_vector.csv')
