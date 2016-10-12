@@ -36,6 +36,7 @@ Agelength_JX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", head
 # Make table with observed total numbers at length by age.
 ###########################################################
 (rawfreq_TB <- xtabs(~lcat2+final_age, data=Agelength_TB)) 
+#rawfreq_TB_test_df <- as.data.frame(as.matrix(xtabs(~lcat2+final_age, data=TB_test)))
 # there appears to be a fish that was assigned an age of 3 but is in the 0-2 length category. Going to remove this because its probably a typo. Specified in above subsetting step as tl>20mm =(2cm).   
 rowSums(rawfreq_TB)
 (rawfreq_AP <- xtabs(~lcat2+final_age, data=Agelength_AP)) 
@@ -55,18 +56,47 @@ rowSums(rawfreq_JX)
 #The conditional proportions that form the ALK are calculated by dividing ecah cell of the frequency table by the sum of the corresponding row. 
 #These row proportions are constructed by submitting the xtabs() object to prop.table() and including margin=1 to indicate that the proportions are computed by row (page 92). 
 
-alk_TB <- prop.table(rawfreq_TB, margin=1)
+#The alkPlot command used for plotting the observed ALK is unable to extend the x axis to the bounds of c(0,80) because xlim is not working. 
+# Therefore, in order to produce a plot with an x axis that can span from 0-80 (like what is happening with the length frequency and the smoothed ALK)
+# I need to add in "observed" proportions for length categories that were not sampled. 
+# I could have added them to the original data frame but I was concerned that in the process of proportion calculations the extra entries would
+# affect the proportions or result in proportions that I didn't want. The smoothing process can estimate proportions outside of the range but I wanted 
+# to keep the observed plot with just the proportions from the observed data. Therefore, I added in the zero proportion data by writing and editing
+# a csv file which I then read below. 
+
+as.data.frame.matrix((prop.table(rawfreq_TB, margin=1))) %>% write.csv("alk_TB.csv")
+alk_TB <- read.csv("alk_TB_edit.csv", row.names=1)
+names(alk_TB) <- c(1,2,3,4,5,6,7,8,9)
 round(alk_TB,3)
-alk_CH <- prop.table(rawfreq_CH, margin=1)
+
+as.data.frame.matrix((prop.table(rawfreq_CH, margin=1))) %>% write.csv("alk_CH.csv")
+alk_CH <- read.csv("alk_CH_edit.csv", row.names=1)
+names(alk_CH) <- c(1,2,3,4,5,6,7,8,9)
 round(alk_CH,3)
-alk_CK <- prop.table(rawfreq_CK, margin=1)
+
+as.data.frame.matrix((prop.table(rawfreq_CK, margin=1))) %>% write.csv("alk_CK.csv")
+alk_CK <- read.csv("alk_CK_edit.csv", row.names=1)
+names(alk_CK) <- c(1,2,3,4,5,6,7,8)
 round(alk_CK,3)
-alk_AP <- prop.table(rawfreq_AP, margin=1)
+
+as.data.frame.matrix((prop.table(rawfreq_AP, margin=1))) %>% write.csv("alk_AP.csv")
+alk_AP <- read.csv("alk_AP_edit.csv", row.names=1)
+names(alk_AP) <- c(1,2,3,4,5,6,7,8,9,10)
 round(alk_AP,3)
-alk_JX <- prop.table(rawfreq_JX, margin=1)
+
+as.data.frame.matrix((prop.table(rawfreq_JX, margin=1))) %>% write.csv("alk_JX.csv")
+alk_JX <- read.csv("alk_JX_edit.csv", row.names=1)
+names(alk_JX) <- c(1,2,3,4,5,6,7,8)
 round(alk_JX,3)
-alk_IR <- prop.table(rawfreq_IR, margin=1)
+
+as.data.frame.matrix((prop.table(rawfreq_IR, margin=1))) %>% write.csv("alk_IR.csv")
+alk_IR <- read.csv("alk_IR_edit.csv", row.names=1)
+names(alk_IR) <- c(1,2,3,4,5,6,7,8,9)
 round(alk_IR,3)
+
+
+
+
 
 ######################################################################
 # Apply ALK.
@@ -88,12 +118,35 @@ alk.tb <- predict(tb, data.frame(lcat2=lens), type="probs")
 row.names(alk.tb) <- lens
 round(alk.tb, 3)
 
+
+
+
+#################################################
 #Plot raw data, observed ALK, and modeled ALK
-rawTB <- histStack(lcat2~final_age, data=Agelength_TB, col=gray.colors(9, start=0, end=1), breaks=seq(10,80,1), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
-obsTB <- alkPlot(alk_TB, type="barplot", pal="gray", showLegend=TRUE) #could remove legend and just reference in figure description
-obsTB <- alkPlot(alk_TB, type="area", pal="gray", showLegend=TRUE)
-obsTB <- alkPlot(alk_TB, type="lines", showLegend=TRUE)
-obsTB <- alkPlot(alk_TB, type="splines", showLegend=TRUE, span=0.1)
+# Multiple options below. 
+#################################################
+histStack(lcat2~final_age, data=Agelength_TB, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), xlim=c(0,80), ylim=c(0,700), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+rawCK <- histStack(lcat2~final_age, data=Agelength_CK, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,80), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+rawCH <- histStack(lcat2~final_age, data=Agelength_CH, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,250), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+rawAP <- histStack(lcat2~final_age, data=Agelength_AP, col=gray.colors(10, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,350), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+rawIR <- histStack(lcat2~final_age, data=Agelength_IR, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,500), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+rawJX <- histStack(lcat2~final_age, data=Agelength_JX, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,100), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+
+
+alkPlot(alk_TB_new, type="barplot", xlab="Total Length (cm)", xlim=c(0,80), showLegend=F, pal="gray") #could remove legend and just reference in figure description
+# will tighten xlim but won't expand. Maybe I'll have to put some dummy values in here. 
+alkPlot(alk_TB, type="barplot", xlab="Total Length (cm)", showLegend=F, pal="gray") #could remove legend and just reference in figure description
+
+alkPlot # this is what you did without having a good enough answer
+methods(alkPlot) # Next step, ask for the method: 'princomp.default'
+getAnywhere('alkPlot.default')
+
+
+#obsTB <- alkPlot(alk_TB, type="area", pal="gray", showLegend=TRUE)
+#obsTB <- alkPlot(alk_TB, type="lines", showLegend=TRUE)
+#obsTB <- alkPlot(alk_TB, type="splines", showLegend=TRUE, span=0.1)
 
 smoTB <- alkPlot(alk.tb, type="barplot", pal="gray", showLegend=TRUE)
 smoTB <- alkPlot(alk.tb, type="area", pal="gray", showLegend=TRUE)
