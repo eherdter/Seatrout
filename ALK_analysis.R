@@ -1,16 +1,19 @@
 # 10/10/2016 This script imports ALK with Bay.xlsx
 # Main Objectives of this script: 
-# 1. Separate age-length data by bay
-# 2. Use methods in Ogle (87-) to do Age Length Key Analysis
-
+# 1. Imports otolith data. 
+# 2. Makes bay-specific observed ALK.  
+# 3. Makes bay specific smoothed (modeled) ALK with multinomial modeling methods in Ogle (87-).
+# 4. Likelihood ratio testing to do among group statistical comparisons - Ogle (102-103)
+# 5. Plots observed and smoothed ALK for each bay. 
+#################################################################
 library(FSA)
 library(magrittr)
 library(dplyr)
 library(nnet)
+library(plotrix)
 
 # set working directory
 setwd("~/Desktop/Github Repo/Seatrout/Data")
-
 
 #load the csv file
 # subset by which bay I want
@@ -21,7 +24,7 @@ setwd("~/Desktop/Github Repo/Seatrout/Data")
 # turn tl from mm to cm
 # create length categories with FSA package
 
-Agelength_TB<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="TB" & tl>20 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))- can include this when determing ALK below but the smoothed ALK needs to be the nonfactored version of the length categorization variable. 
+Agelength_TB<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="TB" & tl>14 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))- can include this when determing ALK below but the smoothed ALK needs to be the nonfactored version of the length categorization variable. 
 Agelength_AP<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="AP" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))
 Agelength_CK<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CK" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
 Agelength_CH<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CH" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
@@ -29,47 +32,74 @@ Agelength_IR<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", head
 Agelength_JX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="JX" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
 
 
-#MAKE SIMPLE ALK
-(alk.freq_TB <- xtabs(~lcat2+final_age, data=Agelength_TB)) 
-# there appears to be a fish that was assigned an age of 3 but is in the 0-2 length category. Going to remove this because its probably a typo. Specified in above subsetting step in first step as tl>20mm =(2cm).   
-rowSums(alk.freq_TB)
-(alk.freq_AP <- xtabs(~lcat2+final_age, data=Agelength_AP)) 
-rowSums(alk.freq_AP)
-(alk.freq_CK <- xtabs(~lcat2+final_age, data=Agelength_CK)) 
-rowSums(alk.freq_CK)
-(alk.freq_CH <- xtabs(~lcat2+final_age, data=Agelength_CH)) 
-rowSums(alk.freq_CH)
-(alk.freq_IR <- xtabs(~lcat2+final_age, data=Agelength_IR)) 
-rowSums(alk.freq_IR)
-(alk.freq_JX <- xtabs(~lcat2+final_age, data=Agelength_JX))
-rowSums(alk.freq_JX)
+###########################################################
+# Make table with observed total numbers at length by age.
+###########################################################
+(rawfreq_TB <- xtabs(~lcat2+final_age, data=Agelength_TB)) 
+# there appears to be a fish that was assigned an age of 3 but is in the 0-2 length category. Going to remove this because its probably a typo. Specified in above subsetting step as tl>20mm =(2cm).   
+rowSums(rawfreq_TB)
+(rawfreq_AP <- xtabs(~lcat2+final_age, data=Agelength_AP)) 
+rowSums(rawfreq_AP)
+(rawfreq_CK <- xtabs(~lcat2+final_age, data=Agelength_CK)) 
+rowSums(rawfreq_CK)
+(rawfreq_CH <- xtabs(~lcat2+final_age, data=Agelength_CH)) 
+rowSums(rawfreq_CH)
+(rawfreq_IR <- xtabs(~lcat2+final_age, data=Agelength_IR)) 
+rowSums(rawfreq_IR)
+(rawfreq_JX <- xtabs(~lcat2+final_age, data=Agelength_JX))
+rowSums(rawfreq_JX)
 
+############################################
+# Make observed ALK from the above tables.
+############################################
 #The conditional proportions that form the ALK are calculated by dividing ecah cell of the frequency table by the sum of the corresponding row. 
-# These row proportions are constructed by submitting the xtabs() object to prop.table() and including margin=1 to indicate that the proportions are computed by row (page 92). 
+#These row proportions are constructed by submitting the xtabs() object to prop.table() and including margin=1 to indicate that the proportions are computed by row (page 92). 
 
-alk_TB <- prop.table(alk.freq_TB, margin=1)
+alk_TB <- prop.table(rawfreq_TB, margin=1)
 round(alk_TB,3)
+alk_CH <- prop.table(rawfreq_CH, margin=1)
+round(alk_CH,3)
+alk_CK <- prop.table(rawfreq_CK, margin=1)
+round(alk_CK,3)
+alk_AP <- prop.table(rawfreq_AP, margin=1)
+round(alk_AP,3)
+alk_JX <- prop.table(rawfreq_JX, margin=1)
+round(alk_JX,3)
+alk_IR <- prop.table(rawfreq_IR, margin=1)
+round(alk_IR,3)
 
-#Mean Length at Age
-    # done with additional length data
+######################################################################
+# Apply ALK.
+# 1. Determine age distribution (age distribution with standard errors)
+# 2. Mean length-at-age. 
+######################################################################
 
 
-sis<- read.csv("SiscowetMI2004.csv")
-
+###############################################################################################################
+# Produce smoothed ALK from multinomial modeling exercise which can be used to do Likelihood ratio testing. 
 #MODELED AGE LENGTH KEYS (aka SMOOTHED ALK)
 #-fixes two common issues with Age Length keys detailed on page 92 Ogle. 
 #multinomial logistic regression model -Gerritsen et al. 2006. The response variable has more than two levels
-
+###############################################################################################################
+#TB
 tb <- multinom(final_age~lcat2, data=Agelength_TB, maxit=500)
-lens<- seq(1,72, 1)
-alk.sm <- predict(tb, data.frame(lcat2=lens), type="probs")
-row.names(alk.sm) <- lens
-round(alk.sm, 3)
+lens<- seq(10,85, 1)
+alk.tb <- predict(tb, data.frame(lcat2=lens), type="probs")
+row.names(alk.tb) <- lens
+round(alk.tb, 3)
 
-#plot Modeled
-alkPlot(alk.sm, type="line")
+#Plot raw data, observed ALK, and modeled ALK
+rawTB <- histStack(lcat2~final_age, data=Agelength_TB, col=gray.colors(9, start=0, end=1), breaks=seq(10,80,1), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+obsTB <- alkPlot(alk_TB, type="barplot", pal="gray", showLegend=TRUE) #could remove legend and just reference in figure description
+obsTB <- alkPlot(alk_TB, type="area", pal="gray", showLegend=TRUE)
+obsTB <- alkPlot(alk_TB, type="lines", showLegend=TRUE)
+obsTB <- alkPlot(alk_TB, type="splines", showLegend=TRUE, span=0.1)
 
+smoTB <- alkPlot(alk.tb, type="barplot", pal="gray", showLegend=TRUE)
+smoTB <- alkPlot(alk.tb, type="area", pal="gray", showLegend=TRUE)
+smoTB <- alkPlot(alk.tb, type="lines", showLegend=TRUE)
 
+  
 ck <- multinom(final_age~lcat2, data=Agelength_CK, maxit=500)
 lens<- seq(14,68, 1)
 alk.ck <- predict(ck, data.frame(lcat2=lens), type="probs")
@@ -77,7 +107,7 @@ row.names(alk.ck) <- lens
 round(alk.ck, 3)
 
 #plot
-alkPlot(alk.ck, type="line")
+alkPlot(alk.ck, type="barplot")
 
 
 
