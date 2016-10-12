@@ -1,7 +1,7 @@
 # 10/10/2016 This script imports ALK with Bay.xlsx
 # Main Objectives of this script: 
 # 1. Imports otolith data. 
-# 2. Makes bay-specific observed ALK.  
+# 2. Makes bay-specific observed alksmo.  
 # 3. Makes bay specific smoothed (modeled) ALK with multinomial modeling methods in Ogle (87-).
 # 4. Likelihood ratio testing to do among group statistical comparisons - Ogle (102-103)
 # 5. Plots observed and smoothed ALK for each bay. 
@@ -95,15 +95,82 @@ names(alk_IR) <- c(1,2,3,4,5,6,7,8,9)
 round(alk_IR,3)
 
 
-
-
-
 ######################################################################
-# Apply ALK.
-# 1. Determine age distribution (age distribution with standard errors)
-# 2. Mean length-at-age. 
+# Apply.
+# 1. Proportional age distribution
+# 1. Mean length-at-age. (otolith database)
+# 2. Test length frequency distributions (mrfss, mrip)- ask about whether they have ages
 ######################################################################
 
+#Proportional age distribution
+  # might need to make sure I add some dummy data for bays that don't have equal number of ages
+ad_TB <- xtabs(~final_age, data=Agelength_TB)
+round(prop.table(ad_TB), 3)
+
+ad_CK <- xtabs(~final_age, data=Agelength_CK)
+round(prop.table(ad_CK), 3)
+
+ad_CH <- xtabs(~final_age, data=Agelength_CH)
+round(prop.table(ad_CH), 3)
+
+ad_AP <- xtabs(~final_age, data=Agelength_AP)
+round(prop.table(ad_AP), 3)
+
+ad_IR <- xtabs(~final_age, data=Agelength_IR)
+round(prop.table(ad_IR), 3)
+
+ad_JX <- xtabs(~final_age, data=Agelength_JX)
+round(prop.table(ad_JX), 3)
+
+#Mean Length-at-age
+TB_sumlen <- Agelength_TB %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                    sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                    as.data.frame()
+
+CK_sumlen <- Agelength_CK %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                    sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                    as.data.frame()                                       
+
+CH_sumlen <- Agelength_CH %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                    sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                    as.data.frame()                                        
+                                       
+ AP_sumlen <- Agelength_AP %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                    sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                    as.data.frame()
+                                        
+IR_sumlen <- Agelength_IR %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                   sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                   as.data.frame() 
+                                       
+JX_sumlen <- Agelength_JX %>% group_by(final_age) %>% summarize(n=validn(tl), mn=mean(tl, na.rm=TRUE),
+                                                  sd=sd(tl, na.rm=TRUE), se=se(tl, na.rm=TRUE)) %>%
+                                                  as.data.frame()   
+# Plot of individual lengths at age with mean lengths at age superimposed. 
+
+plot(tl~final_age, data=Agelength_TB, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=TB_sumlen, lwd=2, lty=2)
+#change scale of x axis
+
+plot(tl~final_age, data=Agelength_CK, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=CK_sumlen, lwd=2, lty=2)
+#change scale of x axis
+
+plot(tl~final_age, data=Agelength_CH, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=CH_sumlen, lwd=2, lty=2)
+#change scale of x axis
+
+plot(tl~final_age, data=Agelength_AP, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=AP_sumlen, lwd=2, lty=2)
+#change scale of x axis
+
+plot(tl~final_age, data=Agelength_IR, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=IR_sumlen, lwd=2, lty=2)
+#change scale of x axis
+
+plot(tl~final_age, data=Agelength_JX, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
+lines(mn~final_age, data=JX_sumlen, lwd=2, lty=2)
+#change scale of x axis
 
 ###############################################################################################################
 # Produce smoothed ALK from multinomial modeling exercise which can be used to do Likelihood ratio testing. 
@@ -113,59 +180,108 @@ round(alk_IR,3)
 ###############################################################################################################
 #TB
 tb <- multinom(final_age~lcat2, data=Agelength_TB, maxit=500)
-lens<- seq(10,85, 1)
-alk.tb <- predict(tb, data.frame(lcat2=lens), type="probs")
-row.names(alk.tb) <- lens
-round(alk.tb, 3)
+lens<- seq(0,80, 1)
+alksmo.tb <- predict(tb, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.tb) <- lens
+round(alksmo.tb, 3)
 
+#CK
+ck <- multinom(final_age~lcat2, data=Agelength_CK, maxit=500)
+lens<- seq(0,80, 1)
+alksmo.ck <- predict(ck, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.ck) <- lens
+round(alksmo.ck, 3)
+
+#CH
+ch <- multinom(final_age~lcat2, data=Agelength_CH, maxit=500)
+lens<- seq(0,80, 1)
+alksmo.ch <- predict(ch, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.ch) <- lens
+round(alksmo.ch, 3)
+
+#AP
+ap <- multinom(final_age~lcat2, data=Agelength_AP, maxit=500)
+lens<- seq(0,80, 1)
+alksmo.ap <- predict(ap, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.ap) <- lens
+round(alksmo.ap, 3)
+
+#JX
+jx <- multinom(final_age~lcat2, data=Agelength_JX, maxit=500)
+lens<- seq(0,80, 1)
+alksmo.jx <- predict(jx, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.jx) <- lens
+round(alksmo.jx, 3)
+
+#IR
+ir <- multinom(final_age~lcat2, data=Agelength_IR, maxit=500)
+lens<- seq(0,80, 1)
+alksmo.ir <- predict(ir, data.frame(lcat2=lens), type="probs")
+row.names(alksmo.ir) <- lens
+round(alksmo.ir, 3)
 
 
 
 #################################################
-#Plot raw data, observed ALK, and modeled ALK
+#Plot length frequency by age, observed ALK, and modeled ALK
 # Multiple options below. 
 #################################################
+
+####Length frequency by age#####
 histStack(lcat2~final_age, data=Agelength_TB, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), xlim=c(0,80), ylim=c(0,700), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
 axis(1, at=seq(0, 80, by=4))
 
-rawCK <- histStack(lcat2~final_age, data=Agelength_CK, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,80), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
-rawCH <- histStack(lcat2~final_age, data=Agelength_CH, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,250), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
-rawAP <- histStack(lcat2~final_age, data=Agelength_AP, col=gray.colors(10, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,350), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
-rawIR <- histStack(lcat2~final_age, data=Agelength_IR, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,500), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
-rawJX <- histStack(lcat2~final_age, data=Agelength_JX, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,100), xlab="Total Length (cm)", legend.pos="topright") #remove col argument if we want it in rainbow format
+histStack(lcat2~final_age, data=Agelength_CK, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,80), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+histStack(lcat2~final_age, data=Agelength_CH, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,250), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+histStack(lcat2~final_age, data=Agelength_AP, col=gray.colors(10, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,350), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+histStack(lcat2~final_age, data=Agelength_IR, col=gray.colors(9, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,500), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+histStack(lcat2~final_age, data=Agelength_JX, col=gray.colors(8, start=0, end=1), breaks=seq(0,80,1), ylim=c(0,100), xlab="Total Length (cm)", legend.pos="topright", xaxt="n") #remove col argument if we want it in rainbow format
+axis(1, at=seq(0, 80, by=4))
+
+####Observed ALK###
+alkPlot(alk_TB, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray") #could remove legend and just reference in figure description
+
+alkPlot(alk_CH, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray")     
+
+alkPlot(alk_CK, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray")   
+
+alkPlot(alk_AP, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray")
+
+alkPlot(alk_IR, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray")
+
+alkPlot(alk_JX, type="barplot", xlab="Total Length (cm)", showLegend=T, pal="gray")
+
+ #Other options for plotting
+     #obsTB <- alkPlot(alk_TB, type="area", pal="gray", showLegend=TRUE)
+     #obsTB <- alkPlot(alk_TB, type="lines", showLegend=TRUE)
+     #obsTB <- alkPlot(alk_TB, type="splines", showLegend=TRUE, span=0.1)
 
 
-alkPlot(alk_TB_new, type="barplot", xlab="Total Length (cm)", xlim=c(0,80), showLegend=F, pal="gray") #could remove legend and just reference in figure description
-# will tighten xlim but won't expand. Maybe I'll have to put some dummy values in here. 
-alkPlot(alk_TB, type="barplot", xlab="Total Length (cm)", showLegend=F, pal="gray") #could remove legend and just reference in figure description
+####Smoothed ALK####
+smoTB <- alkPlot(alksmo.tb, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
-alkPlot # this is what you did without having a good enough answer
-methods(alkPlot) # Next step, ask for the method: 'princomp.default'
-getAnywhere('alkPlot.default')
+smoCK <- alkPlot(alksmo.ck, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
+smoCH <- alkPlot(alksmo.ch, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
-#obsTB <- alkPlot(alk_TB, type="area", pal="gray", showLegend=TRUE)
-#obsTB <- alkPlot(alk_TB, type="lines", showLegend=TRUE)
-#obsTB <- alkPlot(alk_TB, type="splines", showLegend=TRUE, span=0.1)
+smoAP <- alkPlot(alksmo.ap, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
-smoTB <- alkPlot(alk.tb, type="barplot", pal="gray", showLegend=TRUE)
-smoTB <- alkPlot(alk.tb, type="area", pal="gray", showLegend=TRUE)
-smoTB <- alkPlot(alk.tb, type="lines", showLegend=TRUE)
+smoIR <- alkPlot(alksmo.ir, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
-  
-ck <- multinom(final_age~lcat2, data=Agelength_CK, maxit=500)
-lens<- seq(14,68, 1)
-alk.ck <- predict(ck, data.frame(lcat2=lens), type="probs")
-row.names(alk.ck) <- lens
-round(alk.ck, 3)
+smoJX <- alkPlot(alksmo.jx, type="barplot", xlab="Total Length (cm)", pal="gray", showLegend=TRUE)
 
-#plot
-alkPlot(alk.ck, type="barplot")
-
-
-
+#########################################
 #AMONG GROUP STATISTICAL COMPARISONS
 #page 102 in Ogle
+##########################################
 Agelength_ALL<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "TB" | bay== "CK" | bay== "CH" | bay=="IR" |bay=="AP" | bay=="JX"),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
 mod1 <- multinom(final_age~lcat2, data=Agelength_ALL, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_ALL, maxit=500) #more complex model
@@ -173,7 +289,9 @@ mod2 <- multinom(final_age~lcat2*bay,data=Agelength_ALL, maxit=500) #more comple
 #likelihood ratio test is computed with anova
 anova(mod1, mod2)
 
-#bay dropping 
+#Drop Bays to test hypothesis of bay influence
+      #Null Hypothesis- there is no significant difference in alk between groups
+
   #removing IR
 Agelength_minIR<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "TB" | bay== "CK" | bay== "CH" | bay=="AP" | bay=="JX"),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
 mod1 <- multinom(final_age~lcat2, data=Agelength_minIR, maxit=500) #simple model
@@ -195,7 +313,6 @@ Agelength_minIRJXAP<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv
 mod1 <- multinom(final_age~lcat2, data=Agelength_minIRJXAP, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_minIRJXAP, maxit=500) #more complex model
 
-
 anova(mod1, mod2)
 
 #now remove CH also
@@ -206,13 +323,19 @@ mod2 <- multinom(final_age~lcat2*bay,data=Agelength_minIRJXAPCH, maxit=500) #mor
 anova(mod1, mod2)
   #still significantly different
 
-#one on one comparison
+#Bay vs Bay comparison
+      #Null Hypothesis- there is no significant difference in alk between groups
+
 #TB vs CK 
 Agelength_TBCK<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "TB" |  bay== "CK" ),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
 mod1 <- multinom(final_age~lcat2, data=Agelength_TBCK, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_TBCK, maxit=500) #more complex model
 
 anova(mod1, mod2)
+# The p value for testing the effect of the group in explaining the distribution of lengths within each age is obtained by computing a chi-square test-statistic
+#Null Hypothesis- thre is no significant difference in alk between groups
+# the likelihood ratio statistic is -2*LL (final value output) of model 1 MINUS
+# -2*LL of model 2
 
 #TB vs CH
 Agelength_TBCH<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "TB" |  bay== "CH" ),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
@@ -227,6 +350,9 @@ mod1 <- multinom(final_age~lcat2, data=Agelength_TBAP, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_TBAP, maxit=500) #more complex model
 
 anova(mod1, mod2)
+#An alternative way to do a likelihood ratio test of nested models. 
+#library(lmtest)
+#t <- lrtest(mod1, mod2)
 
 #TB vs JX
 Agelength_TBJX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "TB" |  bay== "JX" ),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
@@ -256,7 +382,7 @@ Agelength_CKAP<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", he
 mod1 <- multinom(final_age~lcat2, data=Agelength_CKAP, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_CKAP, maxit=500) #more complex model
 
-anova(mod1, mod2)
+t <- anova(mod1, mod2)
 
 #CK Vs JX
 Agelength_CKJX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)),tl>20 & final_age >0 & (bay== "CK" |  bay== "JX" ),select=c(specimennumber, bay, tl, final_age)) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1))) # as.fact=TRUE))
