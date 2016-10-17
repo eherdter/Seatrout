@@ -7,7 +7,6 @@
 # 5. Plots observed and smoothed ALK for each bay. 
 # 6. Calculates proportional age distribution
 # 7. Determines mean length -at-age (otolith database) and produces plots
-# 8. *******Test length frequency distributions (mrfss, mrip)- ask about whether they have ages
 #################################################################
 library(FSA)
 library(magrittr)
@@ -175,13 +174,6 @@ lines(mn~final_age, data=IR_sumlen, lwd=2, lty=2)
 plot(tl~final_age, data=Agelength_JX, pch=19, col=rgb(0,0,0,1/10), xlab="Age", ylab= "Total Length (cm)", ylim=c(0,80), xlim=c(0,9))
 lines(mn~final_age, data=JX_sumlen, lwd=2, lty=2)
 #change scale of x axis
-
-# **************Length frequency distributions of MRFSS and MRIP
-
-#import the sas data **************************
-mrfss <- read_sas("mrfss_lens_8115.sas7bdat")
-mrip <- read_sas("mrip_lens_20042015.sas7bdat")
-
 
 ###############################################################################################################
 # Produce smoothed ALK from multinomial modeling exercise which can be used to do Likelihood ratio testing. 
