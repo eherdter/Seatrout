@@ -102,7 +102,6 @@ round(alk_IR,3)
 # Apply.
 # 1. Proportional age distribution
 # 1. Mean length-at-age. (otolith database)
-# 2. Test length frequency distributions (mrfss, mrip)- ask about whether they have ages
 ######################################################################
 
 #Proportional age distribution
@@ -290,7 +289,7 @@ mod1 <- multinom(final_age~lcat2, data=Agelength_ALL, maxit=500) #simple model
 mod2 <- multinom(final_age~lcat2*bay,data=Agelength_ALL, maxit=500) #more complex model
 
 #likelihood ratio test is computed with anova
-anova(mod1, mod2)
+test <- anova(mod1, mod2)
 
 #Drop Bays to test hypothesis of bay influence
       #Null Hypothesis- there is no significant difference in alk between groups
