@@ -1,6 +1,17 @@
+#*************
+# Edited on 10/25/2016 when I put data from my FWRI scratch folder in my GitHub on my personal computer -EH
+#**************
+
+# Produces indices ##
+# *** NOTE. This is R code that I used at FWRI. Currently, it does not produce the indices on my computer.
+# I produced them at FWRI and then copied them to my computer. They are located here:
+# ("~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaLogNormal Indices and Diagnostics"). 
+
+
+
 #must run with R 3.1 for lsmeans to work
 rm(list=ls());rm(.SavedPlots);graphics.off();gc();windows(record=T)
-setwd('T:/Elizabeth Herdter/SAS data sets/FIMData')
+setwd("~/Desktop/Github Repo/Seatrout/FWRI SCRATCH FOLDER/Elizabeth Herdter/SAS data sets/FIMData")
 library(haven)
 library(dplyr)
 library('MASS')
@@ -31,7 +42,8 @@ alpha          = 0.05    #signifcance level for correlation
 d = read_sas("ck_yoy_bay_cn_c.sas7bdat") 
 names(d) = tolower(names(d))
 str(d)
-#name the response variable
+
+#name the response variable- which is the number of YOY C.Neb
   d$response = d$number
 
 #concactenate some habitat variables - basically use the dominant type or one I think is most important for juv red drum
@@ -46,7 +58,8 @@ str(d)
   d$salt = log(d$salinity)
 
 
-#for young of year fish, only worried about recruitment window for Estuary of interest
+#for young of year fish, only worried about recruitment window for Estuary of interest!!
+# MUST CHANGE THESE FOR EACH ESTUARY  
   d = subset(d,month %in% c(5,6,7,8,9,10,11))
 
 #some region specific filters
@@ -96,9 +109,9 @@ if(region=='ck'){
   years = as.numeric(levels(d$year))
 
 #create positive and binomial datasets
-  d.pos = d[d$response>0,]
+  d.pos = d[d$response>0,] #positive data set
   d.bin = d
-  d.bin$response = ifelse(d$response>0,1,0)
+  d.bin$response = ifelse(d$response>0,1,0) #binomial data set
 
 ################################################################################
 #
@@ -117,7 +130,10 @@ if(region=='ck'){
   #cut.formula         <- find.formula(glm.step.pos$anova)
   #cut.formula[2]   # deviance table
 #final model - may choose to reduce based on deviance and cutoff in above step
-  glm.final.pos  = glm.step.pos
+  glm.final.pos 
+  glm.final.pos = glm.full.pos 
+  
+  
   summary(glm.final.pos)
 #calculate the LSMeans for the proportion of positive trips
   lsm.p.glm   = lsmeans(glm.final.pos, "year", data = d.pos)
@@ -134,12 +150,27 @@ if(region=='ck'){
   #cut.formula         <- find.formula(glm.step.bin$anova)
   #cut.formula[2]   # deviance table
 #final model - may choose to reduce based on deviance and cutoff in above step
-  glm.final.bin  = glm.step.bin
+  
+  glm.final.bin  
+  
+  
+  glm.final.bin = glm.full.bin 
   summary(glm.final.bin)
   anova(glm.final.bin)
 #calculate the LSMeans for the proportion of positive trips
+  
+  # proportion of the positive trips out of the whole data set is best described by simply defining binary data. 
+  # we dont care specifically how many trips were positive in each year or exactly what the number was we just care whehter the trips
+  # were positive or not. Making a binomial dataset shows only positives and negatives and is helpful
+  # for us to get a total proportion of how many trips were actually positive trips out of all of the trips
+  
   lsm.b.glm   = lsmeans(glm.final.bin, "year", data = d.bin)
   LSMeansProp = summary(lsm.b.glm)
+  
+  
+  dbin_2000 <- subset(d.bin, year=2000)
+  mean(dbin_2000$response) #= 0.1187
+  
 
 ################################################################################
 #
@@ -166,11 +197,11 @@ if(region=='ck'){
   correlated  = (check.rho$p.value <= alpha)
 #loop through years
   num.yr      = length(years)
-  index.dist  = matrix(data=NA,nrow=num.yr,ncol=9)
+  index.dist  = matrix(data=NA,nrow=num.yr,ncol=9)  #make blank matrix for the results to go into
   set.seed(12345)
   for (i in 1:num.yr) {
-    rn.1   <- rnorm(10000,0,1)
-    rn.2   <- rnorm(10000,0,1)
+    rn.1   <- rnorm(10000,0,1) #10,000 random numbers with mean 0 and variance =1 
+    rn.2   <- rnorm(10000,0,1) 
     temp.1 <- estimate$LSM.ppt[i] + rn.1 * estimate$se.ppt[i]
     if (correlated) {
       temp.2 <- estimate$LSM.pos[i] + estimate$se.pos[i] * (rho*rn.1 + rn.2*sqrt(1-rho^2))
@@ -181,11 +212,11 @@ if(region=='ck'){
     pos      <- exp(temp.2)
     temp    <- prop.pos * pos
     l.temp  = log(temp)
-    index.dist[i,1] <- mean(temp)
-    index.dist[i,2] <- sd(temp)
-    index.dist[i,3] <- sd(temp)/mean(temp)
-    index.dist[i,4:8] <- quantile(temp,probs=c(0.025,0.25,0.50,0.75,0.975))
-    index.dist[i,9] = sqrt(var(l.temp)) 
+    index.dist[i,1] <- mean(temp) #mean
+    index.dist[i,2] <- sd(temp) #standard dev
+    index.dist[i,3] <- sd(temp)/mean(temp) #CV
+    index.dist[i,4:8] <- quantile(temp,probs=c(0.025,0.25,0.50,0.75,0.975)) # low, qtr 1 median, qtr 3 up 95
+    index.dist[i,9] = sqrt(var(l.temp)) #log se ?
   }
 
 index <- as.data.frame(cbind(as.character(estimate$year),SampleSize,estimate$num.pos,index.dist, NominalMean,NominalSD,
