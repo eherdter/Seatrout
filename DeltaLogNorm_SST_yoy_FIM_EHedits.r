@@ -7,7 +7,9 @@
 # I produced them at FWRI and then copied them to my computer. They are located here:
 # ("~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaLogNormal Indices and Diagnostics"). 
 
-
+# 10/31/2016
+# The indices that I produced here were wrong because I did not specify the appropriate recruitment months.
+# The more accurate (although not log normal model estimated) indices are produced in Delta Method for Producing Nominal Indices.R
 
 #must run with R 3.1 for lsmeans to work
 rm(list=ls());rm(.SavedPlots);graphics.off();gc();windows(record=T)
