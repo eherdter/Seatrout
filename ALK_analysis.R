@@ -1,7 +1,7 @@
 # 10/10/2016 This script imports ALK with Bay.xlsx
 # Main Objectives of this script: 
 # 1. Imports otolith data. 
-# 2. Makes bay-specific observed ALK.   
+# 2. Makes bay-specific observed ALK, calculates some summary statistics.  
 # 3. Makes bay specific smoothed (modeled) ALK with multinomial modeling methods in Ogle (87-).
 # 4. Likelihood ratio testing to do among group statistical comparisons - Ogle (102-103)
 # 5. Plots observed and smoothed ALK for each bay. 
@@ -27,31 +27,99 @@ setwd("~/Desktop/Github Repo/Seatrout/Data")
 # turn tl from mm to cm
 # create length categories with FSA package
 
-Agelength_TB<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="TB" & tl>14 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))- can include this when determing ALK below but the smoothed ALK needs to be the nonfactored version of the length categorization variable. 
-Agelength_AP<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="AP" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))
-Agelength_CK<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CK" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
-Agelength_CH<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CH" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
-Agelength_IR<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="IR" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
-Agelength_JX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="JX" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
+Agelength_TB<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="TB" & tl>14 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))- can include this when determing ALK below but the smoothed ALK needs to be the nonfactored version of the length categorization variable. 
+
+#change date format into a factor so that I can do summary statistics by year later on
+Agelength_TB$Date=as.character(Agelength_TB$Date)
+Agelength_TB$DateNew = as.POSIXct(strptime(Agelength_TB$Date, format="%m/%d/%y", tz="")) 
+Agelength_TB = mutate(Agelength_TB, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_TB$year = as.factor(Agelength_TB$year) 
+
+Agelength_AP<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="AP" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) #, as.fact=TRUE))
+
+Agelength_AP$Date=as.character(Agelength_AP$Date)
+Agelength_AP$DateNew = as.POSIXct(strptime(Agelength_AP$Date, format="%m/%d/%y", tz="")) 
+Agelength_AP = mutate(Agelength_AP, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_AP$year = as.factor(Agelength_AP$year) 
+
+Agelength_CK<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CK" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
+
+Agelength_CK$Date=as.character(Agelength_CK$Date)
+Agelength_CK$DateNew = as.POSIXct(strptime(Agelength_CK$Date, format="%m/%d/%y", tz="")) 
+Agelength_CK = mutate(Agelength_CK, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_CK$year = as.factor(Agelength_CK$year) 
+
+Agelength_CH<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="CH" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
+
+Agelength_CH$Date=as.character(Agelength_CH$Date)
+Agelength_CH$DateNew = as.POSIXct(strptime(Agelength_CH$Date, format="%m/%d/%y", tz="")) 
+Agelength_CH = mutate(Agelength_CH, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_CH$year = as.factor(Agelength_CH$year) 
+
+Agelength_IR<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="IR" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
+
+Agelength_IR$Date=as.character(Agelength_IR$Date)
+Agelength_IR$DateNew = as.POSIXct(strptime(Agelength_IR$Date, format="%m/%d/%y", tz="")) 
+Agelength_IR = mutate(Agelength_IR, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_IR$year = as.factor(Agelength_IR$year) 
+
+Agelength_JX<- droplevels(subset(as.data.frame(read.csv("ALK with Bay.csv", header=T)), bay=="JX" & tl>0 & final_age >0, select=c(specimennumber, bay, tl, final_age, Date))) %>% mutate(tl=tl/10, lcat2 =lencat(tl, w=1)) # as.fact=TRUE))
+
+Agelength_JX$Date=as.character(Agelength_JX$Date)
+Agelength_JX$DateNew = as.POSIXct(strptime(Agelength_JX$Date, format="%m/%d/%y", tz="")) 
+Agelength_JX = mutate(Agelength_JX, year = strftime(DateNew, format="%Y")) %>%select(-Date, -DateNew)
+Agelength_JX$year = as.factor(Agelength_JX$year) 
+
+#total sample number of FIM data
+
+N= nrow(Agelength_TB) + nrow(Agelength_AP) +nrow(Agelength_CK) +nrow(Agelength_CH) + nrow(Agelength_IR) +nrow(Agelength_JX)
+
+# Added together
+All= rbind(Agelength_TB, Agelength_AP, Agelength_CK, Agelength_CH, Agelength_IR, Agelength_JX) 
+
+#Age proportion
+All_3under =subset(All, final_age <=3)
+Proprotion3under <- nrow(All_3under)/nrow(All)
+
+#Min, max length
+min(All$tl)
+max(All$tl)
 
 
+#TB_sum <- summarise(group_by(Agelength_TB, year), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+TB_sum <- summarise(Agelength_TB,mean_age=mean(final_age), median_age=median(final_age), sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+AP_sum <- summarise(Agelength_AP,mean_age=mean(final_age), median_age=median(final_age),sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+CH_sum <- summarise(Agelength_CH,mean_age=mean(final_age), median_age=median(final_age),sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+CK_sum <- summarise(Agelength_CK,mean_age=mean(final_age), median_age=median(final_age),sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+IR_sum <- summarise(Agelength_IR,mean_age=mean(final_age), median_age=median(final_age),sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+JX_sum <- summarise(Agelength_JX,mean_age=mean(final_age), median_age=median(final_age),sd_age= sd(final_age), se_age=sd_age/sqrt(length(final_age)), mean_tl = mean(tl), sd_tl= sd(tl), se_tl= sd_tl/(sqrt(length(final_age))))
+
+All_sum <- rbind(TB_sum, AP_sum, CH_sum, CK_sum, IR_sum, JX_sum) %>% mutate(bay=c("TB", "AP", "CH", "CK", "IR", "JX"))
 ###########################################################
 # Make table with observed total numbers at length by age.
 ###########################################################
 (rawfreq_TB <- xtabs(~lcat2+final_age, data=Agelength_TB)) 
 #rawfreq_TB_test_df <- as.data.frame(as.matrix(xtabs(~lcat2+final_age, data=TB_test)))
 # there appears to be a fish that was assigned an age of 3 but is in the 0-2 length category. Going to remove this because its probably a typo. Specified in above subsetting step as tl>20mm =(2cm).   
-rowSums(rawfreq_TB)
+rowSums(rawfreq_TB) #number age obs per length
+colSums(rawfreq_TB) #number of lengths obs per age
 (rawfreq_AP <- xtabs(~lcat2+final_age, data=Agelength_AP)) 
 rowSums(rawfreq_AP)
+colSums(rawfreq_AP)
 (rawfreq_CK <- xtabs(~lcat2+final_age, data=Agelength_CK)) 
 rowSums(rawfreq_CK)
+colSums(rawfreq_CK)
 (rawfreq_CH <- xtabs(~lcat2+final_age, data=Agelength_CH)) 
 rowSums(rawfreq_CH)
+colSums(rawfreq_CH)
 (rawfreq_IR <- xtabs(~lcat2+final_age, data=Agelength_IR)) 
 rowSums(rawfreq_IR)
+colSums(rawfreq_IR)
 (rawfreq_JX <- xtabs(~lcat2+final_age, data=Agelength_JX))
 rowSums(rawfreq_JX)
+colSums(rawfreq_JX)
+
+
 
 ############################################
 # Make observed ALK from the above tables.
