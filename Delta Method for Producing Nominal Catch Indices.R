@@ -1,6 +1,11 @@
 ####################
 # 10/26/2016
 # Purpose: To produce adjusted nominal catch indices using the Delta Method
+# 1. Use Delta Method to produce YOY indices
+# 2. Use Delta Method to produce adult indices
+# 3. Fit SR relationships to yoy and adult indices to produce the residuals of Beverton Holt and Ricker
+
+#Delta Method
 # This method uses the Delta method for determining the nominal catch rate of Spotted Seatrout in the FIM catch
 # Uses methods described in Chyan-huei et al 1992
 
@@ -242,3 +247,272 @@ JX <- cbind(jx_all.bin$year, jx_all.pos$totalnumberpositivehauls,jx_all.pos$Tota
 #JXB <- cbind(jxb.bin$year, data.frame(jxb.pos$positive*jxb.bin$ProportionPositive))
 names(JX) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
 write.csv(JX,"~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/JX_yoy_index.csv" )
+
+
+################################################
+
+###########################
+# LOAD ADULT DATA
+###########################
+
+################################################
+# adult data are only 
+
+setwd("~/Desktop/Github Repo/Seatrout/FWRI SCRATCH FOLDER/Elizabeth Herdter/SAS data sets/FIMData")
+ap_ad = subset(read_sas("ap_adult_cn_c.sas7bdat"))
+ap_adl = subset(read_sas("ap_adult_cn_l.sas7bdat"))
+
+
+ch_ad = subset(read_sas("ch_adult_cn_c.sas7bdat")) # *******
+ch_adl = subset(read_sas("ch_adult_cn_l.sas7bdat"))
+
+
+ck_ad = subset(read_sas("ck_adult_cn_c.sas7bdat"))
+ck_adl = subset(read_sas("ck_adult_cn_l.sas7bdat"))
+
+
+tb_ad = subset(read_sas("tb_adult_cn_c.sas7bdat"))
+tb_adl = subset(read_sas("tb_adult_cn_l.sas7bdat"))
+
+
+jx_ad = subset(read_sas("jx_adult_cn_c.sas7bdat"))
+jx_adl = subset(read_sas("jx_adult_cn_l.sas7bdat"))
+
+
+ir_ad = subset(read_sas("ir_adult_cn_c.sas7bdat"))
+ir_adl = subset(read_sas("ir_adult_cn_l.sas7bdat"))
+
+
+###########################
+# Make positive dataset
+
+ap_ad.pos <- ap_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+ch_ad.pos <- ch_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+ck_ad.pos <- ck_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+tb_ad.pos <- tb_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+ir_ad.pos <- ir_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+jx_ad.pos <- jx_ad %>% subset(number>0) %>% group_by(year) %>% summarize(totalnumberpositivehauls=length(unique(bio_reference)), TotalNumberOfSeatroutInPosHauls=sum(number))  %>% 
+  mutate(positive = TotalNumberOfSeatroutInPosHauls/totalnumberpositivehauls)
+
+###################
+# Make binomial dataset
+
+ap_ad.bin = ap_ad %>% mutate(HaulCategory= ifelse(ap_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+ch_ad.bin = ch_ad %>% mutate(HaulCategory= ifelse(ch_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+ck_ad.bin = ck_ad %>% mutate(HaulCategory= ifelse(ck_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+tb_ad.bin = tb_ad %>% mutate(HaulCategory= ifelse(tb_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+ir_ad.bin = ir_ad %>% mutate(HaulCategory= ifelse(ir_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+jx_ad.bin = jx_ad %>% mutate(HaulCategory= ifelse(jx_ad$number>0,1,0)) %>% group_by(year) %>% 
+  summarize(TotalPosHauls= sum(HaulCategory), TotalHauls = length(unique(bio_reference))) %>%
+  mutate(ProportionPositive = TotalPosHauls/TotalHauls)
+
+
+###################################
+# Produce Adjusted Indices for Adult
+##################################
+
+AP_ad <- cbind(ap_ad.bin$year, ap_ad.pos$totalnumberpositivehauls, ap_ad.pos$TotalNumberOfSeatroutInPosHauls, ap_ad.bin$TotalHauls, data.frame(ap_ad.pos$positive*ap_ad.bin$ProportionPositive)) 
+names(AP_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(AP_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/AP_adult_index.csv")
+
+CH_ad <- cbind(ch_ad.bin$year, ch_ad.pos$totalnumberpositivehauls, ch_ad.pos$TotalNumberOfSeatroutInPosHauls, ch_ad.bin$TotalHauls, data.frame(ch_ad.pos$positive*ch_ad.bin$ProportionPositive)) 
+names(CH_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(CH_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/CH_adult_index.csv")
+
+CK_ad <- cbind(ck_ad.bin$year, ck_ad.pos$totalnumberpositivehauls, ck_ad.pos$TotalNumberOfSeatroutInPosHauls, ck_ad.bin$TotalHauls, data.frame(ck_ad.pos$positive*ck_ad.bin$ProportionPositive)) 
+names(CK_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(CK_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/CK_adult_index.csv")
+
+TB_ad <- cbind(tb_ad.bin$year, tb_ad.pos$totalnumberpositivehauls, tb_ad.pos$TotalNumberOfSeatroutInPosHauls, tb_ad.bin$TotalHauls, data.frame(tb_ad.pos$positive*tb_ad.bin$ProportionPositive)) 
+names(TB_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(TB_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/TB_adult_index.csv")
+
+IR_ad <- cbind(ir_ad.bin$year, ir_ad.pos$totalnumberpositivehauls, ir_ad.pos$TotalNumberOfSeatroutInPosHauls, ir_ad.bin$TotalHauls, data.frame(ir_ad.pos$positive*ir_ad.bin$ProportionPositive)) 
+names(IR_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(IR_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/IR_adult_index.csv")
+
+JX_ad <- cbind(jx_ad.bin$year, jx_ad.pos$totalnumberpositivehauls, jx_ad.pos$TotalNumberOfSeatroutInPosHauls, jx_ad.bin$TotalHauls, data.frame(jx_ad.pos$positive*jx_ad.bin$ProportionPositive)) 
+names(JX_ad) <- c('year','Pos_Hauls', 'Tot_C.Neb_in_Pos', 'All_Hauls', 'index')
+write.csv(JX_ad, "~/Desktop/Github Repo/Seatrout/Data/Indices/DeltaMethod Indices/JX_adult_index.csv")
+
+###################################################
+# Make combined biomass indices for YOY and Adults 
+####################################################
+#I will trim the yoy data because the adult timeseries are shorter- only for TB, CH, IR, and CK
+
+AP_bio <- data.frame(cbind(AP_ad$index, AP$index)) %>% mutate(logyoy=log(AP$index), logadult=log(AP_ad$index))
+names(AP_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+CH_bio <- data.frame(cbind(CH_ad$index, CH$index[8:27])) %>% mutate(logyoy=log(CH$index[8:27]), logadult=log(CH_ad$index))
+names(CH_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+CK_bio <- data.frame(cbind(CK_ad$index, CK$index[2:20])) %>% mutate(logyoy=log(CK$index[2:20]), logadult=log(CK_ad$index))
+names(CK_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+TB_bio <- data.frame(cbind(TB_ad$index, TB$index[8:27])) %>% mutate(logyoy=log(TB$index[8:27]), logadult=log(TB_ad$index))
+names(TB_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+IR_bio <- data.frame(cbind(IR_ad$index, IR$index[8:26])) %>% mutate(logyoy=log(IR$index[8:26]), logadult=log(IR_ad$index))
+names(IR_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+JX_bio <- data.frame(cbind(JX_ad$index, JX$index)) %>% mutate(logyoy=log(JX$index), logadult=log(JX_ad$index))
+names(JX_bio) <- c("adult", "yoy", "logyoy", "logadult")
+
+
+######################################################
+# FIT SR CURVES TO DETERMINE RESIDUALS
+#####################################################
+
+library(FSA)
+
+#BEVERTON-HOLT immediately followed by a Ricker Model
+
+#AP
+srStarts(yoy~adult, data=AP_bio, type="BevertonHolt", plot=TRUE)
+svR_ap <- srStarts(yoy ~ adult, data=AP_bio, type="BevertonHolt")
+svR_ap <- list(a=15, b=18)
+bh <- srFuns("BevertonHolt")
+srBH_ap <- nls(logyoy~log(bh(adult,a,b)), data=AP_bio, start=svR_ap)
+summary(srBH_ap)
+x=seq(0,5, length.out=999)
+pR <- bh(x, a=coef(srBH_ap))
+xlmts=range(c(x,AP_bio$adult))
+plot(yoy~adult, data=AP_bio, xlim=xlmts)
+lines(pR~x, lwd=2)
+
+svR_ap <- srStarts(yoy ~ adult, data=AP_bio, type="Ricker")
+svR_ap <- list(a=1.64, b=0.45)
+rk <- srFuns("Ricker")
+srrk_ap <- nls(logyoy~log(rk(adult,a,b)), data=AP_bio, start=svR_ap)
+summary(srrk_ap)
+x=seq(0,5, length.out=999)
+pR <- rk(x, a=coef(srrk_ap))
+xlmts=range(c(x,AP_bio$adult))
+plot(yoy~adult, data=AP_bio, xlim=xlmts)
+lines(pR~x, lwd=2)
+
+        # ricker appears to be a better fit 
+write.csv(data.frame(residuals(srBH_ap)) %>% mutate(year = c(1998:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ap_resid_BH.csv")
+write.csv(data.frame(residuals(srrk_ap)) %>% mutate(year = c(1998:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ap_resid_RK.csv")
+
+
+#CH
+svR_ch <- srStarts(yoy ~ adult, data=CH_bio, type="BevertonHolt")
+svR_ch <- list(a=-19.92, b=-21.60)
+bh <- srFuns("BevertonHolt")
+srBH_ch <- nls(logyoy~log(bh(adult,a,b)), data=CH_bio, start=svR_ch)
+summary(srBH_ch)
+x=seq(0,2, length.out=999)
+pR <- bh(x, a=coef(srBH_ch))
+xlmts=range(c(x,CH_bio$adult))
+plot(yoy~adult, data=CH_bio, xlim=xlmts)
+lines(pR~x, lwd=2)
+
+svR_ch <- srStarts(yoy ~ adult, data=CH_bio, type="Ricker")
+svR_ch <- list(a=5, b=2)
+rk <- srFuns("Ricker")
+srrk_ch <- nls(logyoy~log(rk(adult,a,b)), data=CH_bio, start=svR_ch)
+summary(srrk_ch)
+x=seq(0,2, length.out=999)
+pR <- bh(x, a=coef(srrk_ch))
+xlmts=range(c(x,CH_bio$adult))
+plot(yoy~adult, data=CH_bio, xlim=xlmts)
+lines(pR~x, lwd=2)
+
+
+
+write.csv(data.frame(residuals(srrk_ch)) %>% mutate(year = c(1996:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ch_resid.csv")
+
+
+write.csv(data.frame(residuals(srBH_ch)) %>% mutate(year = c(1996:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ch_resid.csv")
+
+
+
+
+
+svR_ck <- srStarts(yoy ~ adult, data=CK_bio, type="BevertonHolt")
+svR_ck <- list(a=0.45, b=0.04)
+bh <- srFuns("BevertonHolt")
+srBH_ck <- nls(logyoy~log(bh(adult,a,b)), data=CK_bio, start=svR_ck)
+write.csv(data.frame(residuals(srBH_ck)) %>% mutate(year = c(1997:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ck_resid.csv")
+
+
+svR_tb <- srStarts(yoy ~ adult, data=TB_bio, type="BevertonHolt")
+svR_tb <- list(a=10.415, b=6.192)
+bh <- srFuns("BevertonHolt")
+srBH_tb <- nls(logyoy~log(bh(adult,a,b)), data=TB_bio, start=svR_tb)
+write.csv(data.frame(residuals(srBH_tb)) %>% mutate(year= c(1996:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/tb_resid.csv")
+
+svR_ir <- srStarts(yoy ~ adult, data=IR_bio, type="BevertonHolt")
+svR_ir <- list(a=-56.92, b=-57.60)
+bh <- srFuns("BevertonHolt")
+srBH_ir <- nls(logyoy~log(bh(adult,a,b)), data=IR_bio, start=svR_ir)
+write.csv(data.frame(residuals(srBH_ir))  %>% mutate(year = c(1997:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ir_resid.csv")
+
+
+svR_jx <- srStarts(yoy ~ adult, data=JX_bio, type="BevertonHolt")
+svR_jx <- list(a=0.40, b=0.34)
+bh <- srFuns("BevertonHolt")
+srBH_jx <- nls(logyoy~log(bh(adult,a,b)), data=JX_bio, start=svR_jx)
+write.csv(data.frame(residuals(srBH_jx)) %>% mutate(year = c(2001:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/jx_resid.csv")
+
+
+#RICKER 
+
+
+svR_ch <- srStarts(yoy ~ adult, data=CH_bio, type="Ricker")
+svR_ch <- list(a=-19.92, b=-21.60)
+rk <- srFuns("Ricker")
+srrk_ch <- nls(logyoy~log(rk(adult,a,b)), data=CH_bio, start=svR_ch)
+write.csv(data.frame(residuals(srrk_ch)) %>% mutate(year = c(1996:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ch_resid.csv")
+
+svR_ck <- srStarts(yoy ~ adult, data=CK_bio, type="Ricker")
+svR_ck <- list(a=0.45, b=0.04)
+rk <- srFuns("Ricker")
+srrk_ck <- nls(logyoy~log(rk(adult,a,b)), data=CK_bio, start=svR_ck)
+write.csv(data.frame(residuals(srrk_ck)) %>% mutate(year = c(1997:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ck_resid.csv")
+
+
+svR_tb <- srStarts(yoy ~ adult, data=TB_bio, type="Ricker")
+svR_tb <- list(a=10.415, b=6.192)
+rk <- srFuns("Ricker")
+srrk_tb <- nls(logyoy~log(rk(adult,a,b)), data=TB_bio, start=svR_tb)
+write.csv(data.frame(residuals(srrk_tb)) %>% mutate(year= c(1996:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/tb_resid.csv")
+
+svR_ir <- srStarts(yoy ~ adult, data=IR_bio, type="Ricker")
+svR_ir <- list(a=-56.92, b=-57.60)
+rk <- srFuns("Ricker")
+srrk_ir <- nls(logyoy~log(rk(adult,a,b)), data=IR_bio, start=svR_ir)
+write.csv(data.frame(residuals(srrk_ir))  %>% mutate(year = c(1997:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/ir_resid.csv")
+
+
+svR_jx <- srStarts(yoy ~ adult, data=JX_bio, type="Ricker")
+svR_jx <- list(a=0.40, b=0.34)
+rk <- srFuns("Ricker")
+srrk_jx <- nls(logyoy~log(rk(adult,a,b)), data=JX_bio, start=svR_jx)
+write.csv(data.frame(residuals(srrk_jx)) %>% mutate(year = c(2001:2015)), "~/Desktop/Github Repo/Seatrout/Data/Exported R Dataframes/jx_resid.csv")
